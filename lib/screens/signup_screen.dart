@@ -133,7 +133,7 @@ class _MyApp1State extends State<MyApp1> {
                                 enabledBorder: InputBorder.none,
                                 prefixIcon: Icon(Icons.call_outlined)
                             ),
-                            keyboardType: TextInputType.number,
+                            //keyboardType: TextInputType.number,
                             // onSaved: (val) => item.no = val,
                           ),
                         )
@@ -209,7 +209,6 @@ class _MyApp1State extends State<MyApp1> {
                       child: RaisedButton(
                         onPressed:(){
                           // handleSubmit();
-
                             signUp();
                         },
                         shape: RoundedRectangleBorder(

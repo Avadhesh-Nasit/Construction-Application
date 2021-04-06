@@ -1,4 +1,8 @@
+import 'package:construction_application/models/firebase.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'home_screen.dart';
 
 class quickRegister extends StatefulWidget {
   @override
@@ -31,7 +35,7 @@ class _quickRegisterState extends State<quickRegister> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Register", style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.indigo)),
+                    Text("Quick-Register", style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.indigo)),
                     SizedBox(height: 25),
                     Text("Register As"),
                     SizedBox(height: 10,),
@@ -163,7 +167,7 @@ class _quickRegisterState extends State<quickRegister> {
                       width: MediaQuery.of(context).size.width * 0.6,
                       child: RaisedButton(
                         onPressed:(){
-
+                          signUp();
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(35),
@@ -180,6 +184,24 @@ class _quickRegisterState extends State<quickRegister> {
         ),
       ),
     );
+  }
+
+  void signUp() async {
+    if(formKey.currentState.validate()){
+      formKey.currentState.save();
+      try{
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
+        User updateUser=FirebaseAuth.instance.currentUser;
+        updateUser.updateProfile(displayName: name.text);
+        userSetup(name.text, email.text, no.text, password.text,lst1[selectedIndex]);
+        if(updateUser!=null){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        }
+        //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      }catch(e){
+        print(e.message);
+      }
+    }
   }
 
   void changeIndex(int index) {

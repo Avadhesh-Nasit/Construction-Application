@@ -274,6 +274,7 @@
 import 'package:construction_application/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class PhoneVerification extends StatefulWidget {
   @override
   _PhoneVerificationState createState() => _PhoneVerificationState();
@@ -394,11 +395,13 @@ class _PhoneVerificationState extends State<PhoneVerification> {
             actions: <Widget>[
               FlatButton(
                   child: Text("Verify"),
-                onPressed: (){
+                onPressed: ()  async {
                     var user=FirebaseAuth.instance.currentUser;
                     if(user!=null){
                         Navigator.of(context).pop();
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                        SharedPreferences prefs=await SharedPreferences.getInstance();
+                        prefs.setString('phoneNumber',number);
                     }
                     else{
                       Navigator.of(context).pop();

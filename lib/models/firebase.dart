@@ -28,3 +28,13 @@ Future<void> userSetup(String displayName, String email, String phoneNumber, Str
 //     return null;
 //   }
 // }
+
+Future<void> user(String displayName,String phoneNumber, String password,String role) async {
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  var firebaseUser= await FirebaseAuth.instance.currentUser;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String uid = auth.currentUser.uid.toString();
+  users.document(firebaseUser.uid).set({'name': displayName, 'userId': uid,'mobileNumber':phoneNumber, 'password': password,'role':role });
+  //users.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number':phoneNumber, 'Password': password,'Role':role });
+  return;
+}

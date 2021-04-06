@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/firebase.dart';
 import 'package:construction_application/screens/Login_with_phone.dart';
+import 'package:construction_application/screens/builder_page.dart';
+import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/quick_register.dart';
+//import 'package:construction_application/screens/quick_register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +23,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String email, password;
+  String smsCode;
+  String verificationCode;
+  String number;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +74,6 @@ class _LoginState extends State<Login> {
                             ),
                           )
                       ),
-
                       SizedBox(height: 15.0,),
                       Container(
                           height: MediaQuery.of(context).size.height * 0.068,
@@ -111,7 +117,9 @@ class _LoginState extends State<Login> {
                               style: TextStyle(
                                   color: Colors.blue, fontWeight: FontWeight.bold),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>PostProperty()));
+                            },
                           ),
                         ],
                       ),
@@ -142,6 +150,7 @@ class _LoginState extends State<Login> {
                           child: Text("Quick Login",style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold,color: Colors.white),),
                           onPressed:(){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>PhoneVerification()));
+                            //Navigator.push(context, MaterialPageRoute(builder: (context)=>quickRegister()));
                           },
                         ),
                       ),
@@ -174,6 +183,8 @@ class _LoginState extends State<Login> {
       try{
         UserCredential user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
         if(user!=null){
+          User _auth=FirebaseAuth.instance.currentUser;
+          _auth.emailVerified;
           SharedPreferences prefs=await SharedPreferences.getInstance();
           prefs.setString('email', email);
           Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
@@ -184,4 +195,35 @@ class _LoginState extends State<Login> {
       }
     }
   }
+
+  // _fetch() async {
+  //   return StreamBuilder<User>(
+  //       stream: FirebaseAuth.instance.authStateChanges(),
+  //       builder: (context, snapshot) {
+  //         if(snapshot.hasData && snapshot.data != null) {
+  //           return StreamBuilder<DocumentSnapshot>(
+  //             stream: FirebaseFirestore.instance.collection("Users").doc(snapshot.data.uid).snapshots() ,
+  //             builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
+  //               if(snapshot.hasData && snapshot.data != null) {
+  //                 final userDoc = snapshot.data;
+  //                 final user = userDoc.data();
+  //                 if(user['role'] == 'Builder') {
+  //                   return builderPage();
+  //                 }else{
+  //                   return HomeScreen();
+  //                 }
+  //               }else{
+  //                 return Material(
+  //                   child: Center(child: CircularProgressIndicator(),),
+  //                 );
+  //               }
+  //             },
+  //           );
+  //         }
+  //         return Login();
+  //       }
+  //   );
+  // }
+
+
 }
