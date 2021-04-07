@@ -41,7 +41,8 @@ Future<void> main() async{
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email =prefs.getString('email');
-  runApp(MaterialApp(home:email==null?Login():HomeScreen(),));
+  //runApp(MaterialApp(home:email==null?Login():HomeScreen(),));
+  runApp(myapp());
 }
 
 // class Main extends StatefulWidget {
@@ -100,20 +101,51 @@ class myapp1 extends StatefulWidget {
 }
 
 class _myapp1State extends State<myapp1> {
+  String accountStatus = '';
   @override
   void initState() {
-    final keep=FirebaseAuth.instance.currentUser;
-    if(keep==null){
+    // final keep=FirebaseAuth.instance.currentUser;
+    // if(keep==null){
+    //   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
+    // }
+    // Navigator.of(context).push(MaterialPageRoute(builder:(context)=>HomeScreen()));
+    super.initState();
+    saveUser();
+     FirebaseAuth _auth = FirebaseAuth.instance;
+    _getCurrentUser();
+  }
+  Future<void> saveUser() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var email =prefs.getString('email');
+    var phoneNumber=prefs.getString('phoneNumber');
+    var displayName=prefs.getString('displayName');
+    if(email==null && phoneNumber==null){
       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
     }
-    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>HomeScreen()));
-    super.initState();
+    else if(displayName==null){
+      return ;
+    }
+    else if(email!=null){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen()));
+    }
+    else if(phoneNumber!=null){
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen()));
+    }
+    else{
+      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyApp1()));
+    }
+  }
+  Future<void> _getCurrentUser () async {
+    User mCurrentUser = await FirebaseAuth.instance.currentUser;
+    print('Hello ' + mCurrentUser.displayName.toString());
+    print('Email ' + mCurrentUser.email.toString());
+    setState(() {
+      mCurrentUser != null ? accountStatus = 'Signed In' : 'Not Signed In';
+    });
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("Wel-Come"),),
-    );
+    return Login();
   }
 }
 

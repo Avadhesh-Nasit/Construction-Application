@@ -363,6 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<bool> signOut() async {
     SharedPreferences prefs=await SharedPreferences.getInstance();
     prefs.remove('email');
+    //prefs.remove('phoneNumber');
     await FirebaseAuth.instance.signOut();
   }
   _fetch() async {

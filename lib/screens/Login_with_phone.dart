@@ -271,6 +271,7 @@
 //   }
 // }
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -402,6 +403,8 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
                         SharedPreferences prefs=await SharedPreferences.getInstance();
                         prefs.setString('phoneNumber',number);
+                      // User _auth=FirebaseAuth.instance.currentUser;
+                      // FirebaseFirestore.instance.collection('Users').doc(_auth.uid).set({'phoneNumber':number});
                     }
                     else{
                       Navigator.of(context).pop();

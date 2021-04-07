@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/firebase.dart';
 import 'package:construction_application/screens/Login_with_phone.dart';
+import 'package:construction_application/screens/broker_page.dart';
 import 'package:construction_application/screens/builder_page.dart';
 import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/quick_register.dart';
@@ -26,6 +27,7 @@ class _LoginState extends State<Login> {
   String smsCode;
   String verificationCode;
   String number;
+  String myRole;
 
   @override
   Widget build(BuildContext context) {
@@ -139,21 +141,21 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       SizedBox(height:20.0,),
-                      Container(
-                        height:MediaQuery.of(context).size.height*0.07,
-                        width: MediaQuery.of(context).size.width*0.6  ,
-                        child: RaisedButton(
-                          color: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35.0)
-                          ),
-                          child: Text("Quick Login",style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold,color: Colors.white),),
-                          onPressed:(){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>PhoneVerification()));
-                            //Navigator.push(context, MaterialPageRoute(builder: (context)=>quickRegister()));
-                          },
-                        ),
-                      ),
+                      // Container(
+                      //   height:MediaQuery.of(context).size.height*0.07,
+                      //   width: MediaQuery.of(context).size.width*0.6  ,
+                      //   child: RaisedButton(
+                      //     color: Colors.blue,
+                      //     shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(35.0)
+                      //     ),
+                      //     child: Text("Quick Login",style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold,color: Colors.white),),
+                      //     onPressed:(){
+                      //       Navigator.push(context, MaterialPageRoute(builder: (context)=>PhoneVerification()));
+                      //       //Navigator.push(context, MaterialPageRoute(builder: (context)=>quickRegister()));
+                      //     },
+                      //   ),
+                      // ), //QUICK_LOGIN
                       SizedBox(height: 20,),
                       GestureDetector(
                         child: Text("Don't have account? Sign up here",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 17.0),),
@@ -183,11 +185,14 @@ class _LoginState extends State<Login> {
       try{
         UserCredential user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
         if(user!=null){
-          User _auth=FirebaseAuth.instance.currentUser;
-          _auth.emailVerified;
+          // User _auth=FirebaseAuth.instance.currentUser;
+          // _auth.email;
+          // User _auth=FirebaseAuth.instance.currentUser;
+          // FirebaseFirestore.instance.collection('Users').doc(_auth.uid).set({'email':email});
+          _fetch();
           SharedPreferences prefs=await SharedPreferences.getInstance();
           prefs.setString('email', email);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
         }
         // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }catch(e){
@@ -196,34 +201,31 @@ class _LoginState extends State<Login> {
     }
   }
 
-  // _fetch() async {
-  //   return StreamBuilder<User>(
-  //       stream: FirebaseAuth.instance.authStateChanges(),
-  //       builder: (context, snapshot) {
-  //         if(snapshot.hasData && snapshot.data != null) {
-  //           return StreamBuilder<DocumentSnapshot>(
-  //             stream: FirebaseFirestore.instance.collection("Users").doc(snapshot.data.uid).snapshots() ,
-  //             builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
-  //               if(snapshot.hasData && snapshot.data != null) {
-  //                 final userDoc = snapshot.data;
-  //                 final user = userDoc.data();
-  //                 if(user['role'] == 'Builder') {
-  //                   return builderPage();
-  //                 }else{
-  //                   return HomeScreen();
-  //                 }
-  //               }else{
-  //                 return Material(
-  //                   child: Center(child: CircularProgressIndicator(),),
-  //                 );
-  //               }
-  //             },
-  //           );
-  //         }
-  //         return Login();
-  //       }
-  //   );
-  // }
+  _fetch() async {
+    final firebaseUser = await FirebaseAuth.instance.currentUser;
+    if(firebaseUser != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(firebaseUser.uid)
+          .get()
+          .then((ds) {myRole = ds.data()['role'];
+      if(myRole == 'User') {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
+      else if(myRole == 'Builder') {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => builderPage()));
+      }
+      else if(myRole == 'Broker') {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => brokerPage()));
+      }
+      else {
+        print("Invalid User Credentials");
+      }
+      }).catchError((e) {
+        print(e);
+      });
+    }
+  }
 
 
 }

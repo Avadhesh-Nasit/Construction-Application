@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/firebase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -239,7 +240,9 @@ class _MyApp1State extends State<MyApp1> {
         if(updateUser!=null){
           SharedPreferences prefs=await SharedPreferences.getInstance();
           prefs.setString('email', _email);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          // User _auth=FirebaseAuth.instance.currentUser;
+          // FirebaseFirestore.instance.collection('Users').doc(_auth.uid).set({'email':email});
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
         }
         //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }catch(e){
