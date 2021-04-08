@@ -17,6 +17,8 @@ class _Search_PageState extends State<Search_Page> {
   List<String> select_checkbox = ['User', 'Builder', 'Brocker'];
   List<String> sell_and_rent = ['Sell', 'Rent'];
   List<String> sell_and_rent1 = ['Sell', 'Rent'];
+  List<String> bhk=["1BHK","2BHK","3BHK","4BHK"];
+  int selectedIndex=0;
   int selectedIndex1 = 0;
   int selectedIndex2 = 0;
   int selectedIndex3 = 0;
@@ -56,47 +58,57 @@ class _Search_PageState extends State<Search_Page> {
                 margin: EdgeInsets.only(left: 20, top: 15),
                 child: Text("Location", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.44,
-                    height: 50,
-                    padding: EdgeInsets.only(left: 15),
-                    margin: EdgeInsets.only(left: 20, top: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                    ),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          hintText: "State",
-                          hintStyle: TextStyle(fontSize: 18)
+              SizedBox(height: 10.0,),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width/2,
+                        height: 50,
+                        padding: EdgeInsets.only(left: 15),
+                        //margin: EdgeInsets.only(left: 20, top: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              hintText: "State",
+                              hintStyle: TextStyle(fontSize: 18)
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.44,
-                    height: 50,
-                    padding: EdgeInsets.only(left: 15),
-                    margin: EdgeInsets.only(left: 10, right: 20, top: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                    ),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          hintText: "City",
-                          hintStyle: TextStyle(fontSize: 18)
+                    SizedBox(width: 10.0,),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width/2,
+                        height: 50,
+                        padding: EdgeInsets.only(left: 15),
+                        //margin: EdgeInsets.only(left: 10, right: 20, top: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                        ),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              hintText: "City",
+                              hintStyle: TextStyle(fontSize: 18)
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              Padding(padding: EdgeInsets.only(top: 10.0),),
+            Divider(),
               SizedBox(
                 height: 50 ,
                 child: AppBar(
@@ -145,82 +157,47 @@ class _Search_PageState extends State<Search_Page> {
                                   )
                               ),
                               SizedBox(height: 10.0,),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                      value: apartment,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          apartment=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Apartment", style: TextStyle(fontSize: 16.0)),
-                                  Checkbox(
-                                      value: villa,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          villa=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Villa/House", style: TextStyle(fontSize: 16.0)),
-                                  Checkbox(
-                                      value: rowhouse,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          rowhouse=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Row House", style: TextStyle(fontSize: 16.0)),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                      value: farmhouse,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          farmhouse=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Farm House", style: TextStyle(fontSize: 16.0)),
-                                  Checkbox(
-                                      value: plot,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          plot=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Plot", style: TextStyle(fontSize: 16.0)),
-                                  Checkbox(
-                                      value: pentahouse,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          pentahouse=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Penta House", style: TextStyle(fontSize: 16.0)),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                      value: other,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          other=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Others", style: TextStyle(fontSize: 16.0)),
-                                ],
+                              Container(
+                                  child: Wrap(
+                                    spacing: 10.0,
+                                    runSpacing: 3.0,
+                                    children: <Widget>[
+                                      filterChipWidget(chipName: 'Apartment'),
+                                      filterChipWidget(chipName: 'Villa/House'),
+                                      filterChipWidget(chipName: 'Row House'),
+                                      filterChipWidget(chipName: 'Farm House'),
+                                      filterChipWidget(chipName: 'Plot'),
+                                      filterChipWidget(chipName: 'Pent House'),
+                                      filterChipWidget(chipName: 'Others'),
+                                    ],
+                                  )
                               ),
                               SizedBox(height: 10),
+                              Divider(),
+                              Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    "Property Detail",style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                                  )
+                              ),
+                              SizedBox(height: 10.0),
+                              Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left: 20),
+                                child: Row(
+                                  children: [
+                                    customRadio_5(bhk[0], 0),
+                                    SizedBox(width: 10),
+                                    customRadio_5(bhk[1], 1),
+                                    SizedBox(width: 10),
+                                    customRadio_5(bhk[2], 2),
+                                    SizedBox(width: 10),
+                                    customRadio_5(bhk[3], 3),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 10.0),
                               Divider(),
                               Container(
                                 alignment: Alignment.topLeft,
@@ -302,39 +279,19 @@ class _Search_PageState extends State<Search_Page> {
                               ),
                               SizedBox(height: 8),
                               Container(
-                                alignment: Alignment.topLeft,
-                                margin: EdgeInsets.only(left: 8),
-                                child: Row(
-                                  children: [
-                                    Checkbox(
-                                        value: usr1,
-                                        onChanged:(bool value){
-                                          setState(() {
-                                            usr1=value;
-                                          });
-                                        }
-                                    ),
-                                    Text("User", style: TextStyle(fontSize: 16.0)),
-                                    Checkbox(
-                                        value: builder1,
-                                        onChanged:(bool value){
-                                          setState(() {
-                                            builder1=value;
-                                          });
-                                        }
-                                    ),
-                                    Text("Builder", style: TextStyle(fontSize: 16.0)),
-                                    Checkbox(
-                                        value: broker1,
-                                        onChanged:(bool value){
-                                          setState(() {
-                                            broker1=value;
-                                          });
-                                        }
-                                    ),
-                                    Text("Broker", style: TextStyle(fontSize: 16.0)),
-                                  ],
-                                ),
+                                  alignment: Alignment.topLeft,
+                                  margin: EdgeInsets.only(left: 8),
+                                  child: Container(
+                                      child: Wrap(
+                                        spacing: 10.0,
+                                        runSpacing: 3.0,
+                                        children: <Widget>[
+                                          filterChipWidget(chipName: 'User'),
+                                          filterChipWidget(chipName: 'Builder'),
+                                          filterChipWidget(chipName: 'Broker'),
+                                        ],
+                                      )
+                                  )
                               ),
                               SizedBox(height: 15),
                               Container(
@@ -381,80 +338,20 @@ class _Search_PageState extends State<Search_Page> {
                                   )
                               ),
                               SizedBox(height: 10.0,),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                      value: officespace,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          officespace=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Office Space", style: TextStyle(fontSize: 16.0)),
-                                  Checkbox(
-                                      value: shop,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          shop=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Shop", style: TextStyle(fontSize: 16.0)),
-                                  Checkbox(
-                                      value: warehouse,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          warehouse=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Ware House", style: TextStyle(fontSize: 16.0)),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                      value: commercialland,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          commercialland=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Commercial Land", style: TextStyle(fontSize: 16.0)),
-                                  Checkbox(
-                                      value: hotel,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          hotel=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Hotel", style: TextStyle(fontSize: 16.0)),
-                                  Checkbox(
-                                      value: showroom,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          showroom=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Show Room", style: TextStyle(fontSize: 16.0)),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                      value: other,
-                                      onChanged:(bool value){
-                                        setState(() {
-                                          other=value;
-                                        });
-                                      }
-                                  ),
-                                  Text("Others", style: TextStyle(fontSize: 16.0)),
-                                ],
+                              Container(
+                                  child: Wrap(
+                                    spacing: 10.0,
+                                    runSpacing: 3.0,
+                                    children: <Widget>[
+                                      filterChipWidget(chipName: 'Office Space'),
+                                      filterChipWidget(chipName: 'Shop'),
+                                      filterChipWidget(chipName: 'Ware House'),
+                                      filterChipWidget(chipName: 'Commercial Land'),
+                                      filterChipWidget(chipName: 'Hotel'),
+                                      filterChipWidget(chipName: 'Showroom'),
+                                      filterChipWidget(chipName: 'Others'),
+                                    ],
+                                  )
                               ),
                               SizedBox(height: 10),
                               Divider(),
@@ -538,39 +435,19 @@ class _Search_PageState extends State<Search_Page> {
                               ),
                               SizedBox(height: 8),
                               Container(
-                                alignment: Alignment.topLeft,
-                                margin: EdgeInsets.only(left: 8),
-                                child: Row(
-                                  children: [
-                                    Checkbox(
-                                        value: usr2,
-                                        onChanged:(bool value){
-                                          setState(() {
-                                            usr2=value;
-                                          });
-                                        }
-                                    ),
-                                    Text("User", style: TextStyle(fontSize: 16.0)),
-                                    Checkbox(
-                                        value: builder2,
-                                        onChanged:(bool value){
-                                          setState(() {
-                                            builder2=value;
-                                          });
-                                        }
-                                    ),
-                                    Text("Builder", style: TextStyle(fontSize: 16.0)),
-                                    Checkbox(
-                                        value: broker2,
-                                        onChanged:(bool value){
-                                          setState(() {
-                                            broker2=value;
-                                          });
-                                        }
-                                    ),
-                                    Text("Broker", style: TextStyle(fontSize: 16.0)),
-                                  ],
-                                ),
+                                  alignment: Alignment.topLeft,
+                                  margin: EdgeInsets.only(left: 8),
+                                  child: Container(
+                                      child: Wrap(
+                                        spacing: 10.0,
+                                        runSpacing: 3.0,
+                                        children: <Widget>[
+                                          filterChipWidget(chipName: 'User'),
+                                          filterChipWidget(chipName: 'Builder'),
+                                          filterChipWidget(chipName: 'Broker'),
+                                        ],
+                                      )
+                                  )
                               )
                             ],
                           ),
@@ -625,6 +502,21 @@ class _Search_PageState extends State<Search_Page> {
       selectedIndex4 = index;
     });
   }
+  void changeIndex_sell_rent_3(int index){
+    setState(() {
+      selectedIndex=index;
+    });
+  }
+  Widget customRadio_5(String txt, int index) {
+    return OutlineButton(
+      onPressed: () => changeIndex_sell_rent_3(index),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      borderSide: BorderSide(color: selectedIndex == index ? Colors.indigo : Colors.grey),
+      child: Text(txt, style: TextStyle(color: selectedIndex == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
+    );
+  }
 
   Widget customRadio_1(String txt, int index) {
     return OutlineButton(
@@ -670,4 +562,35 @@ class _Search_PageState extends State<Search_Page> {
     );
   }
 
+}
+
+class filterChipWidget extends StatefulWidget {
+  final String chipName;
+
+  filterChipWidget({Key key, this.chipName}) : super(key: key);
+
+  @override
+  _filterChipWidgetState createState() => _filterChipWidgetState();
+}
+
+class _filterChipWidgetState extends State<filterChipWidget> {
+  var _isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return FilterChip(
+        label: Text(widget.chipName),
+        labelStyle: TextStyle(color: Colors.indigo,fontSize: 16.0,fontWeight: FontWeight.bold),
+        selected: _isSelected,
+        shape:RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+              30.0),),
+        backgroundColor: Colors.indigo.shade50,
+        onSelected: (isSelected) {
+          setState(() {
+            _isSelected = isSelected;
+          });
+        },
+        selectedColor: Colors.indigo.shade100);
+  }
 }

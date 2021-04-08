@@ -3,6 +3,7 @@ import 'package:construction_application/models/firebase.dart';
 import 'package:construction_application/screens/Login_with_phone.dart';
 import 'package:construction_application/screens/broker_page.dart';
 import 'package:construction_application/screens/builder_page.dart';
+import 'package:construction_application/screens/forgotPassword.dart';
 import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/quick_register.dart';
 //import 'package:construction_application/screens/quick_register.dart';
@@ -120,7 +121,7 @@ class _LoginState extends State<Login> {
                                   color: Colors.blue, fontWeight: FontWeight.bold),
                             ),
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>PostProperty()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>forgotPassword()));
                             },
                           ),
                         ],

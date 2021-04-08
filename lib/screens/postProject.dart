@@ -60,8 +60,12 @@ class _PostPropertyState extends State<PostProperty> {
   bool showroom=false;
   List<String> sell_and_rent=["Sell","Rent"];
   List<String> owner_builder_broker=["Owner","Builder","Broker"];
+  List<String> bhk=["1BHK","2BHK","3BHK","4BHK"];
+  List<String> construction_status=["Completed","Under Construction"];
   int selectedIndex=0;
   int selectedIndex1=0;
+  int selectedIndex2=0;
+  int selectedIndex3=0;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -70,7 +74,7 @@ class _PostPropertyState extends State<PostProperty> {
         backgroundColor: Colors.grey.shade50,
         appBar: AppBar(
           title: Text("Post Property"),
-          backgroundColor: Colors.indigo.shade300,
+          backgroundColor: Colors.indigo,
 
         ),
         body: Container(
@@ -92,20 +96,8 @@ class _PostPropertyState extends State<PostProperty> {
                           customRadio_2(owner_builder_broker[2], 2),
                         ],
                       ),
-                    ),
-                  //Row of radiobutton
-              SizedBox(height: 10.0,),
-              Container(
-                  height: 30.0,
-                  margin: EdgeInsets.only(left: 5.0),
-                  width: MediaQuery.of(context).size.width,
-                  child: Container(
-                      alignment: Alignment.topLeft,
-                      margin: EdgeInsets.only(left:20),
-                      child: Text("Property",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)
-                  )
-              ), //property
-              Padding(padding: EdgeInsets.only(top: 10.0)),
+                    ), //Row of radiobutton
+               Divider(),
               SizedBox(
                 height: 50 ,
                 child: AppBar(
@@ -147,173 +139,33 @@ class _PostPropertyState extends State<PostProperty> {
                                     ),
                                   ),
                                   SizedBox(height: 10.0,),
+                                  Divider(),
                                   Container(
                                     alignment: Alignment.topLeft,
                                     margin: EdgeInsets.only(left:20),
                                     child:Text("Property Type",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),),
                                   ),
                                   SizedBox(height: 10.0,),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                          value: apartment,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              apartment=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Apartment"),
-                                      Checkbox(
-                                          value: villa,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              villa=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Villa/House"),
-                                      Checkbox(
-                                          value: rowhouse,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              rowhouse=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Row House"),
-                                    ],
+                                  Container(
+                                      child: Wrap(
+                                        spacing: 10.0,
+                                        runSpacing: 3.0,
+                                        children: <Widget>[
+                                          filterChipWidget(chipName: 'Apartment'),
+                                          filterChipWidget(chipName: 'Villa/House'),
+                                          filterChipWidget(chipName: 'Row House'),
+                                          filterChipWidget(chipName: 'Farm House'),
+                                          filterChipWidget(chipName: 'Plot'),
+                                          filterChipWidget(chipName: 'Pent House'),
+                                          filterChipWidget(chipName: 'Others'),
+                                        ],
+                                      )
                                   ),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                          value: farmhouse,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              farmhouse=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Farm House"),
-                                      Checkbox(
-                                          value: plot,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              plot=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Plot"),
-                                      Checkbox(
-                                          value: pentahouse,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              pentahouse=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Penta House"),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                          value: other,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              other=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Others"),
-                                    ],
-                                  )
                                 ],
                               ),
                             ),
                             SizedBox(height: 10.0,),
-                            Container(
-                              width: MediaQuery.of(context).size.width ,
-                              height: 50,
-                              padding: EdgeInsets.only(left: 15),
-                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                              ),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    hintText: "State",
-                                    hintStyle: TextStyle(fontSize: 18)
-                                ),
-                              ),
-                            ),
-
-                            SizedBox(height: 10.0,),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              padding: EdgeInsets.only(left: 15),
-                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                              ),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    hintText: "City",
-                                    hintStyle: TextStyle(fontSize: 18)
-                                ),
-                              ),
-                            ),
-                            // SizedBox(height: 10.0,),
-                            // InkWell(
-                            //   child: Container(
-                            //     color: Colors.indigo,
-                            //     height: 30.0,
-                            //   ),
-                            //   onTap: (){
-                            //     _optionsDialogBox();
-                            //   },
-                            // ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              height: 100,
-                              width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.only(left: 20.0,right: 20.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width/2,
-                                        color: Colors.white,
-                                        child: Center(
-                                          child: Icon(Icons.photo_library_outlined,size: 40.0,),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 15,),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      child: Container(
-                                        color: Colors.white,
-                                        width: MediaQuery.of(context).size.width/2,
-                                        child: Center(
-                                          child: Icon(Icons.photo_camera_outlined,size: 40.0,),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
+                            Divider(),
                             Container(
                                 alignment: Alignment.topLeft,
                                 margin: EdgeInsets.only(left:20),
@@ -376,10 +228,160 @@ class _PostPropertyState extends State<PostProperty> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 10.0),
+                            Container(
+                              width: MediaQuery.of(context).size.width ,
+                              height: 50,
+                              padding: EdgeInsets.only(left: 15),
+                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: "State",
+                                    hintStyle: TextStyle(fontSize: 18)
+                                ),
+                              ),
+                            ),
                             SizedBox(height: 10.0,),
                             Container(
                               width: MediaQuery.of(context).size.width,
                               height: 50,
+                              padding: EdgeInsets.only(left: 15),
+                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: "City",
+                                    hintStyle: TextStyle(fontSize: 18)
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            // SizedBox(height: 10.0,),
+                            // InkWell(
+                            //   child: Container(
+                            //     color: Colors.indigo,
+                            //     height: 30.0,
+                            //   ),
+                            //   onTap: (){
+                            //     _optionsDialogBox();
+                            //   },
+                            // ),
+                            SizedBox(height: 10.0,),
+                            Divider(),
+                            Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left:20),
+                                child: Text("Upload Photos",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              height: 100,
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.only(left: 20.0,right: 20.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width/2,
+                                        color: Colors.white,
+                                        child: Center(
+                                          child: Icon(Icons.photo_library_outlined,size: 40.0,),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 15,),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      child: Container(
+                                        color: Colors.white,
+                                        width: MediaQuery.of(context).size.width/2,
+                                        child: Center(
+                                          child: Icon(Icons.photo_camera_outlined,size: 40.0,),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Divider(),
+                            Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left:20),
+                                child: Text("Property Detail",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              margin: EdgeInsets.only(left: 20),
+                              child: Row(
+                                children: [
+                                  customRadio_3(bhk[0], 0),
+                                  SizedBox(width: 10),
+                                  customRadio_3(bhk[1], 1),
+                                  SizedBox(width: 10),
+                                  customRadio_3(bhk[2], 2),
+                                  SizedBox(width: 10),
+                                  customRadio_3(bhk[3], 3),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              padding: EdgeInsets.only(left: 15),
+                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: "Area",
+                                    hintStyle: TextStyle(fontSize: 18)
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              padding: EdgeInsets.only(left: 15),
+                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: "Price",
+                                    hintStyle: TextStyle(fontSize: 18)
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 100,
                               padding: EdgeInsets.only(left: 15),
                               margin: EdgeInsets.only(left: 20, top: 10,right: 20),
                               decoration: BoxDecoration(
@@ -395,6 +397,39 @@ class _PostPropertyState extends State<PostProperty> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 10.0,),
+                            Divider(),
+                            Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left:20),
+                                child: Text("Construction Status",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              margin: EdgeInsets.only(left: 20),
+                              child: Row(
+                                children: [
+                                  customRadio_4(construction_status[0], 0),
+                                  SizedBox(width: 20),
+                                  customRadio_4(construction_status[1], 1),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 30.0,),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              height: 50,
+                              child: RaisedButton(
+                                onPressed: () {},
+                                color: Colors.indigo,
+                                child: Center(child: Text("POST", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+
                             SizedBox(height: 30.0,)
                           ],
                         ),
@@ -426,156 +461,26 @@ class _PostPropertyState extends State<PostProperty> {
                                     child:Text("Property Type",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),),
                                   ),
                                   SizedBox(height: 10.0,),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                          value: officespace,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              officespace=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Office Space"),
-                                      Checkbox(
-                                          value: shop,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              shop=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Shop"),
-                                      Checkbox(
-                                          value: warehouse,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              warehouse=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Ware House"),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                          value: commercialland,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              commercialland=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Commercial Land"),
-                                      Checkbox(
-                                          value: hotel,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              hotel=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Hotel"),
-                                      Checkbox(
-                                          value: showroom,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              showroom=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Show Room"),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                          value: other,
-                                          onChanged:(bool value){
-                                            setState(() {
-                                              other=value;
-                                            });
-                                          }
-                                      ),
-                                      Text("Others"),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              width: MediaQuery.of(context).size.width ,
-                              height: 50,
-                              padding: EdgeInsets.only(left: 15),
-                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                              ),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    hintText: "State",
-                                    hintStyle: TextStyle(fontSize: 18)
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              padding: EdgeInsets.only(left: 15),
-                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                              ),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    hintText: "City",
-                                    hintStyle: TextStyle(fontSize: 18)
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Container(
-                              height: 100,
-                              width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.only(left: 20.0,right: 20.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width/2,
-                                        color: Colors.white,
-                                        child: Center(
-                                          child: Icon(Icons.photo_library_outlined,size: 40.0,),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 15,),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      child: Container(
-                                        color: Colors.white,
-                                        width: MediaQuery.of(context).size.width/2,
-                                        child: Center(
-                                          child: Icon(Icons.photo_camera_outlined,size: 40.0,),
-                                        ),
-                                      ),
-                                    ),
+                                  Container(
+                                      child: Wrap(
+                                        spacing: 10.0,
+                                        runSpacing: 3.0,
+                                        children: <Widget>[
+                                          filterChipWidget(chipName: 'Office Space'),
+                                          filterChipWidget(chipName: 'Shop'),
+                                          filterChipWidget(chipName: 'Ware House'),
+                                          filterChipWidget(chipName: 'Commercial Land'),
+                                          filterChipWidget(chipName: 'Hotel'),
+                                          filterChipWidget(chipName: 'Showroom'),
+                                          filterChipWidget(chipName: 'Others'),
+                                        ],
+                                      )
                                   ),
                                 ],
                               ),
                             ),
                             SizedBox(height: 10.0,),
+                            Divider(),
                             Container(
                                 alignment: Alignment.topLeft,
                                 margin: EdgeInsets.only(left:20),
@@ -638,10 +543,163 @@ class _PostPropertyState extends State<PostProperty> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 10.0),
+                            Container(
+                              width: MediaQuery.of(context).size.width ,
+                              height: 50,
+                              padding: EdgeInsets.only(left: 15),
+                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: "State",
+                                    hintStyle: TextStyle(fontSize: 18)
+                                ),
+                              ),
+                            ),
                             SizedBox(height: 10.0,),
                             Container(
                               width: MediaQuery.of(context).size.width,
                               height: 50,
+                              padding: EdgeInsets.only(left: 15),
+                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: "City",
+                                    hintStyle: TextStyle(fontSize: 18)
+                                ),
+                              ),
+                            ),
+                            //SizedBox(height: 10.0,),
+                            // Container(
+                            //   width: MediaQuery.of(context).size.width,
+                            //   height: 50,
+                            //   padding: EdgeInsets.only(left: 15),
+                            //   margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(15),
+                            //     border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                            //   ),
+                            //   child: TextFormField(
+                            //     decoration: InputDecoration(
+                            //         enabledBorder: InputBorder.none,
+                            //         focusedBorder: InputBorder.none,
+                            //         hintText: "Project Description",
+                            //         hintStyle: TextStyle(fontSize: 18)
+                            //     ),
+                            //   ),
+                            // ),
+                            SizedBox(height: 10.0,),
+                            // SizedBox(height: 10.0,),
+                            // InkWell(
+                            //   child: Container(
+                            //     color: Colors.indigo,
+                            //     height: 30.0,
+                            //   ),
+                            //   onTap: (){
+                            //     _optionsDialogBox();
+                            //   },
+                            // ),
+                            SizedBox(height: 10.0,),
+                            Divider(),
+                            Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left:20),
+                                child: Text("Upload Photos",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              height: 100,
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.only(left: 20.0,right: 20.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width/2,
+                                        color: Colors.white,
+                                        child: Center(
+                                          child: Icon(Icons.photo_library_outlined,size: 40.0,),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 15,),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      child: Container(
+                                        color: Colors.white,
+                                        width: MediaQuery.of(context).size.width/2,
+                                        child: Center(
+                                          child: Icon(Icons.photo_camera_outlined,size: 40.0,),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Divider(),
+                            Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left:20),
+                                child: Text("Property Detail",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              padding: EdgeInsets.only(left: 15),
+                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: "Area",
+                                    hintStyle: TextStyle(fontSize: 18)
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              padding: EdgeInsets.only(left: 15),
+                              margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              ),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: "Price",
+                                    hintStyle: TextStyle(fontSize: 18)
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 100,
                               padding: EdgeInsets.only(left: 15),
                               margin: EdgeInsets.only(left: 20, top: 10,right: 20),
                               decoration: BoxDecoration(
@@ -657,6 +715,39 @@ class _PostPropertyState extends State<PostProperty> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 10.0,),
+                            Divider(),
+                            Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left:20),
+                                child: Text("Construction Status",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              margin: EdgeInsets.only(left: 20),
+                              child: Row(
+                                children: [
+                                  customRadio_4(construction_status[0], 0),
+                                  SizedBox(width: 20),
+                                  customRadio_4(construction_status[1], 1),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 30.0,),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              height: 50,
+                              child: RaisedButton(
+                                onPressed: () {},
+                                color: Colors.indigo,
+                                child: Center(child: Text("POST", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+
                             SizedBox(height: 30.0,)
                           ],
                         ),
@@ -681,6 +772,37 @@ class _PostPropertyState extends State<PostProperty> {
       selectedIndex=index;
     });
   }
+  void changeIndex_sell_rent_3(int index){
+    setState(() {
+      selectedIndex2=index;
+    });
+  }
+  void changeIndex_sell_rent_4(int index){
+    setState(() {
+      selectedIndex3=index;
+    });
+  }
+
+  Widget customRadio_4(String txt, int index) {
+    return OutlineButton(
+      onPressed: () => changeIndex_sell_rent_4(index),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      borderSide: BorderSide(color: selectedIndex3 == index ? Colors.indigo : Colors.grey),
+      child: Text(txt, style: TextStyle(color: selectedIndex3 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
+    );
+  }
+  Widget customRadio_3(String txt, int index) {
+    return OutlineButton(
+      onPressed: () => changeIndex_sell_rent_3(index),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      borderSide: BorderSide(color: selectedIndex2 == index ? Colors.indigo : Colors.grey),
+      child: Text(txt, style: TextStyle(color: selectedIndex2 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
+    );
+  }
   Widget customRadio_2(String txt, int index) {
     return OutlineButton(
       onPressed: () => changeIndex_sell_rent_2(index),
@@ -691,7 +813,6 @@ class _PostPropertyState extends State<PostProperty> {
       child: Text(txt, style: TextStyle(color: selectedIndex == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
     );
   }
-
   Widget customRadio_1(String txt, int index) {
     return OutlineButton(
       onPressed: () => changeIndex_sell_rent_1(index),
@@ -703,3 +824,34 @@ class _PostPropertyState extends State<PostProperty> {
     );
   }
 }
+class filterChipWidget extends StatefulWidget {
+  final String chipName;
+
+  filterChipWidget({Key key, this.chipName}) : super(key: key);
+
+  @override
+  _filterChipWidgetState createState() => _filterChipWidgetState();
+}
+
+class _filterChipWidgetState extends State<filterChipWidget> {
+  var _isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return FilterChip(
+        label: Text(widget.chipName),
+        labelStyle: TextStyle(color: Colors.indigo,fontSize: 16.0,fontWeight: FontWeight.bold),
+        selected: _isSelected,
+        shape:RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+              30.0),),
+        backgroundColor: Colors.indigo.shade50,
+        onSelected: (isSelected) {
+          setState(() {
+            _isSelected = isSelected;
+          });
+        },
+        selectedColor: Colors.indigo.shade100);
+  }
+}
+

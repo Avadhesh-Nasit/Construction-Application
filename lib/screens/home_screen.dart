@@ -1,5 +1,11 @@
+import 'package:construction_application/screens/changePassword.dart';
+import 'package:construction_application/screens/emiCalculator.dart';
 import 'package:construction_application/screens/login_screen.dart';
+import 'package:construction_application/screens/postProject.dart';
+import 'package:construction_application/screens/propertyDetail.dart';
+import 'package:construction_application/screens/searchPage.dart';
 import 'package:construction_application/screens/signup_screen.dart';
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:construction_application/models/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -59,11 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(padding: EdgeInsets.only(top: 45.0)),
-                                Text("$myName",style: TextStyle(fontSize: 20.0),),
-                                SizedBox(height: 5,),
-                                Text("$myEmail",style: TextStyle(fontSize: 15.0),),
+                                Text("$myName",style: TextStyle(fontSize: 25.0),),
                                 SizedBox(height: 5,),
                                 Text("$myPhone",style: TextStyle(fontSize: 15.0),),
+                                SizedBox(height: 5,),
+                                Text("$myEmail",style: TextStyle(fontSize: 11.0),),
                                 //Text("${_auth.phoneNumber}",style: TextStyle(fontSize: 15.0),)
                               ],
                             );
@@ -82,15 +88,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text("Home")
                 ],
               ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>changePassword()));
+              },
             ),
             ListTile(
               title:Row(
                 children: [
                   Icon(Icons.add_box_outlined),
                   Padding(padding: EdgeInsets.only(left: 10.0)),
-                  Text("Post Property")
+                  Text("Post Property"),
                 ],
               ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostProperty()));
+              },
             ),
             ListTile(
               title:Row(
@@ -100,6 +112,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text("EMI Calculator")
                 ],
               ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>emiCalculator()));
+              },
             ),
             Divider(),
             Container(
@@ -141,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text("About Us")
                 ],
               ),
+              onTap: resetpassword,
             ),
             ListTile(
               title:Row(
@@ -206,7 +222,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Center(child: Text("Hello, ${_auth.displayName}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white))),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Search_Page()));
+                    },
                     child: Container(
                       margin: EdgeInsets.only(top: 80, left: 30, right: 30),
                       height: 50,
@@ -227,7 +245,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 30),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail()));
+                },
                 child: Container(
                   height: 280,
                   width: MediaQuery
@@ -240,14 +260,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: Column(
                     children: [
-                      Container(
-                        height: 140,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(topLeft: Radius
-                                .circular(20), topRight: Radius.circular(20)),
-                            color: Colors.white
-                        ),
-                        // child: Image(image: AssetImage(""), fit: BoxFit.cover),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 140,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(topLeft: Radius
+                                    .circular(20), topRight: Radius.circular(20)),
+                                color: Colors.white
+                            ),
+                            // child: Image(image: AssetImage(""), fit: BoxFit.cover),
+                          ),
+                          Container(
+                            alignment: Alignment.topRight,
+                            margin: EdgeInsets.only(right: 20, top: 20),
+                            child: FavoriteButton(
+                              isFavorite: false,
+                              valueChanged: (_isFavorite) {
+                                print('Is Favorite : $_isFavorite');
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       Row(
                         children: [
@@ -270,7 +304,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 30),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail()));
+                },
                 child: Container(
                   height: 280,
                   width: MediaQuery
@@ -283,14 +319,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: Column(
                     children: [
-                      Container(
-                        height: 140,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(topLeft: Radius
-                                .circular(20), topRight: Radius.circular(20)),
-                            color: Colors.white
-                        ),
-                        // child: Image(image: AssetImage(""), fit: BoxFit.cover),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 140,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(topLeft: Radius
+                                    .circular(20), topRight: Radius.circular(20)),
+                                color: Colors.white
+                            ),
+                            // child: Image(image: AssetImage(""), fit: BoxFit.cover),
+                          ),
+                          Container(
+                            alignment: Alignment.topRight,
+                            margin: EdgeInsets.only(right: 20, top: 20),
+                            child: FavoriteButton(
+                              isFavorite: false,
+                              valueChanged: (_isFavorite) {
+                                print('Is Favorite : $_isFavorite');
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       Row(
                         children: [
@@ -313,7 +363,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               SizedBox(height: 30),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail()));
+                },
                 child: Container(
                   height: 280,
                   width: MediaQuery
@@ -326,14 +378,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: Column(
                     children: [
-                      Container(
-                        height: 140,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(topLeft: Radius
-                                .circular(20), topRight: Radius.circular(20)),
-                            color: Colors.white
-                        ),
-                        // child: Image(image: AssetImage(""), fit: BoxFit.cover),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 140,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(topLeft: Radius
+                                    .circular(20), topRight: Radius.circular(20)),
+                                color: Colors.white
+                            ),
+                            // child: Image(image: AssetImage(""), fit: BoxFit.cover),
+                          ),
+                          Container(
+                            alignment: Alignment.topRight,
+                            margin: EdgeInsets.only(right: 20, top: 20),
+                            child: FavoriteButton(
+                              isFavorite: false,
+                              valueChanged: (_isFavorite) {
+                                print('Is Favorite : $_isFavorite');
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       Row(
                         children: [
@@ -384,5 +450,10 @@ class _HomeScreenState extends State<HomeScreen> {
         print(e);
       });
     }
+  }
+  Future<void> resetpassword(){
+    User _auth = FirebaseAuth.instance.currentUser;
+    _auth.sendEmailVerification();
+
   }
 }
