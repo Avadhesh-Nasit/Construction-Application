@@ -10,37 +10,49 @@ class PostProperty extends StatefulWidget {
 
 class _PostPropertyState extends State<PostProperty> {
 
-  Future<void> _optionsDialogBox() {
-    return showDialog(context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: new SingleChildScrollView(
-              child: new ListBody(
-                children: <Widget>[
-                  GestureDetector(
-                    child: new Text('Take a picture'),
-                    onTap: ()async {
-                      var picture = await ImagePicker.pickImage(
-                        source: ImageSource.camera,
-                      );
-                    },
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                  ),
-                  GestureDetector(
-                    child: new Text('Select from gallery'),
-                    onTap: ()async{
-                      var gallery = await ImagePicker.pickImage(
-                        source: ImageSource.gallery,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
+  // Future<void> _optionsDialogBox() {
+  //   return showDialog(context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           content: new SingleChildScrollView(
+  //             child: new ListBody(
+  //               children: <Widget>[
+  //                 GestureDetector(
+  //                   child: new Text('Take a picture'),
+  //                   onTap: ()async {
+  //                     var picture = await ImagePicker.pickImage(
+  //                       source: ImageSource.camera,
+  //                     );
+  //                   },
+  //                 ),
+  //                 Padding(
+  //                   padding: EdgeInsets.all(8.0),
+  //                 ),
+  //                 GestureDetector(
+  //                   child: new Text('Select from gallery'),
+  //                   onTap: ()async{
+  //                     var gallery = await ImagePicker.pickImage(
+  //                       source: ImageSource.gallery,
+  //                     );
+  //                   },
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
+  File _image;
+  Future getImage(bool isCamera) async{
+    File image;
+    if(isCamera){
+      image=await ImagePicker.pickImage(source: ImageSource.camera);
+    }else{
+      image=await ImagePicker.pickImage(source: ImageSource.gallery);
+    }
+    setState(() {
+      _image=image;
+    });
   }
 
   int group=1;
@@ -84,7 +96,7 @@ class _PostPropertyState extends State<PostProperty> {
                     SizedBox(height: 10.0,),
                     Text("Post As",style: TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),),
               SizedBox(height: 10.0,),
-                    Container(
+              Container(
                       alignment: Alignment.topLeft,
                       margin: EdgeInsets.only(left: 20),
                       child: Row(
@@ -97,7 +109,7 @@ class _PostPropertyState extends State<PostProperty> {
                         ],
                       ),
                     ), //Row of radiobutton
-               Divider(),
+              Divider(),
               SizedBox(
                 height: 50 ,
                 child: AppBar(
@@ -300,6 +312,9 @@ class _PostPropertyState extends State<PostProperty> {
                                           child: Icon(Icons.photo_library_outlined,size: 40.0,),
                                         ),
                                       ),
+                                      onTap: (){
+                                        getImage(false);
+                                      },
                                     ),
                                   ),
                                   SizedBox(width: 15,),
@@ -312,8 +327,12 @@ class _PostPropertyState extends State<PostProperty> {
                                           child: Icon(Icons.photo_camera_outlined,size: 40.0,),
                                         ),
                                       ),
+                                      onTap: (){
+                                        getImage(true);
+                                      },
                                     ),
-                                  )
+                                  ),
+                                  _image==null? Container() : Image.file(_image,height: 100.0,width: 100.0),
                                 ],
                               ),
                             ),

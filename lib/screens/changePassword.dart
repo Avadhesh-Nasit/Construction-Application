@@ -1,3 +1,5 @@
+import 'package:construction_application/screens/postProject.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 class changePassword extends StatefulWidget {
   @override
@@ -6,10 +8,14 @@ class changePassword extends StatefulWidget {
 
 class _changePasswordState extends State<changePassword> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  var _passwordController = TextEditingController();
+  var _newPasswordController = TextEditingController();
+  var _repeatPasswordController = TextEditingController();
+  bool checkCurrentPasswordValid = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
+      backgroundColor: Colors.blue .shade50,
       body: Center(
         child: ListView(
           children: [
@@ -36,12 +42,16 @@ class _changePasswordState extends State<changePassword> {
                           ),
                           child: Center(
                             child: TextFormField(
+                              controller: _passwordController,
                               decoration: InputDecoration(
                                   hintText: "Old Password",
                                   hintStyle: TextStyle(fontSize: 18),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
-                                  prefixIcon: Icon(Icons.lock_outlined)
+                                  prefixIcon: Icon(Icons.lock_outlined),
+                                errorText: checkCurrentPasswordValid
+                                    ? null
+                                    : "Please double check your current password",
                               ),
                               keyboardType: TextInputType.text,
                               // onSaved: (val) => item.name = val,
@@ -58,6 +68,7 @@ class _changePasswordState extends State<changePassword> {
                           ),
                           child: Center(
                             child: TextFormField(
+                              controller: _newPasswordController,
                                 decoration: InputDecoration(
                                     hintText: "New Password",
                                     hintStyle: TextStyle(fontSize: 18),
@@ -80,6 +91,13 @@ class _changePasswordState extends State<changePassword> {
                           ),
                           child: Center(
                             child: TextFormField(
+                              obscureText: true,
+                              controller: _repeatPasswordController,
+                              validator: (value) {
+                                return _newPasswordController.text == value
+                                    ? null
+                                    : "Please validate your entered password";
+                              },
                               decoration: InputDecoration(
                                   hintText: "Confirm Password",
                                   hintStyle: TextStyle(fontSize: 18),
@@ -96,7 +114,17 @@ class _changePasswordState extends State<changePassword> {
                         height: MediaQuery.of(context).size.height * 0.07,
                         width: MediaQuery.of(context).size.width * 0.6,
                         child: RaisedButton(
-                          onPressed:(){
+                          onPressed:() async {
+                            final firebaseUser = await FirebaseAuth.instance.currentUser;
+                            checkCurrentPasswordValid =
+                            await validatePassword(
+                                _passwordController.text);
+                            setState(() {
+                              if(formKey.currentState.validate() && checkCurrentPasswordValid){
+                                firebaseUser.updatePassword(_newPasswordController.text);
+                                Navigator.pop(context);
+                              }
+                            });
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35),
@@ -115,4 +143,20 @@ class _changePasswordState extends State<changePassword> {
       ),
     );
   }
+  Future<bool> validatePassword(String password) async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    var firebaseUser = await _auth.currentUser;
+
+    var authCredentials = EmailAuthProvider.getCredential(
+        email: firebaseUser.email, password: password);
+    try {
+      var authResult = await firebaseUser
+          .reauthenticateWithCredential(authCredentials);
+      return authResult.user != null;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
 }
