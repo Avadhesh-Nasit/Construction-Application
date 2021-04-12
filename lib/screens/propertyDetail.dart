@@ -9,10 +9,10 @@ class _propertyDetailState extends State<propertyDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.indigo,
-      ),
+      // appBar: AppBar(
+      //   elevation: 0.0,
+      //   backgroundColor: Colors.indigo,
+      // ),
       backgroundColor: Colors.grey.shade50,
       body: Container(
         child: ListView(
@@ -27,12 +27,12 @@ class _propertyDetailState extends State<propertyDetail> {
                         children: [
                           Container(
                             child: ClipRRect(
-                              // child: Image.asset(
-                              //     'images/property.jpg',
-                              //     width: MediaQuery.of(context).size.width,
-                              //     height: MediaQuery.of(context).size.height,
-                              //     fit:BoxFit.fill
-                              // ),
+                              child: Image.asset(
+                                  'image/home.jpg',
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  fit:BoxFit.fill
+                              ),
                             ),
                           ),
                           Container(

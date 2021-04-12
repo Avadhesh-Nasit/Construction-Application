@@ -1,6 +1,7 @@
 import 'package:construction_application/screens/changePassword.dart';
 import 'package:construction_application/screens/emiCalculator.dart';
 import 'package:construction_application/screens/login_screen.dart';
+import 'package:construction_application/screens/my_homePage.dart';
 import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:construction_application/screens/searchPage.dart';
@@ -18,6 +19,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final List<Widget> _widgetOptions = <Widget>[
+    myHomepage(),
+    propertyDetail(),
+    PostProperty(),
+    Search_Page(),
+    changePassword()
+  ];
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  int _selectedIndex =0 ;
   final _auth= FirebaseAuth.instance.currentUser;
   String myEmail;
   String myName;
@@ -193,236 +207,33 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: ListView(
-        // child: Center(child: Text("${_auth.displayName}")),
-        children: [
-          Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height * 0.12,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(30),
-                            bottomLeft: Radius.circular(30)),
-                        color: Colors.indigo
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 15),
-                    // child:
-                    child: Center(child: Text("Hello, ${_auth.displayName}", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white))),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Search_Page()));
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: 80, left: 30, right: 30),
-                      height: 50,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
-                      ),
-                      padding: EdgeInsets.only(left: 30, top: 15),
-                      child: Text("Search",
-                          style: TextStyle(color: Colors.grey, fontSize: 16)),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 30),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail()));
-                },
-                child: Container(
-                  height: 280,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.9,
-                  decoration: BoxDecoration(
-                      color: Colors.indigo.shade300,
-                      borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            height: 140,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(topLeft: Radius
-                                    .circular(20), topRight: Radius.circular(20)),
-                                color: Colors.white
-                            ),
-                            // child: Image(image: AssetImage(""), fit: BoxFit.cover),
-                          ),
-                          Container(
-                            alignment: Alignment.topRight,
-                            margin: EdgeInsets.only(right: 20, top: 20),
-                            child: FavoriteButton(
-                              isFavorite: false,
-                              valueChanged: (_isFavorite) {
-                                print('Is Favorite : $_isFavorite');
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Container(color: Colors.yellow,
-                              height: 30,
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.45),
-                          Container(
-                              color: Colors.red, height: 30, width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.45)
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail()));
-                },
-                child: Container(
-                  height: 280,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.9,
-                  decoration: BoxDecoration(
-                      color: Colors.indigo.shade300,
-                      borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            height: 140,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(topLeft: Radius
-                                    .circular(20), topRight: Radius.circular(20)),
-                                color: Colors.white
-                            ),
-                            // child: Image(image: AssetImage(""), fit: BoxFit.cover),
-                          ),
-                          Container(
-                            alignment: Alignment.topRight,
-                            margin: EdgeInsets.only(right: 20, top: 20),
-                            child: FavoriteButton(
-                              isFavorite: false,
-                              valueChanged: (_isFavorite) {
-                                print('Is Favorite : $_isFavorite');
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Container(color: Colors.yellow,
-                              height: 30,
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.45),
-                          Container(
-                              color: Colors.red, height: 30, width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.45)
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail()));
-                },
-                child: Container(
-                  height: 280,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.9,
-                  decoration: BoxDecoration(
-                      color: Colors.indigo.shade300,
-                      borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            height: 140,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(topLeft: Radius
-                                    .circular(20), topRight: Radius.circular(20)),
-                                color: Colors.white
-                            ),
-                            // child: Image(image: AssetImage(""), fit: BoxFit.cover),
-                          ),
-                          Container(
-                            alignment: Alignment.topRight,
-                            margin: EdgeInsets.only(right: 20, top: 20),
-                            child: FavoriteButton(
-                              isFavorite: false,
-                              valueChanged: (_isFavorite) {
-                                print('Is Favorite : $_isFavorite');
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Container(color: Colors.yellow,
-                              height: 30,
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.45),
-                          Container(
-                              color: Colors.red, height: 30, width: MediaQuery
-                              .of(context)
-                              .size
-                              .width * 0.45)
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          )
+      body: _widgetOptions.elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(_selectedIndex==0?Icons.home_filled:Icons.home_outlined, color: Colors.indigo),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(_selectedIndex==1?Icons.favorite_rounded:Icons.favorite_outline_rounded, color: Colors.indigo),
+            label: 'Favorite',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(_selectedIndex==2?Icons.add_box_rounded:Icons.add_box_outlined, color: Colors.indigo),
+            label: 'Add',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search, color: Colors.indigo),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(_selectedIndex==4?Icons.account_circle:Icons.account_circle_outlined, color: Colors.indigo),
+            label: 'My Profile',
+          ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.indigo,
+        onTap: _onItemTapped,
       ),
     );
   }

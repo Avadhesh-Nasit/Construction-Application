@@ -38,3 +38,54 @@ Future<void> user(String displayName,String phoneNumber, String password,String 
   //users.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number':phoneNumber, 'Password': password,'Role':role });
   return;
 }
+
+Future<void> postProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String pro_detail, String area, String price, String description, String con_status,String url) async {
+  CollectionReference property = FirebaseFirestore.instance.collection('propertyDetails');
+  //var firebaseUser = await FirebaseAuth.instance.currentUser;
+  //FirebaseAuth auth = FirebaseAuth.instance;
+  //String uid = auth.currentUser.uid.toString();
+  property.document().set({
+    'category': category,
+    'postedBy': postBy,
+    'sellOrRent': sr_radio,
+    'propertyType': pro_type,
+    'projectName': projectName,
+    'address': address,
+    'landmark': landmark,
+    'city': city,
+    'state': state,
+    'detail': pro_detail,
+    'area': area,
+    'price': price,
+    'description': description,
+    'status': con_status,
+    'url' : url
+  });
+  // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
+  return;
+}
+
+Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String url) async {
+  CollectionReference property = FirebaseFirestore.instance.collection('propertyDetails');
+  //var firebaseUser = await FirebaseAuth.instance.currentUser;
+  //FirebaseAuth auth = FirebaseAuth.instance;
+  //String uid = auth.currentUser.uid.toString();
+  property.document().set({
+    'category': category,
+    'postedBy': postBy,
+    'sellOrRent': sr_radio,
+    'propertyType': pro_type,
+    'projectName': projectName,
+    'address': address,
+    'landmark': landmark,
+    'city': city,
+    'state': state,
+    'area': area,
+    'price': price,
+    'description': description,
+    'status': con_status,
+    'url': url
+  });
+  // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
+  return;
+}
