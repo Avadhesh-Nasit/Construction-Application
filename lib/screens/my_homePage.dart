@@ -18,10 +18,20 @@ class _myHomepageState extends State<myHomepage> {
   String myName;
   String myPhone;
   List userProfilesList = [];
+
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
   @override
   void initState() {
     super.initState();
     fetchDatabaseList();
+    refreshPage();
+  }
+  Future<Null> refreshPage() async{
+    refreshKey.currentState?.show();
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      return ;
+    });
   }
   fetchDatabaseList() async {
     dynamic resultant = await DatabaseManager().getUsersList();
@@ -97,168 +107,178 @@ class _myHomepageState extends State<myHomepage> {
                       )
                     ],
                   ),
+          SizedBox(height: 10.0,),
           Container(
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                 physics: ScrollPhysics(),
-                      itemCount: userProfilesList.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => propertyDetail())),
-                          child: Container(
-                            margin: EdgeInsets.all(10.0),
-                            height: 320,
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width * 0.9,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20)
-                            ),
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    Container(
-                                      height: 160,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(topLeft: Radius
-                                            .circular(20), topRight: Radius.circular(20)),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20.0),
-                                          topRight: Radius.circular(20.0),
+              child: RefreshIndicator(
+                key: refreshKey,
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                   physics: ScrollPhysics(),
+                        itemCount: userProfilesList.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                                // var uid =FirebaseAuth.instance.currentUser.uid;
+                                // var _randomId = FirebaseFirestore.instance.collection('propertyDetails').document(uid);
+                                // print(_randomId);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => propertyDetail()));
+
+                              },
+                            child: Container(
+                              margin: EdgeInsets.all(10.0),
+                              height: 320,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * 0.9,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              child: Column(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        height: 160,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(topLeft: Radius
+                                              .circular(20), topRight: Radius.circular(20)),
                                         ),
-                                        child: Image.network(
-                                            userProfilesList[index]['url'],
-                                            width: MediaQuery.of(context).size.width,
-                                            fit:BoxFit.fill
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20.0),
+                                            topRight: Radius.circular(20.0),
+                                          ),
+                                          child: Image.network(
+                                              userProfilesList[index]['firstImage'],
+                                              width: MediaQuery.of(context).size.width,
+                                              fit:BoxFit.fill
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.topRight,
-                                      margin: EdgeInsets.only(right: 20, top: 20),
-                                      child: FavoriteButton(
-                                        isFavorite: false,
-                                        valueChanged: (_isFavorite) {
-                                          print('Is Favorite : $_isFavorite');
-                                        },
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 13),
-                                        height: 30,
-                                        width: MediaQuery
-                                            .of(context)
-                                            .size
-                                            .width/2,
-                                        child: Text(userProfilesList[index]['projectName'], style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-                                      ),
-                                    ),
-                                    Expanded(
+                                      Container(
+                                        alignment: Alignment.topRight,
+                                        margin: EdgeInsets.only(right: 20, top: 20),
+                                        child: FavoriteButton(
+                                          isFavorite: false,
+                                          valueChanged: (_isFavorite) {
+                                            print('Is Favorite : $_isFavorite');
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Expanded(
                                         child: Container(
-                                          margin: EdgeInsets.only(right: 13),
-                                          alignment: Alignment.topRight,
-                                          height: 20,
+                                          margin: EdgeInsets.only(left: 13),
+                                          height: 30,
                                           width: MediaQuery
                                               .of(context)
                                               .size
                                               .width/2,
-                                          child: Text(userProfilesList[index]['price'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.indigo)),
-                                        )
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: 7),
-                                Container(
-                                    alignment: Alignment.topLeft,
-                                    margin: EdgeInsets.only(left: 13),
-                                    child: RichText(
-                                      text: TextSpan(
-                                          text: "Posted by : ",
-                                          style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
-                                          children: [
-                                            TextSpan(
-                                              // text: "Builder",
-                                                text: userProfilesList[index]['postedBy'],
-                                                style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400)
-                                            )
-                                          ]
+                                          child: Text(userProfilesList[index]['projectName'], style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                                        ),
                                       ),
-                                    )
-                                ),
-                                SizedBox(height: 7),
-                                Container(
-                                    alignment: Alignment.topLeft,
-                                    margin: EdgeInsets.only(left: 13),
-                                    child: RichText(
-                                      text: TextSpan(
-                                          text: "Location : ",
-                                          style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
-                                          children: [
-                                            TextSpan(
-                                                text: userProfilesList[index]['city'],
-                                                style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400)
-                                            )
-                                          ]
-                                      ),
-                                    )
-                                ),
-                                SizedBox(height: 7),
-                                Container(
-                                    alignment: Alignment.topLeft,
-                                    margin: EdgeInsets.only(left: 13),
-                                    child: RichText(
-                                      text: TextSpan(
-                                          text: "Type : ",
-                                          style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
-                                          children: [
-                                            TextSpan(
-                                                text: userProfilesList[index]['category'],
-                                                style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400)
-                                            )
-                                          ]
-                                      ),
-                                    )
-                                ),
-                                SizedBox(height: 7),
-                                Container(
-                                    alignment: Alignment.topLeft,
-                                    margin: EdgeInsets.only(left: 13),
-                                    child: RichText(
-                                      text: TextSpan(
-                                          text: "Status : ",
-                                          style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
-                                          children: [
-                                            TextSpan(
-                                                text: userProfilesList[index]['status'],
-                                                style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400)
-                                            )
-                                          ]
-                                      ),
-                                    )
-                                ),
+                                      Expanded(
+                                          child: Container(
+                                            margin: EdgeInsets.only(right: 13),
+                                            alignment: Alignment.topRight,
+                                            height: 20,
+                                            width: MediaQuery
+                                                .of(context)
+                                                .size
+                                                .width/2,
+                                            child: Text(userProfilesList[index]['price'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.indigo)),
+                                          )
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(height: 7),
+                                  Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 13),
+                                      child: RichText(
+                                        text: TextSpan(
+                                            text: "Posted by : ",
+                                            style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
+                                            children: [
+                                              TextSpan(
+                                                // text: "Builder",
+                                                  text: userProfilesList[index]['postedBy'],
+                                                  style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400)
+                                              )
+                                            ]
+                                        ),
+                                      )
+                                  ),
+                                  SizedBox(height: 7),
+                                  Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 13),
+                                      child: RichText(
+                                        text: TextSpan(
+                                            text: "Location : ",
+                                            style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
+                                            children: [
+                                              TextSpan(
+                                                  text: userProfilesList[index]['city'],
+                                                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400)
+                                              )
+                                            ]
+                                        ),
+                                      )
+                                  ),
+                                  SizedBox(height: 7),
+                                  Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 13),
+                                      child: RichText(
+                                        text: TextSpan(
+                                            text: "Type : ",
+                                            style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
+                                            children: [
+                                              TextSpan(
+                                                  text: userProfilesList[index]['category'],
+                                                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400)
+                                              )
+                                            ]
+                                        ),
+                                      )
+                                  ),
+                                  SizedBox(height: 7),
+                                  Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 13),
+                                      child: RichText(
+                                        text: TextSpan(
+                                            text: "Status : ",
+                                            style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
+                                            children: [
+                                              TextSpan(
+                                                  text: userProfilesList[index]['status'],
+                                                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400)
+                                              )
+                                            ]
+                                        ),
+                                      )
+                                  ),
 
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
+                          );
 
-                      }),
-
+                        }),
+                onRefresh: refreshPage,
+              ),
               ),
         ],
-      )
+      ),
     );
 
       // ListView(

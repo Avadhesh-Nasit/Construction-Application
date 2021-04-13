@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/firebase.dart';
 import 'package:construction_application/screens/home_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -104,164 +106,373 @@ class _PostPropertyState extends State<PostProperty> {
     }
   }
 
-  File _imageFile;
-  File _imageFile1;
-  final picker = ImagePicker();
+  // File _imageFile;
+  // File _imageFile1;
+  // File _imageFile3;
+  // final picker = ImagePicker();
+  //
+  // _openCamera() async {
+  //   // var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+  //   // this.setState(() {
+  //   //   imageFile = picture;
+  //   // });
+  //   // Navigator.of(context).pop();
+  // }
+  //
+  // _openGallery() async {
+  //   // var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+  //   // this.setState(() {
+  //   //   imageFile = picture;
+  //   // });
+  //   // Navigator.pop(context);
+  //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  //
+  //   setState(() {
+  //     _imageFile = File(pickedFile.path);
+  //   });
+  //   //uploadImageToFirebase(context);
+  //   Navigator.of(context).pop();
+  // }
+  //
+  // _openGallery1() async {
+  //   // var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+  //   // this.setState(() {
+  //   //   imageFile = picture;
+  //   // });
+  //   // Navigator.pop(context);
+  //   final pickedFile1 = await picker.getImage(source: ImageSource.gallery);
+  //
+  //   setState(() {
+  //     _imageFile1 = File(pickedFile1.path);
+  //   });
+  //   //uploadImageToFirebase1(context);
+  //   Navigator.of(context).pop();
+  // }
+  //
+  // Future uploadImageToFirebase(BuildContext context) async {
+  //   String fileName = _imageFile.path;
+  //   StorageReference firebaseStorageRef =
+  //   FirebaseStorage.instance.ref().child('property_images/$fileName');
+  //   StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
+  //   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+  //   taskSnapshot.ref.getDownloadURL().then(
+  //         (value){
+  //           postProperty(
+  //             'Residential',
+  //             '${owner_builder_broker[selectedIndex]}',
+  //             '${sell_and_rent[selectedIndex1]}',
+  //             '$_filters1',
+  //             '${project_name_controller_r.text}',
+  //             '${address_controller_r.text}, ${landmark_controller_r.text}, ${city_controller_r.text},  ${state_controller_r.text}',
+  //             '${landmark_controller_r.text}',
+  //             '${city_controller_r.text}',
+  //             '${state_controller_r.text}',
+  //             '${bhk[selectedIndex2]}',
+  //             '${area_controller_r.text}',
+  //             '${price_controller_r.text}',
+  //             '${project_description_controller_r.text}',
+  //             '${construction_status[selectedIndex3]}',
+  //             value
+  //           );
+  //         },
+  //   );
+  // }
+  //
+  // Future uploadImageToFirebase1(BuildContext context) async {
+  //   String fileName = _imageFile1.path;
+  //   StorageReference firebaseStorageRef =
+  //   FirebaseStorage.instance.ref().child('property_images/$fileName');
+  //   StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile1);
+  //   StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+  //   taskSnapshot.ref.getDownloadURL().then(
+  //         (value){
+  //           postCommProperty(
+  //               'Commercial',
+  //               '${owner_builder_broker[selectedIndex]}',
+  //               '${sell_and_rent_1c[selectedIndex1c]}',
+  //               '$commercial1_filters',
+  //               '${project_name_controller_c.text}',
+  //               '${address_controller_c.text}, ${landmark_controller_c.text}, ${city_controller_c.text}, ${state_controller_c.text}',
+  //               '${landmark_controller_c.text}',
+  //               '${city_controller_c.text}',
+  //               '${state_controller_c.text}',
+  //               '${area_controller_c.text}',
+  //               '${price_controller_c.text}',
+  //               '${project_description_controller_c.text}',
+  //               '${construction_status_4c[selectedIndex4c]}',
+  //               value,
+  //
+  //           );
+  //         },
+  //   );
+  // }
+  //
 
-  _openCamera() async {
-    // var picture = await ImagePicker.pickImage(source: ImageSource.camera);
-    // this.setState(() {
-    //   imageFile = picture;
-    // });
-    // Navigator.of(context).pop();
+  File _image1;
+  File _image2;
+  File _image3;
+  File _image4;
+  File _image5;
+  File _image6;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  String _retrievedImageUrl;
+
+  Future getImage1() async {
+    try {
+      File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image1 = image;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+  Future getImage2() async {
+    try {
+      File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image2 = image;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+  Future getImage3() async {
+    try {
+      File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image3 = image;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+  Future getImage4() async {
+    try {
+      File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image4 = image;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+  Future getImage5() async {
+    try {
+      File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image5 = image;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+  Future getImage6() async {
+    try {
+      File image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image6 = image;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
-  _openGallery() async {
-    // var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
-    // this.setState(() {
-    //   imageFile = picture;
-    // });
-    // Navigator.pop(context);
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  Future uploadMultipleImages1() async {
+    List<File> _imageList = List();
+    List<String> _imageUrls = List();
 
-    setState(() {
-      _imageFile = File(pickedFile.path);
-    });
-    //uploadImageToFirebase(context);
-    Navigator.of(context).pop();
-  }
+    _imageList.add(_image1);
+    _imageList.add(_image2);
+    _imageList.add(_image3);
 
-  _openGallery1() async {
-    // var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
-    // this.setState(() {
-    //   imageFile = picture;
-    // });
-    // Navigator.pop(context);
-    final pickedFile1 = await picker.getImage(source: ImageSource.gallery);
+    try {
+      for (int i = 0; i < _imageList.length; i++) {
 
-    setState(() {
-      _imageFile1 = File(pickedFile1.path);
-    });
-    //uploadImageToFirebase1(context);
-    Navigator.of(context).pop();
-  }
+        // if(_imageList[i] == null) {
+        //
+        // }
+        String fileName = _imageList[i].path;
+        final StorageReference storageReference = FirebaseStorage().ref().child("multiple2/$fileName");
 
-  Future uploadImageToFirebase(BuildContext context) async {
-    String fileName = _imageFile.path;
-    StorageReference firebaseStorageRef =
-    FirebaseStorage.instance.ref().child('property_images/$fileName');
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    taskSnapshot.ref.getDownloadURL().then(
-          (value){
-            postProperty(
-              'Residential',
-              '${owner_builder_broker[selectedIndex]}',
-              '${sell_and_rent[selectedIndex1]}',
-              '$_filters1',
-              '${project_name_controller_r.text}',
-              '${address_controller_r.text}, ${landmark_controller_r.text}, ${city_controller_r.text},  ${state_controller_r.text}',
-              '${landmark_controller_r.text}',
-              '${city_controller_r.text}',
-              '${state_controller_r.text}',
-              '${bhk[selectedIndex2]}',
-              '${area_controller_r.text}',
-              '${price_controller_r.text}',
-              '${project_description_controller_r.text}',
-              '${construction_status[selectedIndex3]}',
-              value
-            );
-          },
-    );
-  }
+        final StorageUploadTask uploadTask = storageReference.putFile(_imageList[i]);
 
-  Future uploadImageToFirebase1(BuildContext context) async {
-    String fileName = _imageFile1.path;
-    StorageReference firebaseStorageRef =
-    FirebaseStorage.instance.ref().child('property_images/$fileName');
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile1);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    taskSnapshot.ref.getDownloadURL().then(
-          (value){
-            postCommProperty(
-                'Commercial',
-                '${owner_builder_broker[selectedIndex]}',
-                '${sell_and_rent_1c[selectedIndex1c]}',
-                '$commercial1_filters',
-                '${project_name_controller_c.text}',
-                '${address_controller_c.text}, ${landmark_controller_c.text}, ${city_controller_c.text}, ${state_controller_c.text}',
-                '${landmark_controller_c.text}',
-                '${city_controller_c.text}',
-                '${state_controller_c.text}',
-                '${area_controller_c.text}',
-                '${price_controller_c.text}',
-                '${project_description_controller_c.text}',
-                '${construction_status_4c[selectedIndex4c]}',
-                value
-            );
-          },
-    );
-  }
+        final StreamSubscription<StorageTaskEvent> streamSubscription =
+        uploadTask.events.listen((event) {
+          // You can use this to notify yourself or your user in any kind of way.
+          // For example: you could use the uploadTask.events stream in a StreamBuilder instead
+          // to show your user what the current status is. In that case, you would not need to cancel any
+          // subscription as StreamBuilder handles this automatically.
 
-  Future<void> _optionsDialogBox1(BuildContext context) {
-    return showDialog(context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Make a Choice"),
-            content: new SingleChildScrollView(
-              child: new ListBody(
-                children: <Widget>[
-                  GestureDetector(
-                    child: new Text('Take a picture'),
-                    onTap: () {
-                      _openCamera();
-                    },
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                  ),
-                  GestureDetector(
-                    child: new Text('Select from gallery'),
-                    onTap: () {
-                      _openGallery1();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
+          // Here, every StorageTaskEvent concerning the upload is printed to the logs.
+          print('EVENT ${event.type}');
         });
+
+        // Cancel your subscription when done.
+        await uploadTask.onComplete;
+        streamSubscription.cancel();
+
+        String imageUrl = await storageReference.getDownloadURL();
+        _imageUrls.add(imageUrl); //all all the urls to the list
+      }
+      //upload the list of imageUrls to firebase as an array
+      // await _firestore.collection("users").document().setData({
+      //   "arrayOfImages": _imageUrls,
+      // });
+      postProperty(
+        'Residential',
+        '${owner_builder_broker[selectedIndex]}',
+        '${sell_and_rent[selectedIndex1]}',
+        '$_filters1',
+        '${project_name_controller_r.text}',
+        '${address_controller_r.text}, ${landmark_controller_r.text}, ${city_controller_r.text},  ${state_controller_r.text}',
+        '${landmark_controller_r.text}',
+        '${city_controller_r.text}',
+        '${state_controller_r.text}',
+        '${bhk[selectedIndex2]}',
+        '${area_controller_r.text}',
+        '${price_controller_r.text}',
+        '${project_description_controller_r.text}',
+        '${construction_status[selectedIndex3]}',
+        '$_imageUrls',
+          '${_imageUrls[0]}'
+      );
+      //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
+    } catch (e) {
+      print(e);
+    }
+  }
+  Future uploadMultipleImages2() async {
+    List<File> _imageList = List();
+    List<String> _imageUrls = List();
+
+    _imageList.add(_image4);
+    _imageList.add(_image5);
+    _imageList.add(_image6);
+
+    try {
+      for (int i = 0; i < _imageList.length; i++) {
+
+        // if(_imageList[i] == null) {
+        //
+        // }
+        String fileName = _imageList[i].path;
+        final StorageReference storageReference = FirebaseStorage().ref().child("multiple2/$fileName");
+
+        final StorageUploadTask uploadTask = storageReference.putFile(_imageList[i]);
+
+        final StreamSubscription<StorageTaskEvent> streamSubscription =
+        uploadTask.events.listen((event) {
+          // You can use this to notify yourself or your user in any kind of way.
+          // For example: you could use the uploadTask.events stream in a StreamBuilder instead
+          // to show your user what the current status is. In that case, you would not need to cancel any
+          // subscription as StreamBuilder handles this automatically.
+
+          // Here, every StorageTaskEvent concerning the upload is printed to the logs.
+          print('EVENT ${event.type}');
+        });
+
+        // Cancel your subscription when done.
+        await uploadTask.onComplete;
+        streamSubscription.cancel();
+
+        String imageUrl = await storageReference.getDownloadURL();
+        _imageUrls.add(imageUrl); //all all the urls to the list
+      }
+      //upload the list of imageUrls to firebase as an array
+      await _firestore.collection("users").document().setData({
+        "arrayOfImages": _imageUrls,
+      });
+      postCommProperty(
+                      'Commercial',
+                      '${owner_builder_broker[selectedIndex]}',
+                      '${sell_and_rent_1c[selectedIndex1c]}',
+                      '$commercial1_filters',
+                      '${project_name_controller_c.text}',
+                      '${address_controller_c.text}, ${landmark_controller_c.text}, ${city_controller_c.text}, ${state_controller_c.text}',
+                      '${landmark_controller_c.text}',
+                      '${city_controller_c.text}',
+                      '${state_controller_c.text}',
+                      '${area_controller_c.text}',
+                      '${price_controller_c.text}',
+                      '${project_description_controller_c.text}',
+                      '${construction_status_4c[selectedIndex4c]}',
+                      '$_imageUrls',
+                      '${_imageUrls[0]}'
+
+                  );
+      //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
+    } catch (e) {
+      print(e);
+    }
   }
 
-  Future<void> _optionsDialogBox(BuildContext context) {
-    return showDialog(context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Make a Choice"),
-            content: new SingleChildScrollView(
-              child: new ListBody(
-                children: <Widget>[
-                  GestureDetector(
-                    child: new Text('Take a picture'),
-                    onTap: () {
-                      _openCamera();
-                    },
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                  ),
-                  GestureDetector(
-                    child: new Text('Select from gallery'),
-                    onTap: () {
-                      _openGallery();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+  // Future<void> _optionsDialogBox1(BuildContext context) {
+  //   return showDialog(context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text("Make a Choice"),
+  //           content: new SingleChildScrollView(
+  //             child: new ListBody(
+  //               children: <Widget>[
+  //                 GestureDetector(
+  //                   child: new Text('Take a picture'),
+  //                   onTap: () {
+  //                     _openCamera();
+  //                   },
+  //                 ),
+  //                 Padding(
+  //                   padding: EdgeInsets.all(8.0),
+  //                 ),
+  //                 GestureDetector(
+  //                   child: new Text('Select from gallery'),
+  //                   onTap: () {
+  //                     _openGallery1();
+  //                   },
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
+
+  // Future<void> _optionsDialogBox(BuildContext context) {
+  //   return showDialog(context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text("Make a Choice"),
+  //           content: new SingleChildScrollView(
+  //             child: new ListBody(
+  //               children: <Widget>[
+  //                 GestureDetector(
+  //                   child: new Text('Take a picture'),
+  //                   onTap: () {
+  //                     _openCamera();
+  //                   },
+  //                 ),
+  //                 Padding(
+  //                   padding: EdgeInsets.all(8.0),
+  //                 ),
+  //                 GestureDetector(
+  //                   child: new Text('Select from gallery'),
+  //                   onTap: () {
+  //                     _openGallery();
+  //                   },
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 
   List<String> sell_and_rent=["Sell","Rent"];
   List<String> sell_and_rent_1c=["Sell","Rent"];
@@ -504,15 +715,15 @@ class _PostPropertyState extends State<PostProperty> {
                                       child: Container(
                                         height: 100,
                                         child: ClipRRect(
-                                          child: _imageFile != null
-                                              ? Image.file(_imageFile)
+                                          child: _image1 != null
+                                              ? Image.file(_image1)
                                               : FlatButton(
                                             child: Icon(
                                               Icons.add,
                                               size: 50,
                                             ),
                                             onPressed: () {
-                                              _optionsDialogBox(context);
+                                              getImage1();
                                             },
                                           ),
                                         ),
@@ -523,15 +734,15 @@ class _PostPropertyState extends State<PostProperty> {
                                       child: Container(
                                         height: 100,
                                         child: ClipRRect(
-                                          child: _imageFile1 != null
-                                              ? Image.file(_imageFile1)
+                                          child: _image2 != null
+                                              ? Image.file(_image2)
                                               : FlatButton(
                                             child: Icon(
                                               Icons.add,
                                               size: 50,
                                             ),
                                             onPressed: () {
-                                              _optionsDialogBox1(context);
+                                              getImage2();
                                             },
                                           ),
                                         ),
@@ -541,15 +752,15 @@ class _PostPropertyState extends State<PostProperty> {
                                       child: Container(
                                         height: 100,
                                         child: ClipRRect(
-                                          child: _imageFile != null
-                                              ? Image.file(_imageFile)
+                                          child: _image3 != null
+                                              ? Image.file(_image3)
                                               : FlatButton(
                                             child: Icon(
                                               Icons.add,
                                               size: 50,
                                             ),
                                             onPressed: () {
-                                              _optionsDialogBox(context);
+                                              getImage3();
                                             },
                                           ),
                                         ),
@@ -666,7 +877,8 @@ class _PostPropertyState extends State<PostProperty> {
                                 height: 50,
                                 child: RaisedButton(
                                   onPressed: () {
-                                   uploadImageToFirebase(context);
+                                   //uploadImageToFirebase(context);
+                                 uploadMultipleImages1();
                                     Navigator.pushReplacement(
                                         context, MaterialPageRoute(builder: (context) => HomeScreen()));
                                   },
@@ -845,15 +1057,15 @@ class _PostPropertyState extends State<PostProperty> {
                                       child: Container(
                                         height: 100,
                                         child: ClipRRect(
-                                          child: _imageFile != null
-                                              ? Image.file(_imageFile)
+                                          child: _image4 != null
+                                              ? Image.file(_image4)
                                               : FlatButton(
                                             child: Icon(
                                               Icons.add,
                                               size: 50,
                                             ),
                                             onPressed: () {
-                                              _optionsDialogBox(context);
+                                              getImage4();
                                             },
                                           ),
                                         ),
@@ -864,15 +1076,15 @@ class _PostPropertyState extends State<PostProperty> {
                                       child: Container(
                                         height: 100,
                                         child: ClipRRect(
-                                          child: _imageFile1 != null
-                                              ? Image.file(_imageFile1)
+                                          child: _image5 != null
+                                              ? Image.file(_image5)
                                               : FlatButton(
                                             child: Icon(
                                               Icons.add,
                                               size: 50,
                                             ),
                                             onPressed: () {
-                                              _optionsDialogBox1(context);
+                                              getImage5();
                                             },
                                           ),
                                         ),
@@ -882,15 +1094,15 @@ class _PostPropertyState extends State<PostProperty> {
                                       child: Container(
                                         height: 100,
                                         child: ClipRRect(
-                                          child: _imageFile != null
-                                              ? Image.file(_imageFile)
+                                          child: _image6 != null
+                                              ? Image.file(_image6)
                                               : FlatButton(
                                             child: Icon(
                                               Icons.add,
                                               size: 50,
                                             ),
                                             onPressed: () {
-                                              _optionsDialogBox(context);
+                                              getImage6();
                                             },
                                           ),
                                         ),
@@ -991,7 +1203,8 @@ class _PostPropertyState extends State<PostProperty> {
                                 height: 50,
                                 child: RaisedButton(
                                   onPressed: () {
-                                  uploadImageToFirebase1(context);
+                                  //uploadImageToFirebase1(context);
+                                    uploadMultipleImages2();
                                     Navigator.pushReplacement(
                                         context, MaterialPageRoute(builder: (context) => HomeScreen()));
                                   },

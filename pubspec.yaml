@@ -42,6 +42,8 @@ dependencies:
   favorite_button: ^0.0.3
   auto_size_text: ^2.1.0
   firebase_storage: ^4.0.1
+  multi_image_picker: ^4.6.1
+  carousel_slider: ^3.0.0
 
 
 dev_dependencies:
