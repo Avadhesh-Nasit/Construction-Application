@@ -220,3 +220,10 @@ class _quickRegisterState extends State<quickRegister> {
     );
   }
 }
+
+
+
+
+
+
+

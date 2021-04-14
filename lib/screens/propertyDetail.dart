@@ -1,14 +1,27 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
+import 'my_homePage.dart';
 class propertyDetail extends StatefulWidget {
+  final String doc;
+  const propertyDetail({Key key, this.doc}) : super(key: key);
+
   @override
-  _propertyDetailState createState() => _propertyDetailState();
+  _propertyDetailState createState() => _propertyDetailState(doc);
 }
 
 class _propertyDetailState extends State<propertyDetail> {
+  final String doc;
+  _propertyDetailState(this.doc);
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    //String doc=doc_id;
     return Scaffold(
       // appBar: AppBar(
       //   elevation: 0.0,
@@ -95,6 +108,7 @@ class _propertyDetailState extends State<propertyDetail> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 10.0,),
                     Container(
                       height: 130,
                       width: MediaQuery.of(context).size.width,
@@ -112,7 +126,7 @@ class _propertyDetailState extends State<propertyDetail> {
                                       .of(context)
                                       .size
                                       .width/2,
-                                  child: Text("Silver-Villa", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                                  child: Text({"$doc"} == null ? "":{"$doc"} , style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
                                 ),
                               ),
                               Expanded(

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class myHomepage extends StatefulWidget {
+
   @override
   _myHomepageState createState() => _myHomepageState();
 }
@@ -18,20 +19,13 @@ class _myHomepageState extends State<myHomepage> {
   String myName;
   String myPhone;
   List userProfilesList = [];
+  var doc_id;
 
-  var refreshKey = GlobalKey<RefreshIndicatorState>();
+
   @override
   void initState() {
     super.initState();
     fetchDatabaseList();
-    refreshPage();
-  }
-  Future<Null> refreshPage() async{
-    refreshKey.currentState?.show();
-    await Future.delayed(Duration(seconds: 2));
-    setState(() {
-      return ;
-    });
   }
   fetchDatabaseList() async {
     dynamic resultant = await DatabaseManager().getUsersList();
@@ -109,8 +103,6 @@ class _myHomepageState extends State<myHomepage> {
                   ),
           SizedBox(height: 10.0,),
           Container(
-              child: RefreshIndicator(
-                key: refreshKey,
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -119,11 +111,31 @@ class _myHomepageState extends State<myHomepage> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                                // var uid =FirebaseAuth.instance.currentUser.uid;
-                                // var _randomId = FirebaseFirestore.instance.collection('propertyDetails').document(uid);
-                                // print(_randomId);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => propertyDetail()));
+                              //   var uid =FirebaseAuth.instance.currentUser.uid;
+                              //   var _randomId = FirebaseFirestore.instance.collection('propertyDetails').document(uid);
+                              //   print(_randomId);
+                              // var firebaseUser =  FirebaseAuth.instance.currentUser;
+                              // FirebaseFirestore.instance.collection("propertyDetails").doc(firebaseUser.uid).get().then((value){
+                              //   print(value.data());
+                              // });
+                              FirebaseFirestore.instance
+                                  .collection('propertyDetails')
+                                  .get()
+                                  .then(
+                                    (QuerySnapshot snapshot) => {
+                                  // snapshot.documents.forEach((f) {
+                                  //
+                                  //   print("documentID---- " + f.reference.documentID);
+                                  //
+                                  // }),
+                                  //     snapshot.documents[index].data(),
+                                       doc_id = snapshot.docs[index].documentID,
+                                      //print(snapshot.documents[index].documentID)
+                                      print(doc_id),
 
+                                },
+                              );
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => propertyDetail(doc: doc_id,)));
                               },
                             child: Container(
                               margin: EdgeInsets.all(10.0),
@@ -274,8 +286,6 @@ class _myHomepageState extends State<myHomepage> {
                           );
 
                         }),
-                onRefresh: refreshPage,
-              ),
               ),
         ],
       ),
