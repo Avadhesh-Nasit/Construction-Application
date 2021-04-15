@@ -39,7 +39,7 @@ Future<void> user(String displayName,String phoneNumber, String password,String 
   return;
 }
 
-Future<void> postProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String pro_detail, String area, String price, String description, String con_status,String url,String firstImage) async {
+Future<void> postProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String pro_detail, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage) async {
   CollectionReference property = FirebaseFirestore.instance.collection('propertyDetails');
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
@@ -59,14 +59,15 @@ Future<void> postProperty(String category, String postBy, String sr_radio, Strin
     'price': price,
     'description': description,
     'status': con_status,
-    'url' : url,
-    'firstImage': firstImage
+    'firstImage': firstImage,
+    'secondImage': secondImage,
+    'thirdImage': thirdImage
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;
 }
 
-Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String url,String firstImage) async {
+Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail) async {
   CollectionReference property = FirebaseFirestore.instance.collection('propertyDetails');
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
@@ -85,8 +86,10 @@ Future<void> postCommProperty(String category, String postBy, String sr_radio, S
     'price': price,
     'description': description,
     'status': con_status,
-    'url': url,
-    'firstImage': firstImage
+    'firstImage': firstImage,
+    'secondImage': secondImage,
+    'thirdImage': thirdImage,
+    'detail':detail
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;

@@ -341,8 +341,9 @@ class _PostPropertyState extends State<PostProperty> {
         '${price_controller_r.text}',
         '${project_description_controller_r.text}',
         '${construction_status[selectedIndex3]}',
-        '$_imageUrls',
-          '${_imageUrls[0]}'
+        '${_imageUrls[0]}',
+        '${_imageUrls[1]}',
+        '${_imageUrls[2]}'
       );
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
     } catch (e) {
@@ -404,8 +405,10 @@ class _PostPropertyState extends State<PostProperty> {
                       '${price_controller_c.text}',
                       '${project_description_controller_c.text}',
                       '${construction_status_4c[selectedIndex4c]}',
-                      '$_imageUrls',
-                      '${_imageUrls[0]}'
+                      '${_imageUrls[0]}',
+                      '${_imageUrls[1]}',
+                      '${_imageUrls[2]}',
+                      '${detail_controller.text}'
 
                   );
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
@@ -502,6 +505,7 @@ class _PostPropertyState extends State<PostProperty> {
   TextEditingController area_controller_c = TextEditingController();
   TextEditingController price_controller_c = TextEditingController();
   TextEditingController project_description_controller_c = TextEditingController();
+  TextEditingController detail_controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -656,26 +660,6 @@ class _PostPropertyState extends State<PostProperty> {
                                   ),
                                 ),
                               ), //Landmark
-                              SizedBox(height: 10.0),
-                              Container(
-                                width: MediaQuery.of(context).size.width ,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextFormField(
-                                  controller: state_controller_r,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "State",
-                                      hintStyle: TextStyle(fontSize: 18)
-                                  ),
-                                ),
-                              ), //State
                               SizedBox(height: 10.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width,
@@ -696,6 +680,27 @@ class _PostPropertyState extends State<PostProperty> {
                                   ),
                                 ),
                               ), //City
+                              SizedBox(height: 10.0),
+                              Container(
+                                width: MediaQuery.of(context).size.width ,
+                                height: 50,
+                                padding: EdgeInsets.only(left: 15),
+                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                ),
+                                child: TextFormField(
+                                  controller: state_controller_r,
+                                  decoration: InputDecoration(
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      hintText: "State",
+                                      hintStyle: TextStyle(fontSize: 18)
+                                  ),
+                                ),
+                              ), //State
+
                               SizedBox(height: 10.0,),
                               SizedBox(height: 10.0,),
                               Divider(),
@@ -998,26 +1003,6 @@ class _PostPropertyState extends State<PostProperty> {
                                   ),
                                 ),
                               ),//landmark container commercial
-                              SizedBox(height: 10.0),
-                              Container(
-                                width: MediaQuery.of(context).size.width ,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextFormField(
-                                  controller: state_controller_c,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "State",
-                                      hintStyle: TextStyle(fontSize: 18)
-                                  ),
-                                ),
-                              ),//state container commercial
                               SizedBox(height: 10.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width,
@@ -1038,6 +1023,27 @@ class _PostPropertyState extends State<PostProperty> {
                                   ),
                                 ),
                               ),//city container commercial
+                              SizedBox(height: 10.0),
+                              Container(
+                                width: MediaQuery.of(context).size.width ,
+                                height: 50,
+                                padding: EdgeInsets.only(left: 15),
+                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                ),
+                                child: TextFormField(
+                                  controller: state_controller_c,
+                                  decoration: InputDecoration(
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      hintText: "State",
+                                      hintStyle: TextStyle(fontSize: 18)
+                                  ),
+                                ),
+                              ),//state container commercial
+
                               SizedBox(height: 10.0,),
                               SizedBox(height: 10.0,),
                               Divider(),
@@ -1117,7 +1123,7 @@ class _PostPropertyState extends State<PostProperty> {
                                   alignment: Alignment.topLeft,
                                   margin: EdgeInsets.only(left:20),
                                   child: Text("Property Detail",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)
-                              ),//property detail container
+                              ), //property detail container
                               SizedBox(height: 10.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width,
@@ -1158,6 +1164,26 @@ class _PostPropertyState extends State<PostProperty> {
                                   ),
                                 ),
                               ),//price container
+                              SizedBox(height: 10.0,),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                padding: EdgeInsets.only(left: 15),
+                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                ),
+                                child: TextFormField(
+                                  controller: detail_controller,
+                                  decoration: InputDecoration(
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      hintText: "Maintenance",
+                                      hintStyle: TextStyle(fontSize: 18)
+                                  ),
+                                ),
+                              ),
                               SizedBox(height: 10.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width,

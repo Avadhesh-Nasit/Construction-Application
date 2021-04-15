@@ -20,6 +20,7 @@ class _myHomepageState extends State<myHomepage> {
   String myPhone;
   List userProfilesList = [];
   var doc_id;
+  var route;
 
 
   @override
@@ -108,9 +109,10 @@ class _myHomepageState extends State<myHomepage> {
                     shrinkWrap: true,
                    physics: ScrollPhysics(),
                         itemCount: userProfilesList.length,
-                        itemBuilder: (context, index) {
+                        itemBuilder: (BuildContext context,int index) {
                           return GestureDetector(
                             onTap: () {
+
                               //   var uid =FirebaseAuth.instance.currentUser.uid;
                               //   var _randomId = FirebaseFirestore.instance.collection('propertyDetails').document(uid);
                               //   print(_randomId);
@@ -129,13 +131,21 @@ class _myHomepageState extends State<myHomepage> {
                                   //
                                   // }),
                                   //     snapshot.documents[index].data(),
-                                       doc_id = snapshot.docs[index].documentID,
+
+                                       doc_id = snapshot.docs[index].id,
                                       //print(snapshot.documents[index].documentID)
                                       print(doc_id),
+                                   route = MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                               propertyDetail(value: doc_id),
 
+                              ),
+                                    Navigator.of(context).push(route)
                                 },
                               );
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => propertyDetail(doc: doc_id,)));
+
+
+                              //Navigator.push(context, MaterialPageRoute(builder: (context) => propertyDetail(doc: doc_id,)));
                               },
                             child: Container(
                               margin: EdgeInsets.all(10.0),
@@ -193,7 +203,7 @@ class _myHomepageState extends State<myHomepage> {
                                               .of(context)
                                               .size
                                               .width/2,
-                                          child: Text(userProfilesList[index]['projectName'], style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                                          child: Text(userProfilesList[index]['projectName'], style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold,color: Colors.indigo)),
                                         ),
                                       ),
                                       Expanded(
@@ -205,12 +215,12 @@ class _myHomepageState extends State<myHomepage> {
                                                 .of(context)
                                                 .size
                                                 .width/2,
-                                            child: Text(userProfilesList[index]['price'], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.indigo)),
+                                            child: Text(userProfilesList[index]['price']+"/sq ft", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.indigo)),
                                           )
                                       )
                                     ],
                                   ),
-                                  SizedBox(height: 7),
+                                  SizedBox(height: 10),
                                   Container(
                                       alignment: Alignment.topLeft,
                                       margin: EdgeInsets.only(left: 13),
