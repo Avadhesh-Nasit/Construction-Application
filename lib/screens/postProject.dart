@@ -1327,7 +1327,6 @@ class _PostPropertyState extends State<PostProperty> {
       child: Text(txt, style: TextStyle(color: selectedIndex1 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
     );
   }
-
   Widget customRadio_1c(String txt, int index) {
     return OutlineButton(
       onPressed: () => changeIndex_sell_rent_1c(index),
@@ -1338,7 +1337,6 @@ class _PostPropertyState extends State<PostProperty> {
       child: Text(txt, style: TextStyle(color: selectedIndex1c == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
     );
   }
-
   Widget customRadio_4c(String txt, int index) {
     return OutlineButton(
       onPressed: () => changeIndex_sell_rent_4c(index),

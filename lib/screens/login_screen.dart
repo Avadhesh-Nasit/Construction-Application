@@ -4,6 +4,7 @@ import 'package:construction_application/screens/Login_with_phone.dart';
 import 'package:construction_application/screens/broker_page.dart';
 import 'package:construction_application/screens/builder_page.dart';
 import 'package:construction_application/screens/forgotPassword.dart';
+import 'package:construction_application/screens/homeScreenBuilderAndBroker.dart';
 import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/quick_register.dart';
 //import 'package:construction_application/screens/quick_register.dart';
@@ -214,10 +215,10 @@ class _LoginState extends State<Login> {
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }
       else if(myRole == 'Builder') {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => builderPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen1()));
       }
       else if(myRole == 'Broker') {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => brokerPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen1()));
       }
       else {
         print("Invalid User Credentials");

@@ -236,7 +236,7 @@ class _MyApp1State extends State<MyApp1> {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
         User updateUser=FirebaseAuth.instance.currentUser;
         updateUser.updateProfile(displayName: name.text);
-        userSetup(name.text, email.text, no.text, password.text,lst1[selectedIndex]);
+        userSetup(name.text, email.text, no.text,lst1[selectedIndex], "");
         if(updateUser!=null){
           SharedPreferences prefs=await SharedPreferences.getInstance();
           prefs.setString('email', _email);

@@ -112,7 +112,6 @@ class _myHomepageState extends State<myHomepage> {
                         itemBuilder: (BuildContext context,int index) {
                           return GestureDetector(
                             onTap: () {
-
                               //   var uid =FirebaseAuth.instance.currentUser.uid;
                               //   var _randomId = FirebaseFirestore.instance.collection('propertyDetails').document(uid);
                               //   print(_randomId);
@@ -131,7 +130,6 @@ class _myHomepageState extends State<myHomepage> {
                                   //
                                   // }),
                                   //     snapshot.documents[index].data(),
-
                                        doc_id = snapshot.docs[index].id,
                                       //print(snapshot.documents[index].documentID)
                                       print(doc_id),

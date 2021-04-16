@@ -1,3 +1,4 @@
+import 'package:construction_application/screens/builder_page.dart';
 import 'package:construction_application/screens/changePassword.dart';
 import 'package:construction_application/screens/emiCalculator.dart';
 import 'package:construction_application/screens/favourite.dart';
@@ -15,17 +16,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen1 extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreen1State createState() => _HomeScreen1State();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreen1State extends State<HomeScreen1> {
   final List<Widget> _widgetOptions = <Widget>[
-    myHomepage(),
+    builderPage(),
     favourite(),
     PostProperty(),
-    Search_Page(),
     ProfilePage()
   ];
   void _onItemTapped(int index) {
@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.indigo,
         elevation: 0.0,
         // actions: [
@@ -57,38 +57,27 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           children: [
             DrawerHeader(
-              child: Row(
-                    children: [
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //       shape: BoxShape.circle,
-                      //       image: DecorationImage(
-                      //           fit: BoxFit.fill,
-                      //           image: AssetImage("image/icon.png")
-                      //       )
-                      //   ),
-                      //   height: 80.0,
-                      //   width: 80.0,
-                      // ),
-                      CircleAvatar(
-                        radius: 40,
-                        child: ClipOval(
-                          child: new SizedBox(
-                            width: 200.0,
-                            height: 200.0,
-                            child: (myPhoto!=null)?Image.network(
-                              myPhoto,
-                              fit: BoxFit.fill,
-                            ):Image.asset(
-                              "image/icon.png",
-                              fit: BoxFit.fill,
-                            ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      child: ClipOval(
+                        child: new SizedBox(
+                          width: 200.0,
+                          height: 200.0,
+                          child: (myPhoto!=null)?Image.network(
+                            myPhoto,
+                            fit: BoxFit.fill,
+                          ):Image.asset(
+                            "image/icon.png",
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                      SizedBox(width: 20.0,),
-                      Container(
-                        child: FutureBuilder(
+                    ),
+                    SizedBox(width: 20.0,),
+                    Container(
+                      child: FutureBuilder(
                           future: _fetch(),
                           builder: (context, snapshot) {
                             if(snapshot.connectionState!=ConnectionState.done){
@@ -98,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(padding: EdgeInsets.only(top: 45.0)),
-                                Text("$myName",style: TextStyle(fontSize: 22.0),),
+                                Text("$myName",style: TextStyle(fontSize: 25.0),),
                                 SizedBox(height: 5,),
                                 Text("$myPhone",style: TextStyle(fontSize: 15.0),),
                                 SizedBox(height: 5,),
@@ -107,11 +96,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             );
                           }
-                        ),
-                      )
-                    ],
-                  )
-              ),
+                      ),
+                    )
+                  ],
+                )
+            ),
             //),
             ListTile(
               title:Row(
@@ -137,18 +126,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostProperty()));
               },
             ),
-            ListTile(
-              title:Row(
-                children: [
-                  Icon(Icons.calculate_outlined),
-                  Padding(padding: EdgeInsets.only(left: 10.0)),
-                  Text("EMI Calculator")
-                ],
-              ),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>emiCalculator()));
-              },
-            ),
+            // ListTile(
+            //   title:Row(
+            //     children: [
+            //       Icon(Icons.calculate_outlined),
+            //       Padding(padding: EdgeInsets.only(left: 10.0)),
+            //       Text("EMI Calculator")
+            //     ],
+            //   ),
+            //   onTap: (){
+            //     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>emiCalculator()));
+            //   },
+            // ),
             Divider(),
             Container(
               height: 70.0,
@@ -241,10 +230,10 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(_selectedIndex==2?Icons.add_box_rounded:Icons.add_box_outlined, color: Colors.indigo),
             label: 'Add',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.indigo),
-            label: 'Search',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.search, color: Colors.indigo),
+          //   label: 'Search',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(_selectedIndex==4?Icons.account_circle:Icons.account_circle_outlined, color: Colors.indigo),
             label: 'My Profile',
@@ -270,13 +259,13 @@ class _HomeScreenState extends State<HomeScreen> {
           .doc(firebaseUser.uid)
           .get()
           .then((value){
-            myEmail=value.data()['email'];
-            myName=value.data()['name'];
-            myPhone=value.data()['mobileNumber'];
-            myPhoto=value.data()['Image'];
-            // print(myEmail);
-            // print(myName);
-            // print(myPhone);
+        myEmail=value.data()['email'];
+        myName=value.data()['name'];
+        myPhone=value.data()['mobileNumber'];
+        myPhoto=value.data()['Image'];
+        // print(myEmail);
+        // print(myName);
+        // print(myPhone);
       }).catchError((e){
         print(e);
       });
