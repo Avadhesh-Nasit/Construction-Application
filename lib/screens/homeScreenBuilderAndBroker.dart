@@ -3,6 +3,7 @@ import 'package:construction_application/screens/changePassword.dart';
 import 'package:construction_application/screens/emiCalculator.dart';
 import 'package:construction_application/screens/favourite.dart';
 import 'package:construction_application/screens/login_screen.dart';
+import 'package:construction_application/screens/myPost.dart';
 import 'package:construction_application/screens/my_homePage.dart';
 import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/profile.dart';
@@ -24,7 +25,7 @@ class HomeScreen1 extends StatefulWidget {
 class _HomeScreen1State extends State<HomeScreen1> {
   final List<Widget> _widgetOptions = <Widget>[
     builderPage(),
-    favourite(),
+    MyPost(),
     PostProperty(),
     ProfilePage()
   ];
@@ -224,7 +225,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
           ),
           BottomNavigationBarItem(
             icon: Icon(_selectedIndex==1?Icons.favorite_rounded:Icons.favorite_outline_rounded, color: Colors.indigo),
-            label: 'Favorite',
+            label: 'My Post',
           ),
           BottomNavigationBarItem(
             icon: Icon(_selectedIndex==2?Icons.add_box_rounded:Icons.add_box_outlined, color: Colors.indigo),

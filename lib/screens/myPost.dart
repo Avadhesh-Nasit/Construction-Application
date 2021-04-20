@@ -1,28 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/databaseManager.dart';
+import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:construction_application/screens/userPropertyDetail.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
 
-class favourite extends StatefulWidget {
+class MyPost extends StatefulWidget {
   @override
-  _favouriteState createState() => _favouriteState();
+  _MyPostState createState() => _MyPostState();
 }
 
-class _favouriteState extends State<favourite> {
+class _MyPostState extends State<MyPost> {
   bool isAnimate = false;
 
   //final _auth= FirebaseAuth.instance.currentUser;
-  List FavoritePostList = [];
+  List userPostList = [];
   String doc_id;
-  String doc_id1;
-
-  //bool f1;
-  //String id;
-  //var abc;
 
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
@@ -42,13 +37,13 @@ class _favouriteState extends State<favourite> {
   }
 
   fetchDatabaseList() async {
-    dynamic resultant = await FavoritePostManager().getFavoritePostList();
+    dynamic resultant = await UserpostManager().getUserPostList();
 
     if (resultant == null) {
       print('Unable to retrieve');
     } else {
       setState(() {
-        FavoritePostList = resultant;
+        userPostList = resultant;
       });
     }
   }
@@ -67,7 +62,7 @@ class _favouriteState extends State<favourite> {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
-                  itemCount: FavoritePostList.length,
+                  itemCount: userPostList.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
@@ -81,7 +76,7 @@ class _favouriteState extends State<favourite> {
                         FirebaseFirestore.instance
                             .collection('Users')
                             .document(FirebaseAuth.instance.currentUser.uid)
-                            .collection('favoriteList')
+                            .collection('usersPost')
                             .get()
                             .then(
                               (QuerySnapshot snapshot) =>
@@ -95,8 +90,7 @@ class _favouriteState extends State<favourite> {
                             Navigator.push(context, MaterialPageRoute(
                                 builder: (context) =>
                                     userPropertyDetail(value: doc_id))),
-                            doc_id = snapshot.documents[index].documentID,
-                            //print(snapshot.documents[index].documentID)
+                            doc_id = snapshot.docs[index].id,
                             print(doc_id)
                           },
                         );
@@ -130,7 +124,7 @@ class _favouriteState extends State<favourite> {
                                       topRight: Radius.circular(20.0),
                                     ),
                                     child: Image.network(
-                                        FavoritePostList[index]['firstImage'],
+                                        userPostList[index]['firstImage'],
                                         width: MediaQuery
                                             .of(context)
                                             .size
@@ -153,7 +147,7 @@ class _favouriteState extends State<favourite> {
                                         .size
                                         .width / 2,
                                     child: Text(
-                                        FavoritePostList[index]['projectName'],
+                                        userPostList[index]['projectName'],
                                         style: TextStyle(fontSize: 25,
                                             fontWeight: FontWeight.bold)),
                                   ),
@@ -167,8 +161,7 @@ class _favouriteState extends State<favourite> {
                                           .of(context)
                                           .size
                                           .width / 2,
-                                      child: Text(
-                                          FavoritePostList[index]['price'],
+                                      child: Text(userPostList[index]['price'],
                                           style: TextStyle(fontSize: 20,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.indigo)),
@@ -189,7 +182,7 @@ class _favouriteState extends State<favourite> {
                                       children: [
                                         TextSpan(
                                           // text: "Builder",
-                                            text: FavoritePostList[index]['postedBy'],
+                                            text: userPostList[index]['postedBy'],
                                             style: TextStyle(fontSize: 16,
                                                 fontWeight: FontWeight.w400)
                                         )
@@ -209,7 +202,7 @@ class _favouriteState extends State<favourite> {
                                           fontWeight: FontWeight.w700),
                                       children: [
                                         TextSpan(
-                                            text: FavoritePostList[index]['city'],
+                                            text: userPostList[index]['city'],
                                             style: TextStyle(fontSize: 18,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w400)
@@ -230,7 +223,7 @@ class _favouriteState extends State<favourite> {
                                           fontWeight: FontWeight.w700),
                                       children: [
                                         TextSpan(
-                                            text: FavoritePostList[index]['category'],
+                                            text: userPostList[index]['category'],
                                             style: TextStyle(fontSize: 18,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w400)
@@ -251,7 +244,7 @@ class _favouriteState extends State<favourite> {
                                           fontWeight: FontWeight.w700),
                                       children: [
                                         TextSpan(
-                                            text: FavoritePostList[index]['status'],
+                                            text: userPostList[index]['status'],
                                             style: TextStyle(fontSize: 18,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w400)

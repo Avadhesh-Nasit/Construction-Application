@@ -94,3 +94,49 @@ Future<void> postCommProperty(String category, String postBy, String sr_radio, S
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;
 }
+
+Future<void> usersPostPropertyResi(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String pro_detail, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage) async {
+  CollectionReference property = FirebaseFirestore.instance.collection('usersPost');
+  var firebaseUser = await FirebaseAuth.instance.currentUser;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String uid = auth.currentUser.uid.toString();
+  FirebaseFirestore.instance.collection('Users').document(firebaseUser.uid).collection('usersPost').document().set({
+    'category': category,
+    'postedBy': postBy,
+    'sellOrRent': sr_radio,
+    'propertyType': pro_type,
+    'projectName': projectName,
+    'address': address,
+    'landmark': landmark,
+    'city': city,
+    'state': state,
+    'detail': pro_detail,
+    'area': area,
+    'price': price,
+    'description': description,
+    'status': con_status,
+    'firstImage': firstImage,
+    'secondImage': secondImage,
+    'thirdImage': thirdImage
+  });
+  // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
+  return;
+}
+
+Future<void> FavoriteProperty(String category, String postBy, String projectName, String city, String price, String con_status, String first_image) async {
+  var firebaseUser = await FirebaseAuth.instance.currentUser;
+  CollectionReference users2 = FirebaseFirestore.instance.collection('Users');
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String uid = auth.currentUser.uid.toString();
+  CollectionReference property = FirebaseFirestore.instance.collection(
+      'favoriteList');
+  users2.document(firebaseUser.uid).collection('favoriteList').document().set({
+    'category': category,
+    'postedBy': postBy,
+    'projectName': projectName,
+    'city': city,
+    'price': price,
+    'status': con_status,
+    'firstImage': first_image
+  });
+}

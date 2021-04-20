@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/databaseManager.dart';
+import 'package:construction_application/models/firebase.dart';
 import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:construction_application/screens/searchPage.dart';
 import 'package:favorite_button/favorite_button.dart';
@@ -141,8 +142,6 @@ class _myHomepageState extends State<myHomepage> {
                                     Navigator.of(context).push(route)
                                 },
                               );
-
-
                               //Navigator.push(context, MaterialPageRoute(builder: (context) => propertyDetail(doc: doc_id,)));
                               },
                             child: Container(
@@ -184,7 +183,75 @@ class _myHomepageState extends State<myHomepage> {
                                         child: FavoriteButton(
                                           isFavorite: false,
                                           valueChanged: (_isFavorite) {
-                                            print('Is Favorite : $_isFavorite');
+                                            if (_isFavorite == true) {
+                                              FavoriteProperty(
+                                                  userProfilesList[index]['category'],
+                                                  userProfilesList[index]['postedBy'],
+                                                  userProfilesList[index]['projectName'],
+                                                  userProfilesList[index]['city'],
+                                                  userProfilesList[index]['price'],
+                                                  userProfilesList[index]['status'],
+                                                  userProfilesList[index]['firstImage']
+                                              );
+                                              FirebaseFirestore.instance
+                                                  .collection('Users')
+                                                  .document(
+                                                  FirebaseAuth.instance.currentUser
+                                                      .uid)
+                                                  .collection('favoriteList')
+                                                  .get()
+                                                  .then(
+                                                      (QuerySnapshot snapshot) =>
+                                                  {
+                                                    // snapshot.documents.forEach((f) {
+                                                    //    id = f.reference.documentID;
+                                                    //   //print("documentID---- " + f.reference.documentID);
+                                                    //
+                                                    // }),
+                                                    // print(snapshot.docs[index].documentID),
+                                                    //snapshot.docs[index].data(),
+                                                    snapshot.documents[index]
+                                                        .documentID,
+                                                    // doc_id1 = snapshot.documents[index].documentID,
+                                                    // //print(snapshot.documents[index].documentID)
+                                                    //print(doc_id1)
+                                                  });
+                                              //print(id);
+                                            } else if (_isFavorite == false) {
+                                              FirebaseFirestore.instance
+                                                  .collection('Users')
+                                                  .document(
+                                                  FirebaseAuth.instance.currentUser
+                                                      .uid)
+                                                  .collection('favoriteList')
+                                                  .get()
+                                                  .then(
+                                                      (QuerySnapshot snapshot) =>
+                                                  {
+                                                    // snapshot.documents.forEach((f) {
+                                                    //    id = f.reference.documentID;
+                                                    //   //print("documentID---- " + f.reference.documentID);
+                                                    //
+                                                    // }),
+                                                    // print(snapshot.docs[index].documentID),
+                                                    //snapshot.docs[index].data(),
+                                                    print(snapshot.documents[index]
+                                                        .documentID),
+                                                    FirebaseFirestore.instance
+                                                        .collection('Users')
+                                                        .document(
+                                                        FirebaseAuth.instance
+                                                            .currentUser.uid)
+                                                        .collection('favoriteList')
+                                                        .doc(snapshot.docs[index]
+                                                        .documentID)
+                                                        .delete(),
+                                                    // doc_id1 = snapshot.documents[index].documentID,
+                                                    // //print(snapshot.documents[index].documentID)
+                                                    //print(doc_id1)
+                                                  });
+                                              //print(id);
+                                            }
                                           },
                                         ),
                                       )

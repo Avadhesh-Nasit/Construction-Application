@@ -2,6 +2,7 @@ import 'package:construction_application/screens/changePassword.dart';
 import 'package:construction_application/screens/emiCalculator.dart';
 import 'package:construction_application/screens/favourite.dart';
 import 'package:construction_application/screens/login_screen.dart';
+import 'package:construction_application/screens/myPost.dart';
 import 'package:construction_application/screens/my_homePage.dart';
 import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/profile.dart';
@@ -15,6 +16,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'filter.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -23,9 +26,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _widgetOptions = <Widget>[
     myHomepage(),
-    favourite(),
+    MyPost(),
     PostProperty(),
-    Search_Page(),
+    filter(),
     ProfilePage()
   ];
   void _onItemTapped(int index) {
@@ -128,6 +131,18 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title:Row(
                 children: [
+                  Icon(Icons.favorite_border_outlined),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Favourite")
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>favourite()));
+              },
+            ),
+            ListTile(
+              title:Row(
+                children: [
                   Icon(Icons.add_box_outlined),
                   Padding(padding: EdgeInsets.only(left: 10.0)),
                   Text("Post Property"),
@@ -210,7 +225,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Divider(),
-            SizedBox(height: 88.0,),
             ListTile(
               title:Row(
                 children: [
@@ -234,8 +248,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex==1?Icons.favorite_rounded:Icons.favorite_outline_rounded, color: Colors.indigo),
-            label: 'Favorite',
+            icon: Icon(_selectedIndex==1?Icons.photo_library:Icons.photo_library_outlined, color: Colors.indigo),
+            label: 'My Post',
           ),
           BottomNavigationBarItem(
             icon: Icon(_selectedIndex==2?Icons.add_box_rounded:Icons.add_box_outlined, color: Colors.indigo),
