@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     myHomepage(),
     MyPost(),
     PostProperty(),
-    filter(),
+    Search_Page(),
     ProfilePage()
   ];
   void _onItemTapped(int index) {
@@ -101,11 +101,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(padding: EdgeInsets.only(top: 45.0)),
-                                Text("$myName",style: TextStyle(fontSize: 22.0),),
+                                Text("$myName",style: TextStyle(fontSize: 22.0,color: Colors.indigo),),
                                 SizedBox(height: 5,),
-                                Text("$myPhone",style: TextStyle(fontSize: 15.0),),
+                                Text("$myPhone",style: TextStyle(fontSize: 15.0,color: Colors.teal),),
                                 SizedBox(height: 5,),
-                                Text("$myEmail",style: TextStyle(fontSize: 11.0),),
+                                Text("$myEmail",style: TextStyle(fontSize: 12.0,color: Colors.black),),
                                 //Text("${_auth.phoneNumber}",style: TextStyle(fontSize: 15.0),)
                               ],
                             );
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   )
               ),
-            //),
+
             ListTile(
               title:Row(
                 children: [
@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>changePassword()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen()));
               },
             ),
             ListTile(
@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>favourite()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyFavoritePost()));
               },
             ),
             ListTile(
@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>emiCalculator()));
               },
             ),
-            Divider(),
+            Divider(color: Colors.indigo,),
             Container(
               height: 70.0,
               child: Row(
@@ -177,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text("Contact Us",style: TextStyle(fontSize: 20.0,),),
                       SizedBox(height: 3.0,),
                       Padding(padding: EdgeInsets.only(left: 10.0)),
-                      Text("9988776655",style: TextStyle(fontSize: 15.0),)
+                      Text("9988776655",style: TextStyle(fontSize: 15.0,color: Colors.blue),)
                     ],
                   ),
                   SizedBox(width: 132.0,),
@@ -186,8 +186,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: AssetImage("image/call.png")
-                        )
+                            image: AssetImage("image/call.png",)
+                        ),
                     ),
                     height: 30.0,
                     width: 30.0,
@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Divider(),
+            Divider(color: Colors.indigo,),
             ListTile(
               title:Row(
                 children: [
@@ -204,7 +204,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text("About Us")
                 ],
               ),
-              onTap: resetpassword,
             ),
             ListTile(
               title:Row(
@@ -224,11 +223,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Divider(),
+            Divider(color: Colors.indigo,),
             ListTile(
               title:Row(
                 children: [
-                  Icon(Icons.logout),
+                  Icon(Icons.logout,),
                   Padding(padding: EdgeInsets.only(left: 10.0)),
                   Text("Log-Out"),
                 ],

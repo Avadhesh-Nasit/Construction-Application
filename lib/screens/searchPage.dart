@@ -615,10 +615,15 @@ class _Search_PageState extends State<Search_Page> {
   List<String> select_checkbox = ['Owner', 'Builder', 'Broker'];
   List<String> sell_and_rent = ['Sell', 'Rent'];
   List<String> sell_and_rent1 = ['Sell', 'Rent'];
+  List<String> residential_postedBy = ['Owner','Builder','Broker'];
+  List<String> commercial_postedBy = ['Owner','Builder','Broker'];
   int selectedIndex1 = 0;
   int selectedIndex2 = 0;
   int selectedIndex3 = 0;
   int selectedIndex4 = 0;
+  int selectedIndex5=0;
+  int selectedIndex6=0;
+
   TextEditingController state_controller = TextEditingController();
   TextEditingController city_controller = TextEditingController();
 
@@ -895,33 +900,33 @@ class _Search_PageState extends State<Search_Page> {
                                   )
                               ),
                               SizedBox(height: 10),
-                              Divider(),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: EdgeInsets.only(left: 20),
-                                child: Text("Budget", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                              ),
-                              Container(
-                                  alignment: Alignment.topRight,
-                                  margin: EdgeInsets.only(right: 20),
-                                  child: Text(_value1.toString())
-                              ),
-                              Container(
-                                child: Slider(
-                                  value: _value1.toDouble(),
-                                  min: 100000.0,
-                                  max: 3000000.0,
-                                  divisions: 100,
-                                  activeColor: Colors.blue,
-                                  inactiveColor: Colors.grey,
-                                  label: _value1.toString(),
-                                  onChanged: (double newValue) {
-                                    setState(() {
-                                      _value1 = newValue.round();
-                                    });
-                                  },
-                                ),
-                              ),
+                              // Divider(),
+                              // Container(
+                              //   alignment: Alignment.topLeft,
+                              //   margin: EdgeInsets.only(left: 20),
+                              //   child: Text("Budget", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                              // ),
+                              // Container(
+                              //     alignment: Alignment.topRight,
+                              //     margin: EdgeInsets.only(right: 20),
+                              //     child: Text(_value1.toString())
+                              // ),
+                              // Container(
+                              //   child: Slider(
+                              //     value: _value1.toDouble(),
+                              //     min: 100000.0,
+                              //     max: 3000000.0,
+                              //     divisions: 100,
+                              //     activeColor: Colors.blue,
+                              //     inactiveColor: Colors.grey,
+                              //     label: _value1.toString(),
+                              //     onChanged: (double newValue) {
+                              //       setState(() {
+                              //         _value1 = newValue.round();
+                              //       });
+                              //     },
+                              //   ),
+                              // ),
                               Divider(),
                               SizedBox(height: 5),
                               Container(
@@ -942,32 +947,32 @@ class _Search_PageState extends State<Search_Page> {
                               ),
                               Divider(),
                               SizedBox(height: 8),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: EdgeInsets.only(left: 20),
-                                child: Text("Area (Sq. ft)", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                              ),
-                              Container(
-                                  alignment: Alignment.topRight,
-                                  margin: EdgeInsets.only(right: 20),
-                                  child: Text(_value2.toString())
-                              ),
-                              Container(
-                                child: Slider(
-                                  value: _value2.toDouble(),
-                                  min: 100.0,
-                                  max: 10000.0,
-                                  divisions: 100,
-                                  activeColor: Colors.blue,
-                                  inactiveColor: Colors.grey,
-                                  label: _value2.toString(),
-                                  onChanged: (double newValue) {
-                                    setState(() {
-                                      _value2 = newValue.round();
-                                    });
-                                  },
-                                ),
-                              ),
+                              // Container(
+                              //   alignment: Alignment.topLeft,
+                              //   margin: EdgeInsets.only(left: 20),
+                              //   child: Text("Area (Sq. ft)", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                              // ),
+                              // Container(
+                              //     alignment: Alignment.topRight,
+                              //     margin: EdgeInsets.only(right: 20),
+                              //     child: Text(_value2.toString())
+                              // ),
+                              // Container(
+                              //   child: Slider(
+                              //     value: _value2.toDouble(),
+                              //     min: 100.0,
+                              //     max: 10000.0,
+                              //     divisions: 100,
+                              //     activeColor: Colors.blue,
+                              //     inactiveColor: Colors.grey,
+                              //     label: _value2.toString(),
+                              //     onChanged: (double newValue) {
+                              //       setState(() {
+                              //         _value2 = newValue.round();
+                              //       });
+                              //     },
+                              //   ),
+                              // ),
                               Divider(),
                               Container(
                                   alignment: Alignment.topLeft,
@@ -976,15 +981,17 @@ class _Search_PageState extends State<Search_Page> {
                               ),
                               SizedBox(height: 8),
                               Container(
-                                  alignment: Alignment.topLeft,
-                                  margin: EdgeInsets.only(left: 8),
-                                  child: Container(
-                                      child: Wrap(
-                                        spacing: 10.0,
-                                        runSpacing: 3.0,
-                                        children: residentialUserWidgets.toList(),
-                                      )
-                                  )
+                                margin: EdgeInsets.only(left: 20),
+                                child: Row(
+                                  children: [
+                                    customRadio_5(residential_postedBy[0], 0),
+                                    SizedBox(width: 15),
+                                    customRadio_5(residential_postedBy[1], 1),
+                                    SizedBox(width: 15),
+                                    customRadio_5(residential_postedBy[2], 2),
+
+                                  ],
+                                ),
                               ),
                               SizedBox(height: 15),
                               Container(
@@ -997,6 +1004,7 @@ class _Search_PageState extends State<Search_Page> {
                                                                                                             sellOrRent:sell_and_rent[selectedIndex1],
                                                                                                             propertyType:_filters.toString(),
                                                                                                             status:sale_type_list[selectedIndex3],
+                                                                                                            postedBy:residential_postedBy[selectedIndex5]
                                       
                                     )));
                                   },
@@ -1047,33 +1055,33 @@ class _Search_PageState extends State<Search_Page> {
                                   )
                               ),
                               SizedBox(height: 10),
-                              Divider(),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: EdgeInsets.only(left: 20),
-                                child: Text("Budget", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                              ),
-                              Container(
-                                  alignment: Alignment.topRight,
-                                  margin: EdgeInsets.only(right: 20),
-                                  child: Text(_value3.toString())
-                              ),
-                              Container(
-                                child: Slider(
-                                  value: _value3.toDouble(),
-                                  min: 100000.0,
-                                  max: 3000000.0,
-                                  divisions: 100,
-                                  activeColor: Colors.blue,
-                                  inactiveColor: Colors.grey,
-                                  label: _value3.toString(),
-                                  onChanged: (double newValue) {
-                                    setState(() {
-                                      _value3 = newValue.round();
-                                    });
-                                  },
-                                ),
-                              ),
+                              // Divider(),
+                              // Container(
+                              //   alignment: Alignment.topLeft,
+                              //   margin: EdgeInsets.only(left: 20),
+                              //   child: Text("Budget", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                              // ),
+                              // Container(
+                              //     alignment: Alignment.topRight,
+                              //     margin: EdgeInsets.only(right: 20),
+                              //     child: Text(_value3.toString())
+                              // ),
+                              // Container(
+                              //   child: Slider(
+                              //     value: _value3.toDouble(),
+                              //     min: 100000.0,
+                              //     max: 3000000.0,
+                              //     divisions: 100,
+                              //     activeColor: Colors.blue,
+                              //     inactiveColor: Colors.grey,
+                              //     label: _value3.toString(),
+                              //     onChanged: (double newValue) {
+                              //       setState(() {
+                              //         _value3 = newValue.round();
+                              //       });
+                              //     },
+                              //   ),
+                              // ),
                               Divider(),
                               SizedBox(height: 5),
                               Container(
@@ -1092,34 +1100,34 @@ class _Search_PageState extends State<Search_Page> {
                                   ],
                                 ),
                               ),
-                              Divider(),
-                              SizedBox(height: 8),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                margin: EdgeInsets.only(left: 20),
-                                child: Text("Area (Sq. ft)", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                              ),
-                              Container(
-                                  alignment: Alignment.topRight,
-                                  margin: EdgeInsets.only(right: 20),
-                                  child: Text(_value4.toString())
-                              ),
-                              Container(
-                                child: Slider(
-                                  value: _value4.toDouble(),
-                                  min: 100.0,
-                                  max: 10000.0,
-                                  divisions: 100,
-                                  activeColor: Colors.blue,
-                                  inactiveColor: Colors.grey,
-                                  label: _value4.toString(),
-                                  onChanged: (double newValue) {
-                                    setState(() {
-                                      _value4 = newValue.round();
-                                    });
-                                  },
-                                ),
-                              ),
+                              // Divider(),
+                              // SizedBox(height: 8),
+                              // Container(
+                              //   alignment: Alignment.topLeft,
+                              //   margin: EdgeInsets.only(left: 20),
+                              //   child: Text("Area (Sq. ft)", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                              // ),
+                              // Container(
+                              //     alignment: Alignment.topRight,
+                              //     margin: EdgeInsets.only(right: 20),
+                              //     child: Text(_value4.toString())
+                              // ),
+                              // Container(
+                              //   child: Slider(
+                              //     value: _value4.toDouble(),
+                              //     min: 100.0,
+                              //     max: 10000.0,
+                              //     divisions: 100,
+                              //     activeColor: Colors.blue,
+                              //     inactiveColor: Colors.grey,
+                              //     label: _value4.toString(),
+                              //     onChanged: (double newValue) {
+                              //       setState(() {
+                              //         _value4 = newValue.round();
+                              //       });
+                              //     },
+                              //   ),
+                              // ),
                               Divider(),
                               Container(
                                   alignment: Alignment.topLeft,
@@ -1128,16 +1136,18 @@ class _Search_PageState extends State<Search_Page> {
                               ),
                               SizedBox(height: 8),
                               Container(
-                                  alignment: Alignment.topLeft,
-                                  margin: EdgeInsets.only(left: 8),
-                                  child: Container(
-                                      child: Wrap(
-                                        spacing: 10.0,
-                                        runSpacing: 3.0,
-                                        children: commercialUserWidgets.toList(),
-                                      )
-                                  )
-                              )
+                                margin: EdgeInsets.only(left: 20),
+                                child: Row(
+                                  children: [
+                                    customRadio_6(commercial_postedBy[0], 0),
+                                    SizedBox(width: 15),
+                                    customRadio_6(commercial_postedBy[1], 1),
+                                    SizedBox(width: 15),
+                                    customRadio_6(commercial_postedBy[2], 2),
+
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -1147,7 +1157,16 @@ class _Search_PageState extends State<Search_Page> {
                           height: 50,
                           margin: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.3, left: MediaQuery.of(context).size.width * 0.3),
                           child: RaisedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>filter(state:state_controller.text,
+                                city:city_controller.text,
+                                sellOrRent:sell_and_rent[selectedIndex2],
+                                propertyType:commercial_filters.toString(),
+                                status:sale_type_list[selectedIndex4],
+                                postedBy:commercial_postedBy[selectedIndex6]
+
+                              )));
+                            },
                             color: Colors.indigo,
                             child: Center(child: Text("Apply", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
                             shape: RoundedRectangleBorder(
@@ -1173,22 +1192,29 @@ class _Search_PageState extends State<Search_Page> {
       selectedIndex1 = index;
     });
   }
-
   void changeIndex_sell_rent_2(int index) {
     setState(() {
       selectedIndex2 = index;
     });
   }
-
   void changeIndex_new_resale_1(int index) {
     setState(() {
       selectedIndex3 = index;
     });
   }
-
   void changeIndex_new_resale_2(int index) {
     setState(() {
       selectedIndex4 = index;
+    });
+  }
+  void changeIndex_residential_postedBy(int index) {
+    setState(() {
+      selectedIndex5 = index;
+    });
+  }
+  void changeIndex_commercial_postedBy(int index) {
+    setState(() {
+      selectedIndex6 = index;
     });
   }
 
@@ -1202,7 +1228,6 @@ class _Search_PageState extends State<Search_Page> {
       child: Text(txt, style: TextStyle(color: selectedIndex1 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
     );
   }
-
   Widget customRadio_2(String txt, int index) {
     return OutlineButton(
       onPressed: () => changeIndex_sell_rent_2(index),
@@ -1213,7 +1238,6 @@ class _Search_PageState extends State<Search_Page> {
       child: Text(txt, style: TextStyle(color: selectedIndex2 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
     );
   }
-
   Widget customRadio_3(String txt, int index) {
     return OutlineButton(
       onPressed: () => changeIndex_new_resale_1(index),
@@ -1224,7 +1248,6 @@ class _Search_PageState extends State<Search_Page> {
       child: Text(txt, style: TextStyle(color: selectedIndex3 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
     );
   }
-
   Widget customRadio_4(String txt, int index) {
     return OutlineButton(
       onPressed: () => changeIndex_new_resale_2(index),
@@ -1233,6 +1256,26 @@ class _Search_PageState extends State<Search_Page> {
       ),
       borderSide: BorderSide(color: selectedIndex4 == index ? Colors.indigo : Colors.grey),
       child: Text(txt, style: TextStyle(color: selectedIndex4 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
+    );
+  }
+  Widget customRadio_5(String txt, int index) {
+    return OutlineButton(
+      onPressed: () => changeIndex_residential_postedBy(index),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      borderSide: BorderSide(color: selectedIndex5 == index ? Colors.indigo : Colors.grey),
+      child: Text(txt, style: TextStyle(color: selectedIndex5 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
+    );
+  }
+  Widget customRadio_6(String txt, int index) {
+    return OutlineButton(
+      onPressed: () => changeIndex_commercial_postedBy(index),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      borderSide: BorderSide(color: selectedIndex6 == index ? Colors.indigo : Colors.grey),
+      child: Text(txt, style: TextStyle(color: selectedIndex6 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
     );
   }
 

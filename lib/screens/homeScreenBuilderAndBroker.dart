@@ -6,6 +6,7 @@ import 'package:construction_application/screens/login_screen.dart';
 import 'package:construction_application/screens/myPost.dart';
 import 'package:construction_application/screens/my_homePage.dart';
 import 'package:construction_application/screens/postProject.dart';
+import 'package:construction_application/screens/postProjectBuilderBroker.dart';
 import 'package:construction_application/screens/profile.dart';
 import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:construction_application/screens/searchPage.dart';
@@ -26,7 +27,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
   final List<Widget> _widgetOptions = <Widget>[
     builderPage(),
     MyPost(),
-    PostProperty(),
+    PostPropertyBuilderAndBroker(),
     ProfilePage()
   ];
   void _onItemTapped(int index) {
@@ -224,7 +225,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex==1?Icons.favorite_rounded:Icons.favorite_outline_rounded, color: Colors.indigo),
+            icon: Icon(_selectedIndex==1?Icons.photo_library:Icons.photo_library_outlined, color: Colors.indigo),
             label: 'My Post',
           ),
           BottomNavigationBarItem(

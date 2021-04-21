@@ -20,6 +20,7 @@ class _myHomepageState extends State<myHomepage> {
   String myName;
   String myPhone;
   List userProfilesList = [];
+  String f1;
   var doc_id;
   var route;
 
@@ -183,74 +184,40 @@ class _myHomepageState extends State<myHomepage> {
                                         child: FavoriteButton(
                                           isFavorite: false,
                                           valueChanged: (_isFavorite) {
-                                            if (_isFavorite == true) {
-                                              FavoriteProperty(
-                                                  userProfilesList[index]['category'],
-                                                  userProfilesList[index]['postedBy'],
-                                                  userProfilesList[index]['projectName'],
-                                                  userProfilesList[index]['city'],
-                                                  userProfilesList[index]['price'],
-                                                  userProfilesList[index]['status'],
-                                                  userProfilesList[index]['firstImage']
-                                              );
-                                              FirebaseFirestore.instance
-                                                  .collection('Users')
-                                                  .document(
-                                                  FirebaseAuth.instance.currentUser
-                                                      .uid)
-                                                  .collection('favoriteList')
-                                                  .get()
-                                                  .then(
-                                                      (QuerySnapshot snapshot) =>
-                                                  {
-                                                    // snapshot.documents.forEach((f) {
-                                                    //    id = f.reference.documentID;
-                                                    //   //print("documentID---- " + f.reference.documentID);
-                                                    //
-                                                    // }),
-                                                    // print(snapshot.docs[index].documentID),
-                                                    //snapshot.docs[index].data(),
-                                                    snapshot.documents[index]
-                                                        .documentID,
-                                                    // doc_id1 = snapshot.documents[index].documentID,
-                                                    // //print(snapshot.documents[index].documentID)
-                                                    //print(doc_id1)
-                                                  });
-                                              //print(id);
-                                            } else if (_isFavorite == false) {
-                                              FirebaseFirestore.instance
-                                                  .collection('Users')
-                                                  .document(
-                                                  FirebaseAuth.instance.currentUser
-                                                      .uid)
-                                                  .collection('favoriteList')
-                                                  .get()
-                                                  .then(
-                                                      (QuerySnapshot snapshot) =>
-                                                  {
-                                                    // snapshot.documents.forEach((f) {
-                                                    //    id = f.reference.documentID;
-                                                    //   //print("documentID---- " + f.reference.documentID);
-                                                    //
-                                                    // }),
-                                                    // print(snapshot.docs[index].documentID),
-                                                    //snapshot.docs[index].data(),
-                                                    print(snapshot.documents[index]
-                                                        .documentID),
-                                                    FirebaseFirestore.instance
-                                                        .collection('Users')
-                                                        .document(
-                                                        FirebaseAuth.instance
-                                                            .currentUser.uid)
-                                                        .collection('favoriteList')
-                                                        .doc(snapshot.docs[index]
-                                                        .documentID)
-                                                        .delete(),
-                                                    // doc_id1 = snapshot.documents[index].documentID,
-                                                    // //print(snapshot.documents[index].documentID)
-                                                    //print(doc_id1)
-                                                  });
-                                              //print(id);
+                                            if(_isFavorite == true) {
+                                            FirebaseFirestore.instance
+                                                .collection('propertyDetails')
+                                                .get()
+                                                .then(
+                                            (QuerySnapshot snapshot) =>
+                                            {
+                                            // snapshot.documents.forEach((f) {
+                                            //    id = f.reference.documentID;
+                                            //   //print("documentID---- " + f.reference.documentID);
+                                            //
+                                            // }),
+                                            // print(snapshot.docs[index].documentID),
+                                            //snapshot.docs[index].data(),
+                                            f1 = snapshot.documents[index].documentID,
+                                            // doc_id1 = snapshot.documents[index].documentID,
+                                            // //print(snapshot.documents[index].documentID)
+                                            Firestore.instance.collection('propertyDetails').doc(f1).set({
+                                            'favorites': FieldValue.arrayUnion(['${FirebaseAuth.instance.currentUser.uid}']),
+                                            'propertyId': '$f1'
+                                            },SetOptions(merge: true)).then((value) =>
+                                            {})
+                                            });
+                                            } else {
+                                            FirebaseFirestore.instance
+                                                .collection('propertyDetails')
+                                                .get()
+                                                .then(
+                                            (QuerySnapshot snapshot) => {
+                                            f1 = snapshot.documents[index].documentID,
+                                            Firestore.instance.collection('propertyDetails').doc(f1).set({
+                                            'favorites': FieldValue.arrayRemove(['${FirebaseAuth.instance.currentUser.uid}'])
+                                            },SetOptions(merge: true)).then((value) => {})
+                                            });
                                             }
                                           },
                                         ),
@@ -365,7 +332,6 @@ class _myHomepageState extends State<myHomepage> {
         ],
       ),
     );
-
       // ListView(
       //   // child: Center(child: Text("${_auth.displayName}")),
       //   children: [

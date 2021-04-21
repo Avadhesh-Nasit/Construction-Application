@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/databaseManager.dart';
+import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:flutter/material.dart';
 class filter extends StatefulWidget {
   final String state;
@@ -7,11 +8,12 @@ class filter extends StatefulWidget {
   final String sellOrRent;
   final String propertyType;
   final String status;
+  final String postedBy;
 
 
-  const filter({Key key, this.state,this.city,this.sellOrRent,this.propertyType,this.status}) : super(key: key);
+  const filter({Key key, this.state,this.city,this.sellOrRent,this.propertyType,this.status,this.postedBy}) : super(key: key);
   @override
-  _filterState createState() => _filterState(state,city,sellOrRent,propertyType,status);
+  _filterState createState() => _filterState(state,city,sellOrRent,propertyType,status,postedBy);
 }
 
 class _filterState extends State<filter> {
@@ -20,8 +22,9 @@ class _filterState extends State<filter> {
   final String sellOrRent;
   final String propertyType;
   final String status;
+  final String postedBy;
 
-  _filterState(this.state, this.city,this.sellOrRent,this.propertyType,this.status);
+  _filterState(this.state, this.city,this.sellOrRent,this.propertyType,this.status,this.postedBy);
   @override
   List userProfilesList = [];
 
@@ -30,7 +33,7 @@ class _filterState extends State<filter> {
     fetchDatabaseList();
   }
   fetchDatabaseList() async {
-    dynamic resultant = await DatabaseManager1().getUsersList(state,city,sellOrRent,propertyType,status);
+    dynamic resultant = await DatabaseManager1().getUsersList(state,city,sellOrRent,propertyType,status,postedBy);
 
     if (resultant == null) {
       print('Unable to retrieve');
@@ -44,40 +47,19 @@ class _filterState extends State<filter> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.indigo,
-      //   elevation: 0.0,
-      //   // actions: [
-      //   //   IconButton(icon: Icon(Icons.person),
-      //   //       onPressed: (){
-      //   //     signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
-      //   //       }
-      //   //   )
-      //   // ],
-      // ),
+      appBar: AppBar(
+        backgroundColor: Colors.indigo,
+        elevation: 0.0,
+        // actions: [
+        //   IconButton(icon: Icon(Icons.person),
+        //       onPressed: (){
+        //     signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
+        //       }
+        //   )
+        // ],
+      ),
       body:ListView(
         children: [
-          Stack(
-            children: [
-              Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.12,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(30),
-                        bottomLeft: Radius.circular(30)),
-                    color: Colors.indigo
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10.0,),
           Container(
             child: ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -87,6 +69,7 @@ class _filterState extends State<filter> {
                 itemBuilder: (BuildContext context,int index) {
                   return GestureDetector(
                     onTap: () {
+                     // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail()));
                     },
                     child: Container(
                       margin: EdgeInsets.all(10.0),

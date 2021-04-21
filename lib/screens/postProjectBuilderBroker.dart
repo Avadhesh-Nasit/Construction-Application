@@ -3,12 +3,15 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/firebase.dart';
+import 'package:construction_application/screens/builder_page.dart';
 import 'package:construction_application/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'homeScreenBuilderAndBroker.dart';
 
 class ResidentialFilterEntry1 {
   const ResidentialFilterEntry1(this.name1);
@@ -19,12 +22,12 @@ class CommercialFilterEntry1 {
   const CommercialFilterEntry1(this.cname1);
   final String cname1;
 }
-class PostProperty extends StatefulWidget {
+class PostPropertyBuilderAndBroker extends StatefulWidget {
   @override
-  _PostPropertyState createState() => _PostPropertyState();
+  _PostPropertyBuilderAndBrokerState createState() => _PostPropertyBuilderAndBrokerState();
 }
 
-class _PostPropertyState extends State<PostProperty> {
+class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBroker> {
 
   final List<ResidentialFilterEntry1> residential1_cast = <ResidentialFilterEntry1>[
     const ResidentialFilterEntry1('Apartment'),
@@ -328,24 +331,24 @@ class _PostPropertyState extends State<PostProperty> {
       //   "arrayOfImages": _imageUrls,
       // });
       postProperty(
-        'Residential',
-        '${owner_builder_broker[selectedIndex]}',
-        '${sell_and_rent[selectedIndex1]}',
-        '$_filters1',
-        '${project_name_controller_r.text}',
-        '${address_controller_r.text}, ${landmark_controller_r.text}, ${city_controller_r.text},  ${state_controller_r.text}',
-        '${landmark_controller_r.text}',
-        '${city_controller_r.text}',
-        '${state_controller_r.text}',
-        '${bhk[selectedIndex2]}',
-        '${area_controller_r.text}',
-        '${price_controller_r.text}',
-        '${project_description_controller_r.text}',
-        '${construction_status[selectedIndex3]}',
-        '${_imageUrls[0]}',
-        '${_imageUrls[1]}',
-        '${_imageUrls[2]}',
-        '${FirebaseAuth.instance.currentUser.uid}'
+          'Residential',
+          '${owner_builder_broker[selectedIndex]}',
+          '${sell_and_rent[selectedIndex1]}',
+          '$_filters1',
+          '${project_name_controller_r.text}',
+          '${address_controller_r.text}, ${landmark_controller_r.text}, ${city_controller_r.text},  ${state_controller_r.text}',
+          '${landmark_controller_r.text}',
+          '${city_controller_r.text}',
+          '${state_controller_r.text}',
+          '${bhk[selectedIndex2]}',
+          '${area_controller_r.text}',
+          '${price_controller_r.text}',
+          '${project_description_controller_r.text}',
+          '${construction_status[selectedIndex3]}',
+          '${_imageUrls[0]}',
+          '${_imageUrls[1]}',
+          '${_imageUrls[2]}',
+          '${FirebaseAuth.instance.currentUser.uid}'
       );
 
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
@@ -395,26 +398,26 @@ class _PostPropertyState extends State<PostProperty> {
         "arrayOfImages": _imageUrls,
       });
       postCommProperty(
-                      'Commercial',
-                      '${owner_builder_broker[selectedIndex]}',
-                      '${sell_and_rent_1c[selectedIndex1c]}',
-                      '$commercial1_filters',
-                      '${project_name_controller_c.text}',
-                      '${address_controller_c.text}, ${landmark_controller_c.text}, ${city_controller_c.text}, ${state_controller_c.text}',
-                      '${landmark_controller_c.text}',
-                      '${city_controller_c.text}',
-                      '${state_controller_c.text}',
-                      '${area_controller_c.text}',
-                      '${price_controller_c.text}',
-                      '${project_description_controller_c.text}',
-                      '${construction_status_4c[selectedIndex4c]}',
-                      '${_imageUrls[0]}',
-                      '${_imageUrls[1]}',
-                      '${_imageUrls[2]}',
-                      '${detail_controller.text}',
-                      '${FirebaseAuth.instance.currentUser.uid}'
+          'Commercial',
+          '${owner_builder_broker[selectedIndex]}',
+          '${sell_and_rent_1c[selectedIndex1c]}',
+          '$commercial1_filters',
+          '${project_name_controller_c.text}',
+          '${address_controller_c.text}, ${landmark_controller_c.text}, ${city_controller_c.text}, ${state_controller_c.text}',
+          '${landmark_controller_c.text}',
+          '${city_controller_c.text}',
+          '${state_controller_c.text}',
+          '${area_controller_c.text}',
+          '${price_controller_c.text}',
+          '${project_description_controller_c.text}',
+          '${construction_status_4c[selectedIndex4c]}',
+          '${_imageUrls[0]}',
+          '${_imageUrls[1]}',
+          '${_imageUrls[2]}',
+          '${detail_controller.text}',
+          '${FirebaseAuth.instance.currentUser.uid}'
 
-                  );
+      );
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
     } catch (e) {
       print(e);
@@ -886,10 +889,10 @@ class _PostPropertyState extends State<PostProperty> {
                                 height: 50,
                                 child: RaisedButton(
                                   onPressed: () {
-                                   //uploadImageToFirebase(context);
-                                 uploadMultipleImages1();
+                                    //uploadImageToFirebase(context);
+                                    uploadMultipleImages1();
                                     Navigator.pushReplacement(
-                                        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                                        context, MaterialPageRoute(builder: (context) => HomeScreen1()));
                                   },
                                   color: Colors.indigo,
                                   child: Center(child: Text("POST", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
@@ -1233,10 +1236,10 @@ class _PostPropertyState extends State<PostProperty> {
                                 height: 50,
                                 child: RaisedButton(
                                   onPressed: () {
-                                  //uploadImageToFirebase1(context);
+                                    //uploadImageToFirebase1(context);
                                     uploadMultipleImages2();
                                     Navigator.pushReplacement(
-                                        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                                        context, MaterialPageRoute(builder: (context) => HomeScreen1()));
                                   },
                                   color: Colors.indigo,
                                   child: Center(child: Text("POST", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
