@@ -9,11 +9,13 @@ class filter extends StatefulWidget {
   final String propertyType;
   final String status;
   final String postedBy;
+  final String city1;
+  final String state1;
 
 
-  const filter({Key key, this.state,this.city,this.sellOrRent,this.propertyType,this.status,this.postedBy}) : super(key: key);
+  const filter({Key key, this.state,this.city,this.sellOrRent,this.propertyType,this.status,this.postedBy,this.state1,this.city1}) : super(key: key);
   @override
-  _filterState createState() => _filterState(state,city,sellOrRent,propertyType,status,postedBy);
+  _filterState createState() => _filterState(state,city,sellOrRent,propertyType,status,postedBy,state1,city1);
 }
 
 class _filterState extends State<filter> {
@@ -23,8 +25,10 @@ class _filterState extends State<filter> {
   final String propertyType;
   final String status;
   final String postedBy;
+  final String state1;
+  final String city1;
 
-  _filterState(this.state, this.city,this.sellOrRent,this.propertyType,this.status,this.postedBy);
+  _filterState(this.state, this.city,this.sellOrRent,this.propertyType,this.status,this.postedBy,this.city1,this.state1);
   @override
   List userProfilesList = [];
 
@@ -34,7 +38,6 @@ class _filterState extends State<filter> {
   }
   fetchDatabaseList() async {
     dynamic resultant = await DatabaseManager1().getUsersList(state,city,sellOrRent,propertyType,status,postedBy);
-
     if (resultant == null) {
       print('Unable to retrieve');
     } else {
@@ -43,6 +46,16 @@ class _filterState extends State<filter> {
       });
     }
   }
+  // fetchDatabaseList1() async {
+  //   dynamic resultant = await DatabaseManager2().getUsersList(state1,city1);
+  //   if (resultant == null) {
+  //     print('Unable to retrieve');
+  //   } else {
+  //     setState(() {
+  //       userProfilesList = resultant;
+  //     });
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,7 +216,6 @@ class _filterState extends State<filter> {
                                 ),
                               )
                           ),
-
                         ],
                       ),
                     ),

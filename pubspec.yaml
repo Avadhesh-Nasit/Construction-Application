@@ -36,7 +36,7 @@ dependencies:
   package_info: ^0.4.3
   device_info: ^0.4.2+8
   firebase_database: ^4.1.1
-  pinput: ^0.2.6
+  #pinput: ^0.2.6
   shared_preferences: ^2.0.5
   image_picker: ^0.6.7+22
   favorite_button: ^0.0.3
@@ -44,6 +44,8 @@ dependencies:
   firebase_storage: ^4.0.1
   multi_image_picker: ^4.6.1
   carousel_slider: ^3.0.0
+  algolia: ^0.1.1
+  firestore_search: ^0.1.2
 
 
 dev_dependencies:

@@ -578,7 +578,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'filter.dart';
 
 class ResidentialFilterEntry {
@@ -999,14 +998,16 @@ class _Search_PageState extends State<Search_Page> {
                                 height: 50,
                                 child: RaisedButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>filter(state:state_controller.text,
+                                    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>filter(state:state_controller.text,
                                                                                                             city:city_controller.text,
                                                                                                             sellOrRent:sell_and_rent[selectedIndex1],
                                                                                                             propertyType:_filters.toString(),
                                                                                                             status:sale_type_list[selectedIndex3],
                                                                                                             postedBy:residential_postedBy[selectedIndex5]
-                                      
                                     )));
+                                    // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>filter(state1:state_controller.text,
+                                    //     city1:city_controller.text,
+                                    // )));
                                   },
                                   color: Colors.indigo,
                                   child: Center(child: Text("Apply", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),

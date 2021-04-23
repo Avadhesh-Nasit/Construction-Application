@@ -25,7 +25,6 @@ class DatabaseManager {
 }
 
 class DatabaseManager1 {
-
   Future getUsersList(String state,String city,String sellOrRent,String propertyType,String status,String postedBy) async {
     List itemsList = [];
     final profileList =
@@ -35,8 +34,7 @@ class DatabaseManager1 {
                                       .where('sellOrRent',isEqualTo: sellOrRent)
                                       .where('propertyType',isEqualTo: propertyType)
                                       .where('status',isEqualTo: status)
-                                      .where('postedBy',isEqualTo: postedBy)
-                                      ;
+                                      .where('postedBy',isEqualTo: postedBy);
 
     try {
       await profileList.getDocuments().then((querySnapshot) {
@@ -110,4 +108,59 @@ class UserpostManager {
     }
   }
 }
+
+class SearchService{
+  searchByName(String searchField){
+    return FirebaseFirestore.instance.collection('propertyDetails')
+        .where('city',isEqualTo: searchField.substring(0,1).toUpperCase()).get();
+
+  }
+}
+
+class DataModel {
+  final String postedBy;
+  final String city;
+  final String category;
+  final String status;
+  final String firstImage;
+  final String name;
+
+  DataModel({this.postedBy, this.city,this.category,this.status,this.firstImage,this.name});
+
+  //Create a method to convert QuerySnapshot from Cloud Firestore to a list of objects of this DataModel
+  //This function in essential to the working of FirestoreSearchScaffold
+
+  List<DataModel> dataListFromSnapshot(QuerySnapshot querySnapshot) {
+  return querySnapshot.docs.map((snapshot) {
+  final Map<String, dynamic> dataMap = snapshot.data();
+
+  return DataModel(
+  postedBy: dataMap['postedBy'], city: dataMap['city'],category:dataMap['category'],status: dataMap['status'],firstImage: dataMap['firstImage'],name: dataMap['projectName'] );
+  }).toList();
+  }
+}
+// class DatabaseManager2 {
+//
+//   Future getUsersList(String state,String city) async {
+//     List itemsList = [];
+//     final profileList =
+//     FirebaseFirestore.instance
+//         .collection('propertyDetails').where('state',isEqualTo: state)
+//         .where('city',isEqualTo:city);
+//
+//
+//     try {
+//       await profileList.getDocuments().then((querySnapshot) {
+//         querySnapshot.documents.forEach((element) {
+//           itemsList.add(element.data());
+//         });
+//       });
+//       return itemsList;
+//     } catch (e) {
+//       print(e.toString());
+//       return null;
+//     }
+//   }
+// }
+
 

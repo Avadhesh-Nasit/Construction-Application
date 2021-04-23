@@ -65,6 +65,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                   onPressed:() async {
                     auth.sendPasswordResetEmail(email: _email);
                     Navigator.of(context).pop();
+
                   },
                 ),
               ),

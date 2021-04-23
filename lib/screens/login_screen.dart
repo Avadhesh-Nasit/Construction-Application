@@ -30,6 +30,9 @@ class _LoginState extends State<Login> {
   String verificationCode;
   String number;
   String myRole;
+  String loginfail;
+  String loginfail1;
+  bool isAnimate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,8 @@ class _LoginState extends State<Login> {
                                   hintStyle: TextStyle(fontSize: 18),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
-                                  prefixIcon: Icon(Icons.email_outlined)
+                                  prefixIcon: Icon(Icons.email_outlined),
+                                errorText: loginfail != null ? 'User doesn\'t exist' : null,
                               ),
                               keyboardType: TextInputType.text,
                               validator: (value)
@@ -93,10 +97,17 @@ class _LoginState extends State<Login> {
                                   hintStyle: TextStyle(fontSize: 18),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
-                                  prefixIcon: Icon(Icons.lock_outlined)
+                                  prefixIcon: Icon(Icons.lock_outlined),
+                                suffixIcon: IconButton(
+                                    icon: Icon(isAnimate == false ? Icons.remove_red_eye_outlined : Icons.remove_red_eye),
+                                    onPressed: () {
+                                      _handleAnimation();
+                                    }
+                                ),
+                                errorText: loginfail1 != null ? 'password not match' : null,
                               ),
                               keyboardType: TextInputType.text,
-                              obscureText: true,
+                              obscureText: isAnimate == false ? true : false,
                               validator: (value)
                               {
                                 if(value.isEmpty || value.length<=5)
@@ -106,6 +117,7 @@ class _LoginState extends State<Login> {
                                 return null;
                               },
                               onSaved: (input) => password = input,
+
                             ),
                           )
                       ),
@@ -181,6 +193,11 @@ class _LoginState extends State<Login> {
 
     );
   }
+  _handleAnimation() {
+    setState(() {
+      isAnimate = !isAnimate;
+    });
+  }
   void signIn() async {
     if(_formKey.currentState.validate()){
       _formKey.currentState.save();
@@ -196,9 +213,19 @@ class _LoginState extends State<Login> {
           prefs.setString('email', email);
           //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
         }
+
         // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }catch(e){
-        print(e.message);
+        print(e.hashCode);
+        setState(() {
+          if(e.hashCode==505284406){
+            loginfail=e.toString();
+          }
+          else if(e.hashCode==185768934 || e.hashCode==287540269){
+            loginfail1=e.toString();
+          }
+
+        });
       }
     }
   }

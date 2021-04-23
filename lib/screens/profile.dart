@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/user_data_model.dart';
 import 'package:construction_application/screens/changePassword.dart';
+import 'package:construction_application/screens/searchDemo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -186,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       GestureDetector(
                         child: Text("Click Here",style: TextStyle(fontSize: 18,color: Colors.blue),),
                         onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>changePassword()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SearchFeed()));
                         },
                       )
                     ],

@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:provider/provider.dart';
 import '../main.dart';
 import '../models/authentication.dart';
-
 import 'home_screen.dart';
 import 'login_screen.dart';
 
@@ -56,7 +55,6 @@ class _MyApp1State extends State<MyApp1> {
                         customRadio(lst1[1], 1),
                         SizedBox(width: 10,),
                         customRadio(lst1[2], 2),
-
                       ],
                     ),
                     SizedBox(height: 15,),
@@ -134,7 +132,15 @@ class _MyApp1State extends State<MyApp1> {
                                 enabledBorder: InputBorder.none,
                                 prefixIcon: Icon(Icons.call_outlined)
                             ),
-                            //keyboardType: TextInputType.number,
+                            validator: (value)
+                            {
+                              if(value.isEmpty || value.length!=10)
+                              {
+                                return 'Invalid Phone Number ';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.number,
                             // onSaved: (val) => item.no = val,
                           ),
                         )
@@ -166,6 +172,11 @@ class _MyApp1State extends State<MyApp1> {
                               }
                               return null;
                             },
+                              // validator: (value) {
+                              //   return (password.text == value || value.isEmpty || value.length<=5)
+                              //       ? null
+                              //       : "Please validate your entered password";
+                              // },
                             onSaved: (val) {
                               // item.password = val;
                               _password=val;
@@ -199,6 +210,11 @@ class _MyApp1State extends State<MyApp1> {
                               }
                               return null;
                             },
+                            // validator: (value){
+                            //   return(value!=password.text || value.isEmpty)
+                            //       ?null
+                            //       : "Please check your current password";
+                            // },
                             // onSaved: (val) => item.password = val,
                           ),
                         )

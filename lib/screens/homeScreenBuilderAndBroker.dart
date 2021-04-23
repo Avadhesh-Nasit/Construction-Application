@@ -128,18 +128,18 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostProperty()));
               },
             ),
-            // ListTile(
-            //   title:Row(
-            //     children: [
-            //       Icon(Icons.calculate_outlined),
-            //       Padding(padding: EdgeInsets.only(left: 10.0)),
-            //       Text("EMI Calculator")
-            //     ],
-            //   ),
-            //   onTap: (){
-            //     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>emiCalculator()));
-            //   },
-            // ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.favorite_border),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Faviourite")
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyFavoritePost()));
+              },
+            ),
             Divider(),
             Container(
               height: 70.0,

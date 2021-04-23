@@ -249,7 +249,7 @@ class _propertyDetailState extends State<propertyDetail> {
                                   margin: EdgeInsets.only(left: 13),
                                   child: RichText(
                                     text: TextSpan(
-                                        text: "Detail : ",
+                                        text: "Detail/Maintenance : ",
                                         style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
                                         children: [
                                           TextSpan(

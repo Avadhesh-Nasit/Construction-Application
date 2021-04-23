@@ -391,9 +391,9 @@ class _PostPropertyState extends State<PostProperty> {
         _imageUrls.add(imageUrl); //all all the urls to the list
       }
       //upload the list of imageUrls to firebase as an array
-      await _firestore.collection("users").document().setData({
-        "arrayOfImages": _imageUrls,
-      });
+      // await _firestore.collection("users").document().setData({
+      //   "arrayOfImages": _imageUrls,
+      // });
       postCommProperty(
                       'Commercial',
                       '${owner_builder_broker[selectedIndex]}',
@@ -622,6 +622,14 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "Project Name",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Project Name';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ), //Project Name
                               SizedBox(height: 10.0,),
@@ -642,6 +650,14 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "Address",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Address';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ), //Address
                               SizedBox(height: 10.0,),
@@ -662,6 +678,14 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "Landmark",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Landmark';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ), //Landmark
                               SizedBox(height: 10.0,),
@@ -682,7 +706,16 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "City",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter City';
+                                    }
+                                    return null;
+                                  },
                                 ),
+
                               ), //City
                               SizedBox(height: 10.0),
                               Container(
@@ -702,6 +735,14 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "State",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter State';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ), //State
 
@@ -757,6 +798,7 @@ class _PostPropertyState extends State<PostProperty> {
                                         ),
                                       ),
                                     ),
+                                    SizedBox(width: 10),
                                     Expanded(
                                       child: Container(
                                         height: 100,
@@ -817,8 +859,18 @@ class _PostPropertyState extends State<PostProperty> {
                                       enabledBorder: InputBorder.none,
                                       focusedBorder: InputBorder.none,
                                       hintText: "Area",
-                                      hintStyle: TextStyle(fontSize: 18)
+                                      hintStyle: TextStyle(fontSize: 18),
+                                    suffixText: "sq ft"
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Area';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType:TextInputType.number,
                                 ),
                               ), //Area
                               SizedBox(height: 10.0,),
@@ -837,8 +889,18 @@ class _PostPropertyState extends State<PostProperty> {
                                       enabledBorder: InputBorder.none,
                                       focusedBorder: InputBorder.none,
                                       hintText: "Price",
-                                      hintStyle: TextStyle(fontSize: 18)
+                                      hintStyle: TextStyle(fontSize: 18),
+                                    suffixText: "/sq ft"
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter price';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType:TextInputType.number,
                                 ),
                               ), //Price
                               SizedBox(height: 10.0,),
@@ -852,6 +914,8 @@ class _PostPropertyState extends State<PostProperty> {
                                   border: Border.all(style: BorderStyle.solid, color: Colors.grey),
                                 ),
                                 child: TextFormField(
+                                  minLines: 1,
+                                  maxLines: 6,
                                   controller: project_description_controller_r,
                                   decoration: InputDecoration(
                                       enabledBorder: InputBorder.none,
@@ -859,6 +923,15 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "Project Description",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Description';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType:TextInputType.multiline,
                                 ),
                               ), //Project Description
                               SizedBox(height: 10.0,),
@@ -965,6 +1038,14 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "Project Name",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Project Name';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),//project name commercial
                               SizedBox(height: 10.0,),
@@ -985,6 +1066,14 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "Address",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Address';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),//address commercial
                               SizedBox(height: 10.0,),
@@ -1005,6 +1094,14 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "Landmark",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Landmark';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),//landmark container commercial
                               SizedBox(height: 10.0,),
@@ -1025,6 +1122,14 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "City",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter City';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),//city container commercial
                               SizedBox(height: 10.0),
@@ -1045,9 +1150,16 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "State",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter State';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),//state container commercial
-
                               SizedBox(height: 10.0,),
                               SizedBox(height: 10.0,),
                               Divider(),
@@ -1100,6 +1212,7 @@ class _PostPropertyState extends State<PostProperty> {
                                         ),
                                       ),
                                     ),
+                                    SizedBox(width: 10),
                                     Expanded(
                                       child: Container(
                                         height: 100,
@@ -1144,8 +1257,18 @@ class _PostPropertyState extends State<PostProperty> {
                                       enabledBorder: InputBorder.none,
                                       focusedBorder: InputBorder.none,
                                       hintText: "Area",
-                                      hintStyle: TextStyle(fontSize: 18)
+                                      hintStyle: TextStyle(fontSize: 18),
+                                      suffixText: "sq ft"
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Area';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.number,
                                 ),
                               ),//area container commercial
                               SizedBox(height: 10.0,),
@@ -1164,8 +1287,18 @@ class _PostPropertyState extends State<PostProperty> {
                                       enabledBorder: InputBorder.none,
                                       focusedBorder: InputBorder.none,
                                       hintText: "Price",
-                                      hintStyle: TextStyle(fontSize: 18)
+                                      hintStyle: TextStyle(fontSize: 18),
+                                      suffixText: "/sq ft"
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Price';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.number,
                                 ),
                               ),//price container
                               SizedBox(height: 10.0,),
@@ -1186,6 +1319,15 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "Maintenance",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Maintenance';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.number,
                                 ),
                               ),
                               SizedBox(height: 10.0,),
@@ -1206,6 +1348,14 @@ class _PostPropertyState extends State<PostProperty> {
                                       hintText: "Project Description",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  validator: (value)
+                                  {
+                                    if(value.isEmpty)
+                                    {
+                                      return 'Enter Description';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),//project description container
                               SizedBox(height: 10.0,),
