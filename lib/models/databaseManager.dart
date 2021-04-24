@@ -23,7 +23,6 @@ class DatabaseManager {
     }
   }
 }
-
 class DatabaseManager1 {
   Future getUsersList(String state,String city,String sellOrRent,String propertyType,String status,String postedBy) async {
     List itemsList = [];
@@ -49,6 +48,29 @@ class DatabaseManager1 {
     }
   }
 }
+// class DatabaseManager2 {
+//
+//   Future getUsersList(String state,String city) async {
+//     List itemsList = [];
+//     final profileList =
+//     FirebaseFirestore.instance
+//         .collection('propertyDetails').where('state',isEqualTo: state)
+//         .where('city',isEqualTo:city);
+//
+//
+//     try {
+//       await profileList.getDocuments().then((querySnapshot) {
+//         querySnapshot.documents.forEach((element) {
+//           itemsList.add(element.data());
+//         });
+//       });
+//       return itemsList;
+//     } catch (e) {
+//       print(e.toString());
+//       return null;
+//     }
+//   }
+// }
 
 class FavoritePostManager {
   // var firebaseUser = FirebaseAuth.instance.currentUser;
@@ -139,28 +161,72 @@ class DataModel {
   }).toList();
   }
 }
-// class DatabaseManager2 {
-//
-//   Future getUsersList(String state,String city) async {
-//     List itemsList = [];
-//     final profileList =
-//     FirebaseFirestore.instance
-//         .collection('propertyDetails').where('state',isEqualTo: state)
-//         .where('city',isEqualTo:city);
-//
-//
-//     try {
-//       await profileList.getDocuments().then((querySnapshot) {
-//         querySnapshot.documents.forEach((element) {
-//           itemsList.add(element.data());
-//         });
-//       });
-//       return itemsList;
-//     } catch (e) {
-//       print(e.toString());
-//       return null;
-//     }
-//   }
-// }
+class DataModel1{
+  final String postedBy;
+  final String city;
+  final String category;
+  final String status;
+  final String firstImage;
+  final String name;
+
+  DataModel1({this.postedBy, this.city,this.category,this.status,this.firstImage,this.name});
+
+  //Create a method to convert QuerySnapshot from Cloud Firestore to a list of objects of this DataModel
+  //This function in essential to the working of FirestoreSearchScaffold
+
+  List<DataModel1> dataListFromSnapshot(QuerySnapshot querySnapshot) {
+    return querySnapshot.docs.map((snapshot) {
+      final Map<String, dynamic> dataMap = snapshot.data();
+
+      return DataModel1(
+          postedBy: dataMap['postedBy'], city: dataMap['city'],category:dataMap['category'],status: dataMap['status'],firstImage: dataMap['firstImage'],name: dataMap['projectName'] );
+    }).toList();
+  }
+}
+class DataModelpostedBy{
+  final String postedBy;
+  final String city;
+  final String category;
+  final String status;
+  final String firstImage;
+  final String name;
+
+  DataModelpostedBy({this.postedBy, this.city,this.category,this.status,this.firstImage,this.name});
+
+  //Create a method to convert QuerySnapshot from Cloud Firestore to a list of objects of this DataModel
+  //This function in essential to the working of FirestoreSearchScaffold
+
+  List<DataModelpostedBy> dataListFromSnapshot(QuerySnapshot querySnapshot) {
+    return querySnapshot.docs.map((snapshot) {
+      final Map<String, dynamic> dataMap = snapshot.data();
+
+      return DataModelpostedBy(
+          postedBy: dataMap['postedBy'], city: dataMap['city'],category:dataMap['category'],status: dataMap['status'],firstImage: dataMap['firstImage'],name: dataMap['projectName'] );
+    }).toList();
+  }
+}
+class DataModellandmark{
+  final String postedBy;
+  final String city;
+  final String category;
+  final String status;
+  final String firstImage;
+  final String name;
+
+  DataModellandmark({this.postedBy, this.city,this.category,this.status,this.firstImage,this.name});
+
+  //Create a method to convert QuerySnapshot from Cloud Firestore to a list of objects of this DataModel
+  //This function in essential to the working of FirestoreSearchScaffold
+
+  List<DataModellandmark> dataListFromSnapshot(QuerySnapshot querySnapshot) {
+    return querySnapshot.docs.map((snapshot) {
+      final Map<String, dynamic> dataMap = snapshot.data();
+
+      return DataModellandmark(
+          postedBy: dataMap['postedBy'], city: dataMap['city'],category:dataMap['category'],status: dataMap['status'],firstImage: dataMap['firstImage'],name: dataMap['projectName'] );
+    }).toList();
+  }
+}
+
 
 

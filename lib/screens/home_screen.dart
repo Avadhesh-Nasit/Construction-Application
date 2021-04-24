@@ -8,6 +8,7 @@ import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/profile.dart';
 import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:construction_application/screens/searchPage.dart';
+import 'package:construction_application/screens/searchProperty.dart';
 import 'package:construction_application/screens/signup_screen.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     myHomepage(),
     MyPost(),
     PostProperty(),
-    Search_Page(),
+    searchProperty(),
     ProfilePage()
   ];
   void _onItemTapped(int index) {

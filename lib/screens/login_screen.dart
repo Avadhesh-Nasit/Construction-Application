@@ -190,7 +190,6 @@ class _LoginState extends State<Login> {
             ],
           ),
         )
-
     );
   }
   _handleAnimation() {
@@ -229,7 +228,6 @@ class _LoginState extends State<Login> {
       }
     }
   }
-
   _fetch() async {
     final firebaseUser = await FirebaseAuth.instance.currentUser;
     if(firebaseUser != null) {
