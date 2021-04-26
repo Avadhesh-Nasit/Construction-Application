@@ -31,26 +31,26 @@ class _searchPropertyState extends State<searchProperty> {
                 child: Text("Search Page",style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),),
               ),
             ),
-            GestureDetector(
-              child: Container(
-                margin: EdgeInsets.only(top:20,left: 30, right: 30),
-                height: 50,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.9,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.white,
-                ),
-                padding: EdgeInsets.only(left: 30, top: 15),
-                child: Text("Search By City",
-                    style: TextStyle(color: Colors.grey, fontSize: 16)),
-              ),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SearchFeed()));
-              },
-            ),
+            // GestureDetector(
+            //   child: Container(
+            //     margin: EdgeInsets.only(top:20,left: 30, right: 30),
+            //     height: 50,
+            //     width: MediaQuery
+            //         .of(context)
+            //         .size
+            //         .width * 0.9,
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(30),
+            //       color: Colors.white,
+            //     ),
+            //     padding: EdgeInsets.only(left: 30, top: 15),
+            //     child: Text("Search By City",
+            //         style: TextStyle(color: Colors.grey, fontSize: 16)),
+            //   ),
+            //   onTap: (){
+            //     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SearchFeed()));
+            //   },
+            // ),
             GestureDetector(
                 child:Container(
                   margin: EdgeInsets.only(top: 30, left: 30, right: 30),

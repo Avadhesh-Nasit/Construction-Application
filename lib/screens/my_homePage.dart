@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/databaseManager.dart';
 import 'package:construction_application/models/firebase.dart';
+import 'package:construction_application/screens/login_screen.dart';
 import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:construction_application/screens/searchPage.dart';
 import 'package:favorite_button/favorite_button.dart';
@@ -742,4 +743,10 @@ class _myHomepageState extends State<myHomepage> {
     _auth.sendEmailVerification();
 
   }
+  // login() async{
+  //   final firebaseUser = await FirebaseAuth.instance.currentUser;
+  //   if(firebaseUser==null){
+  //     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Login()));
+  //   }
+  // }
 }

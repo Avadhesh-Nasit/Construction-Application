@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:flutter/material.dart';
 
 class searchByPostedBY extends StatefulWidget {
@@ -8,6 +9,8 @@ class searchByPostedBY extends StatefulWidget {
 
 class _searchByPostedByState extends State<searchByPostedBY> {
   String name = "";
+  var doc_id;
+  var route;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +52,28 @@ class _searchByPostedByState extends State<searchByPostedBY> {
               DocumentSnapshot data = snapshot.data.docs[index];
               return GestureDetector(
                 onTap: (){
+                  FirebaseFirestore.instance
+                      .collection('propertyDetails')
+                      .get()
+                      .then(
+                        (QuerySnapshot snapshot) => {
+                      // snapshot.documents.forEach((f) {
+                      //
+                      //   print("documentID---- " + f.reference.documentID);
+                      //
+                      // }),
+                      //     snapshot.documents[index].data(),
+                      doc_id = data['propertyId'],
+                      //print(snapshot.documents[index].documentID)
+                      print(doc_id),
+                      route = MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            propertyDetail(value: doc_id),
+
+                      ),
+                      Navigator.of(context).push(route)
+                    },
+                  );
                 },
                 child: Container(
                   margin: EdgeInsets.all(10.0),

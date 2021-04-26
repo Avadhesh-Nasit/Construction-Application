@@ -188,6 +188,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:flutter/material.dart';
 
 class searchByCity extends StatefulWidget {
@@ -197,6 +198,8 @@ class searchByCity extends StatefulWidget {
 
 class _searchByCityState extends State<searchByCity> {
   String name = "";
+  var doc_id;
+  var route;
 
   @override
   Widget build(BuildContext context) {
@@ -236,22 +239,42 @@ class _searchByCityState extends State<searchByCity> {
               DocumentSnapshot data = snapshot.data.docs[index];
               return GestureDetector(
                 onTap: (){
-                  // FirebaseFirestore.instance
-                  //     .collection('propertyDetails')
-                  //     .get()
-                  //     .then(
-                  //       (QuerySnapshot snapshot) => {
+                  FirebaseFirestore.instance
+                      .collection('propertyDetails')
+                      .get()
+                      .then(
+                        (QuerySnapshot snapshot) => {
+                      // snapshot.documents.forEach((f) {
+                      //
+                      //   print("documentID---- " + f.reference.documentID);
+                      //
+                      // }),
+                      //     snapshot.documents[index].data(),
+                      doc_id = data['propertyId'],
+                      //print(snapshot.documents[index].documentID)
+                      print(doc_id),
+                      route = MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            propertyDetail(value: doc_id),
+
+                      ),
+                      Navigator.of(context).push(route)
+                    },
+                  );
+                  // List<String> productName= [];
                   //
-                  //     doc_id = snapshot.docs[index].id,
-                  //     print(doc_id),
-                  //     route = MaterialPageRoute(
-                  //       builder: (BuildContext context) =>
-                  //           propertyDetail(value: doc_id),
-                  //
-                  //     ),
-                  //     Navigator.of(context).push(route)
-                  //   },
-                  // );
+                  // Stream<QuerySnapshot> productRef = FirebaseFirestore.instance
+                  //     .collection("propertyDetails")
+                  //     .doc(name)
+                  //     .collection("propertyDetails")
+                  //     .snapshots();
+                  // productRef.forEach((field) {
+                  //   field.docs.asMap().forEach((index, data) {
+                  //     productName.add(field.docs[index]["city"]);
+                  //   });
+                  // });
+                  // print(productName);
+
                 },
                 child: Container(
                   margin: EdgeInsets.all(10.0),
