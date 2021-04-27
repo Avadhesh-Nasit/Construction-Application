@@ -25,7 +25,7 @@ class _searchByLandmarkState extends State<searchByLandmark> {
         title: Card(
           child: TextField(
             decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search), hintText: 'Search...',
+                prefixIcon: Icon(Icons.search), hintText: 'Enter Landmark',
 
             ),
             onChanged: (val) {

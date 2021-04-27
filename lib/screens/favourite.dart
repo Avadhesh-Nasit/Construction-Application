@@ -18,6 +18,7 @@ class _MyFavoritePostState extends State<MyFavoritePost> {
   //final _auth= FirebaseAuth.instance.currentUser;
   List FavoritePostList = [];
   String doc_id;
+  var route;
   String doc_id1;
   //bool f1;
   //String id;
@@ -71,31 +72,26 @@ class _MyFavoritePostState extends State<MyFavoritePost> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        //   var uid =FirebaseAuth.instance.currentUser.uid;
-                        //   var _randomId = FirebaseFirestore.instance.collection('propertyDetails').document(uid);
-                        //   print(_randomId);
-                        // var firebaseUser =  FirebaseAuth.instance.currentUser;
-                        // FirebaseFirestore.instance.collection("propertyDetails").doc(firebaseUser.uid).get().then((value){
-                        //   print(value.data());
-                        // });
                         FirebaseFirestore.instance
                             .collection('propertyDetails')
                             .get()
                             .then(
-                              (QuerySnapshot snapshot) =>
-                          {
+                              (QuerySnapshot snapshot) => {
                             // snapshot.documents.forEach((f) {
                             //
                             //   print("documentID---- " + f.reference.documentID);
                             //
                             // }),
                             //     snapshot.documents[index].data(),
-                            Navigator.push(context, MaterialPageRoute(
-                                builder: (context) =>
-                                    propertyDetail(value: doc_id))),
-                            doc_id = snapshot.documents[index].documentID,
+                            doc_id = FavoritePostList[index]['propertyId'],
                             //print(snapshot.documents[index].documentID)
-                            print(doc_id)
+                            print(doc_id),
+                            route = MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  propertyDetail(value: doc_id),
+
+                            ),
+                            Navigator.of(context).push(route)
                           },
                         );
                       },

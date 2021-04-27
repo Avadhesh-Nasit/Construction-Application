@@ -2,6 +2,7 @@ import 'package:construction_application/screens/builder_page.dart';
 import 'package:construction_application/screens/changePassword.dart';
 import 'package:construction_application/screens/emiCalculator.dart';
 import 'package:construction_application/screens/favourite.dart';
+import 'package:construction_application/screens/home_screen.dart';
 import 'package:construction_application/screens/login_screen.dart';
 import 'package:construction_application/screens/myPost.dart';
 import 'package:construction_application/screens/my_homePage.dart';
@@ -9,8 +10,10 @@ import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/postProjectBuilderBroker.dart';
 import 'package:construction_application/screens/profile.dart';
 import 'package:construction_application/screens/propertyDetail.dart';
+import 'package:construction_application/screens/searchByLandmark.dart';
 import 'package:construction_application/screens/searchPage.dart';
 import 'package:construction_application/screens/signup_screen.dart';
+import 'package:construction_application/screens/updateDetails.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:construction_application/models/authentication.dart';
@@ -25,7 +28,6 @@ class HomeScreen1 extends StatefulWidget {
 
 class _HomeScreen1State extends State<HomeScreen1> {
   final List<Widget> _widgetOptions = <Widget>[
-    builderPage(),
     MyPost(),
     PostPropertyBuilderAndBroker(),
     ProfilePage()
@@ -131,13 +133,25 @@ class _HomeScreen1State extends State<HomeScreen1> {
             ListTile(
               title:Row(
                 children: [
-                  Icon(Icons.favorite_border),
+                  Icon(Icons.assignment_ind_outlined),
                   Padding(padding: EdgeInsets.only(left: 10.0)),
-                  Text("Faviourite")
+                  Text("Switch to User")
                 ],
               ),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyFavoritePost()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen()));
+              },
+            ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.near_me_outlined),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Nearby Area Property")
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>searchByLandmark()));
               },
             ),
             Divider(),
@@ -199,9 +213,11 @@ class _HomeScreen1State extends State<HomeScreen1> {
                   Text("Terms & Condition")
                 ],
               ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>updateDetails()));
+              },
             ),
             Divider(),
-            SizedBox(height: 88.0,),
             ListTile(
               title:Row(
                 children: [
@@ -220,10 +236,10 @@ class _HomeScreen1State extends State<HomeScreen1> {
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(_selectedIndex==0?Icons.home_filled:Icons.home_outlined, color: Colors.indigo),
-            label: 'Home',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(_selectedIndex==0?Icons.home_filled:Icons.home_outlined, color: Colors.indigo),
+          //   label: 'Home',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(_selectedIndex==1?Icons.photo_library:Icons.photo_library_outlined, color: Colors.indigo),
             label: 'My Post',
