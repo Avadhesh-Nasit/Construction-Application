@@ -43,6 +43,9 @@ dependencies:
   carousel_slider: ^3.0.0
   algolia: ^0.1.1
   firestore_search: ^0.1.2
+  location: ^3.0.0
+  google_maps_flutter: ^1.2.0
+  geocoder: ^0.2.1
 
 
 dev_dependencies:

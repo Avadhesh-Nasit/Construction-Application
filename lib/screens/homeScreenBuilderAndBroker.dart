@@ -3,6 +3,7 @@ import 'package:construction_application/screens/changePassword.dart';
 import 'package:construction_application/screens/emiCalculator.dart';
 import 'package:construction_application/screens/favourite.dart';
 import 'package:construction_application/screens/home_screen.dart';
+import 'package:construction_application/screens/location.dart';
 import 'package:construction_application/screens/login_screen.dart';
 import 'package:construction_application/screens/myPost.dart';
 import 'package:construction_application/screens/my_homePage.dart';
@@ -214,7 +215,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 ],
               ),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>updateDetails()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyLocation()));
               },
             ),
             Divider(),

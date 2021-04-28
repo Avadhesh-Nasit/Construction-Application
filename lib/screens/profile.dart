@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/user_data_model.dart';
+import 'package:construction_application/screens/changeEmail.dart';
 import 'package:construction_application/screens/changePassword.dart';
 import 'package:construction_application/screens/searchDemo.dart';
 import 'package:construction_application/screens/searchByCategory.dart';
@@ -142,12 +143,25 @@ class _ProfilePageState extends State<ProfilePage> {
                             TextStyle(color: Colors.blueGrey, fontSize: 22.0)),
                       ),
                      Spacer(),
-                      Container(
-                        child: Text(userData['email'],
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold)),
+                      Row(
+                        children: [
+                          Container(
+                            child: Text(userData['email'],
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              width: 30.0,
+                              child: Icon(Icons.edit,color: Colors.blue,)
+                            ),
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>changeEmail()));
+                            },
+                          )
+                        ],
                       ),
                     ],
                   ),

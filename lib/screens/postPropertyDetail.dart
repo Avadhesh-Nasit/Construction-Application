@@ -281,12 +281,12 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
                                         )
                                     ),
                                     Spacer(),
-                                    GestureDetector(
-                                      child: Container(
-                                        width: 30.0,
-                                        child: Text("Edit",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),),
-                                      ),
-                                    )
+                                    // GestureDetector(
+                                    //   child: Container(
+                                    //     width: 30.0,
+                                    //     child: Text("Edit",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),),
+                                    //   ),
+                                    // )
                                   ],
                                 ),
                                 SizedBox(height: 7),
@@ -385,7 +385,9 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
                                             print(value);
                                             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>updateDetails(value:value,
                                               projectName:userData['projectName'],
-                                              status:userData['status']
+                                              status:userData['status'],
+                                              price:userData['price'],
+                                              description:userData['description']
                                             )));
                                           },
                                           color: Colors.indigo,

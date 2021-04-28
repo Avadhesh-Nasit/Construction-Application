@@ -5,28 +5,32 @@ class updateDetails extends StatefulWidget {
   final String value;
   final String projectName;
   final String status;
+  final String price;
+  final String description;
 
-  const updateDetails({Key key, this.value,this.projectName,this.status}) : super(key: key);
+  const updateDetails({Key key, this.value,this.projectName,this.status,this.price,this.description}) : super(key: key);
 
   @override
-  _updateDetailsState createState() => _updateDetailsState(value,projectName,status);
+  _updateDetailsState createState() => _updateDetailsState(value,projectName,status,price,description);
 }
 
 class _updateDetailsState extends State<updateDetails> {
   final String value;
   final String projectName;
   final String status;
+  final String price;
+  final String description;
   List<String> sell_and_rent=["Sell","Rent"];
   int selectedIndex=0;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController projectName1 = TextEditingController();
-  TextEditingController price = TextEditingController();
+  TextEditingController price1 = TextEditingController();
   TextEditingController status1 = TextEditingController();
   TextEditingController description1 = TextEditingController();
   TextEditingController sellOrRent = TextEditingController();
 
-  _updateDetailsState(this.value,this.projectName,this.status);
+  _updateDetailsState(this.value,this.projectName,this.status,this.price,this.description);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,11 +108,11 @@ class _updateDetailsState extends State<updateDetails> {
                     border: Border.all(style: BorderStyle.solid, color: Colors.grey),
                   ),
                   child: TextFormField(
-                    controller: price,
+                    controller: price1,
                     decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: "Price",
+                        hintText: price.toString() +" (Price)",
                         hintStyle: TextStyle(fontSize: 18)
                     ),
                     keyboardType: TextInputType.number,
@@ -137,7 +141,7 @@ class _updateDetailsState extends State<updateDetails> {
                     decoration: InputDecoration(
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: "Description",
+                        hintText: description+" (Description)",
                         hintStyle: TextStyle(fontSize: 18)
                     ),
                     keyboardType: TextInputType.text,
@@ -203,7 +207,7 @@ class _updateDetailsState extends State<updateDetails> {
     // });
     await FirebaseFirestore.instance.collection('propertyDetails').doc(value).update({
      'projectName': projectName1.text,
-      'price':price.text,
+      'price':price1.text,
       'status':status1.text,
       'description':description1.text,
       'sellOrRent':sell_and_rent[selectedIndex]
