@@ -21,7 +21,7 @@ class _MyLocationState extends State<MyLocation> {
   Location location = Location();
 
   GoogleMapController _controller;
-  LatLng _initialcameraposition = LatLng(0.5937, 0.9629);
+  LatLng _initialcameraposition = LatLng(21.1702, 72.8311);
 
   @override
   void initState() {
@@ -46,7 +46,6 @@ class _MyLocationState extends State<MyLocation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -127,7 +126,6 @@ class _MyLocationState extends State<MyLocation> {
         return;
       }
     }
-
     _permissionGranted = await location.hasPermission();
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await location.requestPermission();

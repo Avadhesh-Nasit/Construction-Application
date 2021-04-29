@@ -14,7 +14,7 @@ import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:construction_application/screens/searchByLandmark.dart';
 import 'package:construction_application/screens/searchPage.dart';
 import 'package:construction_application/screens/signup_screen.dart';
-import 'package:construction_application/screens/updateDetails.dart';
+
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:construction_application/models/authentication.dart';
