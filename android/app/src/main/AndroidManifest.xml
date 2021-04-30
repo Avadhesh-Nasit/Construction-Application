@@ -10,6 +10,8 @@
    <application
         android:label="construction_application"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyDyF086KuQAxHr2CbWOdfXT6O2aP_gkp1o"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
