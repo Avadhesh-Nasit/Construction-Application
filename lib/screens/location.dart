@@ -191,7 +191,7 @@ class _MyLocationState extends State<MyLocation> {
     });
 
   }
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+
 
   populateClients(){
     FirebaseFirestore.instance.collection('markers').get().then((docs){
@@ -202,6 +202,7 @@ class _MyLocationState extends State<MyLocation> {
       }
     });
   }
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   void initMarker(request,requestId){
     var markerIdval = requestId;
@@ -245,6 +246,10 @@ class _MyLocationState extends State<MyLocation> {
   //
   //   }); }
 
+  Widget loadMaps(){
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -259,7 +264,9 @@ class _MyLocationState extends State<MyLocation> {
                   GoogleMap(
                     mapType: MapType.normal,
                     markers: Set<Marker>.of(markers.values),
-                    onMapCreated: onMapCreated,
+                    onMapCreated: (GoogleMapController controller){
+                      mapController=controller;
+                    },
                     initialCameraPosition: CameraPosition(
                       target: LatLng(currentLocation.latitude,currentLocation.longitude),
                       zoom: 10.0
@@ -282,9 +289,9 @@ class _MyLocationState extends State<MyLocation> {
       ) ,
     );
   }
-  void onMapCreated(controller){
-    setState(() {
-      mapController = controller;
-    });
-  }
+  // void onMapCreated(controller){
+  //   setState(() {
+  //     mapController = controller;
+  //   });
+  // }
 }
