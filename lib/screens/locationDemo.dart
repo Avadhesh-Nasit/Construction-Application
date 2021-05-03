@@ -186,6 +186,9 @@
 
 
 
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 ////////////////////////////////////////////////////////////////////////////////////////
 
 // import 'dart:async';
@@ -345,274 +348,190 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+//
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter/material.dart';
+// import 'package:geolocator/geolocator.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+//
+//
+// class NewMap extends StatefulWidget {
+//   @override
+//   _NewMapState createState() => _NewMapState();
+// }
+//
+// class _NewMapState extends State<NewMap> {
+//   GoogleMapController _controller;
+//
+//   Position position;
+//   bool mapToggle = false;
+//   var currentLocation;
+//
+//   Widget _child;
+//
+//   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+//   BitmapDescriptor pinLocationIcon;
+//
+//   @override
+//   void initState() {
+//     _child = SpinKitRipple(
+//       itemBuilder: (BuildContext context, int index) {
+//         return DecoratedBox(
+//           decoration: BoxDecoration(
+//             color: index.isEven ? Colors.grey : Color(0xffffb838),
+//           ),
+//         );
+//       },
+//     );
+//     getCurrentLocation();
+//     populateClients();
+//     setCustomMapPin();
+//     super.initState();
+//
+//
+//   }
+//
+//   void getCurrentLocation() async {
+//     Position res = await getCurrentPosition();
+//     setState(() {
+//       position = res;
+//       _child = mapWidget();
+//     });
+//   }
+//
+//   populateClients() {
+//     FirebaseFirestore.instance.collection('markers').get().then((docs) {
+//       if (docs.docs.isNotEmpty) {
+//         for (int i = 0; i < docs.docs.length; ++i) {
+//           initMarker(docs.docs[i].data(), docs.docs[i].id);
+//         }
+//       }
+//     });
+//   }
+//
+//   void initMarker(tomb, tombId) {
+//     var markerIdVal = tombId;
+//     final MarkerId markerId = MarkerId(markerIdVal);
+//
+//     final Marker marker = Marker(
+//       markerId: markerId,
+//       position: LatLng(
+//           tomb.data()['location'].latitude, tomb.data()['location'].latitude),
+//       icon: pinLocationIcon,
+//     );
+//     setState(() {
+//       markers[markerId] = marker;
+//     });
+//   }
+//
+//   void setCustomMapPin() async {
+//     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
+//         ImageConfiguration(devicePixelRatio: 2.5), 'image/icon.png');
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         iconTheme: IconThemeData(color: Color(0xffffb838)),
+//         centerTitle: true,
+//         backgroundColor: Colors.white,
+//       ),
+//       body: _child,
+//     );
+//   }
+//
+//   Widget mapWidget() {
+//     return Stack(
+//       children: <Widget>[
+//         GoogleMap(
+//             initialCameraPosition: CameraPosition(
+//               target: LatLng(position.latitude, position.longitude),
+//               zoom: 10,
+//             ),
+//             onMapCreated: (GoogleMapController controller) {
+//               _controller = controller;
+//             },
+//             compassEnabled: true,
+//             myLocationEnabled: true,
+//             markers: Set<Marker>.of(markers.values)),
+//         SizedBox(
+//           height: 26,
+//         ),
+//       ],
+//     );
+//   }
+//   getCurrentPosition(){
+//     Geolocator().getCurrentPosition().then((currloc){
+//       setState(() {
+//         currentLocation=currloc;
+//         mapToggle=true;
+//       });
+//     });
+//   }
+// }
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class NewMap extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+  _NewMapState createState() => _NewMapState();
+}
+
+class _NewMapState extends State<NewMap> {
+  GoogleMapController myController;
+  Map<MarkerId,Marker> markers = <MarkerId, Marker>{};
+  void initMarker(specify,specifyId) async{
+    var markerIdVal= specifyId;
+    final MarkerId markerId = MarkerId(markerIdVal);
+    final Marker marker= Marker(
+      markerId: markerId,
+      position: LatLng(specify['location'].latitude,specify['location'].longitude),
+      infoWindow: InfoWindow(title: "Property",snippet: specify['place'])
     );
+  setState(() {
+    markers[markerId]= marker;
+  });
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  bool mapToggle = false;
-  bool clientsToggle = false;
-  bool resetToggle = false;
-
-  var currentLocation;
-
-  var clients = [];
-
-  var currentClient;
-  var currentBearing;
-
-  GoogleMapController mapController;
-
+  getMarkerData() async{
+    FirebaseFirestore.instance.collection('markers').getDocuments().then((data){
+        if(data.documents.isNotEmpty){
+          for(int i=0;i<data.documents.length;i++){
+              initMarker(data.documents[i].data(), data.documents[i].documentID);
+          }
+        }
+    });
+  }
+ @override
   void initState() {
+    getMarkerData();
     super.initState();
-    Geolocator().getCurrentPosition().then((currloc) {
-      setState(() {
-        currentLocation = currloc;
-        mapToggle = true;
-        populateClients();
-      });
-    });
-  }
-
-  populateClients() {
-    clients = [];
-    Firestore.instance.collection('markers').getDocuments().then((docs) {
-      if (docs.documents.isNotEmpty) {
-        setState(() {
-          clientsToggle = true;
-        });
-        for (int i = 0; i < docs.documents.length; ++i) {
-          clients.add(docs.documents[i].data);
-          initMarker(docs.documents[i].data,docs.docs[i].id);
-        }
-      }
-    });
-  }
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-
-  initMarker(client,request) {
-    // mapController.clearMarkers().then((val) {
-    //   mapController.addMarker(MarkerOptions(
-    //       position:
-    //       LatLng(client['location'].latitude, client['location'].longitude),
-    //       draggable: false,
-    //       infoWindowText: InfoWindowText(client['clientName'], 'Nice')));
-    // });
-    var markerIdval = request;
-    final MarkerId markerId= MarkerId(markerIdval);
-    final Marker marker = Marker(markerId: markerId,
-      position: LatLng(client['location'].latitude,client['location'].longitude),
-      infoWindow: InfoWindow(title: "Fetched Marker",snippet: request['place']),
-    );
-    setState(() {
-      markers[markerId]=marker;
-      print(markerId);
-    });
-  }
-
-  // Widget clientCard(client) {
-  //   return Padding(
-  //       padding: EdgeInsets.only(left: 2.0, top: 10.0),
-  //       child: InkWell(
-  //           onTap: () {
-  //             setState(() {
-  //               currentClient = client;
-  //               currentBearing = 90.0;
-  //             });
-  //             zoomInMarker(client);
-  //           },
-  //           child: Material(
-  //             elevation: 4.0,
-  //             borderRadius: BorderRadius.circular(5.0),
-  //             child: Container(
-  //                 height: 100.0,
-  //                 width: 125.0,
-  //                 decoration: BoxDecoration(
-  //                     borderRadius: BorderRadius.circular(5.0),
-  //                     color: Colors.white),
-  //                 child: Center(child: Text(client['place']))),
-  //           )));
-  // }
-
-  zoomInMarker(client) {
-    mapController
-        .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(
-            client['location'].latitude, client['location'].longitude),
-        zoom: 17.0,
-        bearing: 90.0,
-        tilt: 45.0)))
-        .then((val) {
-      setState(() {
-        resetToggle = true;
-      });
-    });
-  }
-
-  resetCamera() {
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(40.7128, -74.0060), zoom: 10.0))).then((val) {
-      setState(() {
-        resetToggle = false;
-      });
-    });
-  }
-
-  addBearing() {
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(
-            target: LatLng(currentClient['location'].latitude,
-                currentClient['location'].longitude
-            ),
-            bearing: currentBearing == 360.0 ? currentBearing : currentBearing + 90.0,
-            zoom: 17.0,
-            tilt: 45.0
-        )
-    )
-    ).then((val) {
-      setState(() {
-        if(currentBearing == 360.0) {}
-        else {
-          currentBearing = currentBearing + 90.0;
-        }
-      });
-    });
-  }
-
-  removeBearing() {
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(
-            target: LatLng(currentClient['location'].latitude,
-                currentClient['location'].longitude
-            ),
-            bearing: currentBearing == 0.0 ? currentBearing : currentBearing - 90.0,
-            zoom: 17.0,
-            tilt: 45.0
-        )
-    )
-    ).then((val) {
-      setState(() {
-        if(currentBearing == 0.0) {}
-        else {
-          currentBearing = currentBearing - 90.0;
-        }
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Map Demo'),
-        ),
-        body: Column(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
-                    height: MediaQuery.of(context).size.height - 80.0,
-                    width: double.infinity,
-                    child: mapToggle
-                        ? GoogleMap(
-                      onMapCreated: onMapCreated,
-                      initialCameraPosition:CameraPosition(
-                        target: LatLng(40.7128, -74.0060),
-                        zoom: 10.0
-                      ),
-                      // options: GoogleMapOptions(
-                      //     cameraPosition: CameraPosition(
-                      //         target: LatLng(40.7128, -74.0060),
-                      //         zoom: 10.0)),
-                    )
-                        : Center(
-                        child: Text(
-                          'Loading.. Please wait..',
-                          style: TextStyle(fontSize: 20.0),
-                        ))),
-                // Positioned(
-                //     top: MediaQuery.of(context).size.height - 250.0,
-                //     left: 10.0,
-                //     child: Container(
-                //         height: 125.0,
-                //         width: MediaQuery.of(context).size.width,
-                //         child: clientsToggle
-                //             ? ListView(
-                //           scrollDirection: Axis.horizontal,
-                //           padding: EdgeInsets.all(8.0),
-                //           children: clients.map((element) {
-                //             return clientCard(element);
-                //           }).toList(),
-                //         )
-                //             : Container(height: 1.0, width: 1.0))),
-                resetToggle
-                    ? Positioned(
-                    top: MediaQuery.of(context).size.height -
-                        (MediaQuery.of(context).size.height -
-                            50.0),
-                    right: 15.0,
-                    child: FloatingActionButton(
-                      onPressed: resetCamera,
-                      mini: true,
-                      backgroundColor: Colors.red,
-                      child: Icon(Icons.refresh),
-                    ))
-                    : Container(),
-                resetToggle
-                    ? Positioned(
-                    top: MediaQuery.of(context).size.height -
-                        (MediaQuery.of(context).size.height -
-                            50.0),
-                    right: 60.0,
-                    child: FloatingActionButton(
-                        onPressed: addBearing,
-                        mini: true,
-                        backgroundColor: Colors.green,
-                        child: Icon(Icons.rotate_left
-                        ))
-                )
-                    : Container(),
-                resetToggle
-                    ? Positioned(
-                    top: MediaQuery.of(context).size.height -
-                        (MediaQuery.of(context).size.height -
-                            50.0),
-                    right: 110.0,
-                    child: FloatingActionButton(
-                        onPressed: removeBearing,
-                        mini: true,
-                        backgroundColor: Colors.blue,
-                        child: Icon(Icons.rotate_right)
-                    ))
-                    : Container()
-              ],
-            )
-          ],
-        ));
-  }
 
-  void onMapCreated(controller) {
-    setState(() {
-      mapController = controller;
-    });
+    Set<Marker> getMarker(){
+      return <Marker>[
+        Marker(
+            markerId: MarkerId("Property Id"),
+            position: LatLng(21.1702,72.8311),
+            icon: BitmapDescriptor.defaultMarker,
+          infoWindow: InfoWindow(title: "Property")
+        )
+      ].toSet();
+    }
+    return Scaffold(
+      body: GoogleMap(
+        markers: Set<Marker>.of(markers.values),
+        mapType: MapType.normal,
+        initialCameraPosition: CameraPosition(
+          target: LatLng(21.1702,72.8311),
+          zoom: 14.0
+        ),
+        onMapCreated:(GoogleMapController controller){
+          myController=controller;
+        },
+      ),
+    );
   }
 }
-

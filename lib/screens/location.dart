@@ -282,7 +282,7 @@ class _MyLocationState extends State<MyLocation> {
           RaisedButton(
               child: Text("🍄🍄🍄"),
               onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyApp()));
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NewMap()));
           }
           )
         ],
