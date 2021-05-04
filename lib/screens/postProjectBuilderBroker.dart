@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'homeScreenBuilderAndBroker.dart';
@@ -513,7 +514,43 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
   TextEditingController price_controller_c = TextEditingController();
   TextEditingController project_description_controller_c = TextEditingController();
   TextEditingController detail_controller = TextEditingController();
+  String inputaddr='';
 
+  addToList() async{
+    final query = inputaddr;
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    var first = addresses.first;
+    FirebaseFirestore.instance.collection('propertyDetails').add({
+      'location':new GeoPoint(first.coordinates.latitude, first.coordinates.longitude),
+     // 'place': first.featureName
+    });
+  }
+  Future addMarker() async{
+    await showDialog(
+        context: context,
+        builder:(BuildContext context){
+          return new SimpleDialog(
+            title: Text("Add Marker Location",style: TextStyle(fontSize: 17.0),),
+            children: <Widget>[
+              new TextField(
+                onChanged: (String enterLoc){
+                  setState(() {
+                    inputaddr=enterLoc;
+                  });
+                },
+              ),
+              new SimpleDialogOption(
+                child: Text("Add It",style: TextStyle(color: Colors.blue),),
+                onPressed: (){
+                  addToList();
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        }
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -883,6 +920,21 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                   ],
                                 ),
                               ),//construction status button
+                              SizedBox(height: 10.0,),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height: 50,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    addMarker();
+                                  },
+                                  color: Colors.indigo,
+                                  child: Center(child: Text("Add to Map", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
                               SizedBox(height: 30.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
@@ -1230,7 +1282,23 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                   ],
                                 ),
                               ),//construction status buttons
-                              SizedBox(height: 30.0,),
+                              SizedBox(height: 10.0,),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height: 50,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    addMarker();
+
+                                  },
+                                  color: Colors.indigo,
+                                  child: Center(child: Text("Add to Map", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height:30.0),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 height: 50,

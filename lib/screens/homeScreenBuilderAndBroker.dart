@@ -22,6 +22,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'locationDemo.dart';
+
 class HomeScreen1 extends StatefulWidget {
   @override
   _HomeScreen1State createState() => _HomeScreen1State();
@@ -215,7 +217,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 ],
               ),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyLocation()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NewMap()));
               },
             ),
             Divider(),

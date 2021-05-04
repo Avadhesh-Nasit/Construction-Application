@@ -6,7 +6,7 @@ Future<void> userSetup(String displayName, String email, String phoneNumber,Stri
   var firebaseUser= await FirebaseAuth.instance.currentUser;
   FirebaseAuth auth = FirebaseAuth.instance;
   String uid = auth.currentUser.uid.toString();
-  users.document(firebaseUser.uid).set({'name': displayName, 'userId': uid, 'email': email, 'mobileNumber':phoneNumber,'role':role ,'Image':Image});
+  users.doc(firebaseUser.uid).set({'name': displayName, 'userId': uid, 'email': email, 'mobileNumber':phoneNumber,'role':role ,'Image':Image});
   //users.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number':phoneNumber, 'Password': password,'Role':role });
   return;
 }
@@ -34,7 +34,7 @@ Future<void> user(String displayName,String phoneNumber, String password,String 
   var firebaseUser= await FirebaseAuth.instance.currentUser;
   FirebaseAuth auth = FirebaseAuth.instance;
   String uid = auth.currentUser.uid.toString();
-  users.document(firebaseUser.uid).set({'name': displayName, 'userId': uid,'mobileNumber':phoneNumber, 'password': password,'role':role });
+  users.doc(firebaseUser.uid).set({'name': displayName, 'userId': uid,'mobileNumber':phoneNumber, 'password': password,'role':role });
   //users.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number':phoneNumber, 'Password': password,'Role':role });
   return;
 }
@@ -44,7 +44,7 @@ Future<void> postProperty(String category, String postBy, String sr_radio, Strin
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
   //String uid = auth.currentUser.uid.toString();
-  property.document().set({
+  property.doc().set({
     'category': category,
     'postedBy': postBy,
     'sellOrRent': sr_radio,
@@ -73,7 +73,7 @@ Future<void> postCommProperty(String category, String postBy, String sr_radio, S
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
   //String uid = auth.currentUser.uid.toString();
-  property.document().set({
+  property.doc().set({
     'category': category,
     'postedBy': postBy,
     'sellOrRent': sr_radio,
