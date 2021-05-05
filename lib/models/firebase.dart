@@ -40,11 +40,11 @@ Future<void> user(String displayName,String phoneNumber, String password,String 
 }
 
 Future<void> postProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String pro_detail, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String userId) async {
-  CollectionReference property = FirebaseFirestore.instance.collection('propertyDetails');
+  DocumentReference property = FirebaseFirestore.instance.collection('propertyDetails').doc();
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
   //String uid = auth.currentUser.uid.toString();
-  property.doc().set({
+  property.set({
     'category': category,
     'postedBy': postBy,
     'sellOrRent': sr_radio,
@@ -62,18 +62,19 @@ Future<void> postProperty(String category, String postBy, String sr_radio, Strin
     'firstImage': firstImage,
     'secondImage': secondImage,
     'thirdImage': thirdImage,
-    'postedById':userId
+    'postedById':userId,
+    'propertyId':property.documentID
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;
 }
 
 Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId) async {
-  CollectionReference property = FirebaseFirestore.instance.collection('propertyDetails');
+  DocumentReference property = FirebaseFirestore.instance.collection('propertyDetails').doc();
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
   //String uid = auth.currentUser.uid.toString();
-  property.doc().set({
+  property.set({
     'category': category,
     'postedBy': postBy,
     'sellOrRent': sr_radio,
@@ -91,7 +92,8 @@ Future<void> postCommProperty(String category, String postBy, String sr_radio, S
     'secondImage': secondImage,
     'thirdImage': thirdImage,
     'detail':detail,
-    'postedById': userId
+    'postedById': userId,
+    'propertyId':property.documentID,
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;

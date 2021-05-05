@@ -327,6 +327,7 @@ class _PostPropertyState extends State<PostProperty> {
       // await _firestore.collection("users").document().setData({
       //   "arrayOfImages": _imageUrls,
       // });
+
       postProperty(
         'Residential',
         '${owner_builder_broker[selectedIndex]}',
@@ -345,7 +346,9 @@ class _PostPropertyState extends State<PostProperty> {
         '${_imageUrls[0]}',
         '${_imageUrls[1]}',
         '${_imageUrls[2]}',
-        '${FirebaseAuth.instance.currentUser.uid}'
+        '${FirebaseAuth.instance.currentUser.uid}',
+
+
       );
 
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)

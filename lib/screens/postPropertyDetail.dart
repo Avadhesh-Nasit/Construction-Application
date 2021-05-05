@@ -638,7 +638,7 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
                 child: Text("Update"),
                 onPressed: ()  async {
                   await FirebaseFirestore.instance.collection('propertyDetails').doc(value).update({
-                    'status':editstatus1[selectedIndex],
+                    'sellOrRent':editstatus1[selectedIndex],
                   });
                   Navigator.of(context).pop();
                 },

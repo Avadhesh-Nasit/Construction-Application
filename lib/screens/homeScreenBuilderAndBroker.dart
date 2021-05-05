@@ -244,11 +244,11 @@ class _HomeScreen1State extends State<HomeScreen1> {
           //   label: 'Home',
           // ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex==1?Icons.photo_library:Icons.photo_library_outlined, color: Colors.indigo),
+            icon: Icon(_selectedIndex==0?Icons.photo_library:Icons.photo_library_outlined, color: Colors.indigo),
             label: 'My Post',
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex==2?Icons.add_box_rounded:Icons.add_box_outlined, color: Colors.indigo),
+            icon: Icon(_selectedIndex==1?Icons.add_box_rounded:Icons.add_box_outlined, color: Colors.indigo),
             label: 'Add',
           ),
           // BottomNavigationBarItem(
@@ -256,7 +256,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
           //   label: 'Search',
           // ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex==4?Icons.account_circle:Icons.account_circle_outlined, color: Colors.indigo),
+            icon: Icon(_selectedIndex==2?Icons.account_circle:Icons.account_circle_outlined, color: Colors.indigo),
             label: 'My Profile',
           ),
         ],

@@ -330,7 +330,7 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
       //upload the list of imageUrls to firebase as an array
       // await _firestore.collection("users").document().setData({
       //   "arrayOfImages": _imageUrls,
-      // });
+      // });8
       postProperty(
           'Residential',
           '${owner_builder_broker[selectedIndex]}',
@@ -349,7 +349,7 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
           '${_imageUrls[0]}',
           '${_imageUrls[1]}',
           '${_imageUrls[2]}',
-          '${FirebaseAuth.instance.currentUser.uid}'
+          '${FirebaseAuth.instance.currentUser.uid}',
       );
 
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
@@ -416,7 +416,7 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
           '${_imageUrls[1]}',
           '${_imageUrls[2]}',
           '${detail_controller.text}',
-          '${FirebaseAuth.instance.currentUser.uid}'
+          '${FirebaseAuth.instance.currentUser.uid}',
 
       );
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
@@ -797,6 +797,7 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                         ),
                                       ),
                                     ),
+                                    SizedBox(width: 10),
                                     Expanded(
                                       child: Container(
                                         height: 100,
@@ -922,16 +923,25 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                               ),//construction status button
                               SizedBox(height: 10.0,),
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.4,
+                                width: MediaQuery.of(context).size.width,
                                 height: 50,
-                                child: RaisedButton(
-                                  onPressed: () {
-                                    addMarker();
+                                padding: EdgeInsets.only(left: 15),
+                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                ),
+                                child: TextFormField(
+                                  onChanged: (String enterLoc){
+                                    setState(() {
+                                      inputaddr=enterLoc;
+                                    });
                                   },
-                                  color: Colors.indigo,
-                                  child: Center(child: Text("Add to Map", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
+                                  decoration: InputDecoration(
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      hintText: "Add to Map",
+                                      hintStyle: TextStyle(fontSize: 18)
                                   ),
                                 ),
                               ),

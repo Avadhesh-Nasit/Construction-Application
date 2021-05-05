@@ -203,7 +203,7 @@ class _NewMapState extends State<NewMap> {
     var addresses = await Geocoder.local.findAddressesFromQuery(query);
     var first = addresses.first;
     FirebaseFirestore.instance.collection('markers').add({
-      'location':new GeoPoint(first.coordinates.latitude, first.coordinates.longitude),
+      'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
       'place': first.featureName
     });
   }
