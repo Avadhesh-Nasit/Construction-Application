@@ -347,7 +347,7 @@ class _PostPropertyState extends State<PostProperty> {
         '${_imageUrls[1]}',
         '${_imageUrls[2]}',
         '${FirebaseAuth.instance.currentUser.uid}',
-
+        '${addToMap}'
 
       );
 
@@ -513,6 +513,7 @@ class _PostPropertyState extends State<PostProperty> {
   TextEditingController price_controller_c = TextEditingController();
   TextEditingController project_description_controller_c = TextEditingController();
   TextEditingController detail_controller = TextEditingController();
+  TextEditingController addToMap = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

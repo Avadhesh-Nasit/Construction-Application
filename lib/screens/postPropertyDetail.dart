@@ -501,6 +501,7 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
 
   Future <void> delete() async {
     await FirebaseFirestore.instance.collection('propertyDetails').doc(value).delete();
+    Navigator.of(context).pop();
   }
   Future<bool> editPrice(){
     return showDialog(

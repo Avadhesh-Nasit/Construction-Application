@@ -185,6 +185,7 @@
 // }
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -204,7 +205,7 @@ class _NewMapState extends State<NewMap> {
     var first = addresses.first;
     FirebaseFirestore.instance.collection('markers').add({
       'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
-      'place': first.featureName
+      'place': first.featureName,
     });
   }
   Future addMarker() async{
@@ -240,14 +241,18 @@ class _NewMapState extends State<NewMap> {
     final Marker marker= Marker(
       markerId: markerId,
       position: LatLng(specify['location'].latitude,specify['location'].longitude),
-      infoWindow: InfoWindow(title: "Property",snippet: specify['place'],)
+      infoWindow: InfoWindow(title: "Property",snippet: specify['projectName'],
+          onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail(value: specify['propertyId'],)));
+      }
+      ),
     );
   setState(() {
     markers[markerId]= marker;
   });
   }
   getMarkerData() async{
-    FirebaseFirestore.instance.collection('markers').getDocuments().then((data){
+    FirebaseFirestore.instance.collection('propertyDetails').getDocuments().then((data){
         if(data.docs.isNotEmpty){
           for(int i=0;i<data.docs.length;i++){
               initMarker(data.docs[i].data(), data.docs[i].id);

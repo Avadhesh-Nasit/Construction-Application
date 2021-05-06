@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geocoder/geocoder.dart';
 
 Future<void> userSetup(String displayName, String email, String phoneNumber,String role,String Image) async {
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
@@ -39,7 +40,30 @@ Future<void> user(String displayName,String phoneNumber, String password,String 
   return;
 }
 
-Future<void> postProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String pro_detail, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String userId) async {
+Future<void> postProperty(String category,
+                          String postBy,
+                          String sr_radio,
+                          String pro_type,
+                          String projectName,
+                          String address,
+                          String landmark,
+                          String city,
+                          String state,
+                          String pro_detail,
+                          String area,
+                          String price,
+                          String description,
+                          String con_status,
+                          String firstImage,
+                          String secondImage,
+                          String thirdImage,
+                          String userId,
+                          String location
+                          ) async {
+
+  final query = location;
+  var addresses = await Geocoder.local.findAddressesFromQuery(query);
+  var first = addresses.first;
   DocumentReference property = FirebaseFirestore.instance.collection('propertyDetails').doc();
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
@@ -63,7 +87,8 @@ Future<void> postProperty(String category, String postBy, String sr_radio, Strin
     'secondImage': secondImage,
     'thirdImage': thirdImage,
     'postedById':userId,
-    'propertyId':property.documentID
+    'propertyId':property.documentID,
+    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude)
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;

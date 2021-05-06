@@ -350,6 +350,7 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
           '${_imageUrls[1]}',
           '${_imageUrls[2]}',
           '${FirebaseAuth.instance.currentUser.uid}',
+          '${inputaddr}'
       );
 
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
@@ -514,6 +515,7 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
   TextEditingController price_controller_c = TextEditingController();
   TextEditingController project_description_controller_c = TextEditingController();
   TextEditingController detail_controller = TextEditingController();
+  TextEditingController addToMap = TextEditingController();
   String inputaddr='';
 
   addToList() async{
@@ -521,8 +523,8 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
     var addresses = await Geocoder.local.findAddressesFromQuery(query);
     var first = addresses.first;
     FirebaseFirestore.instance.collection('propertyDetails').add({
-      'location':new GeoPoint(first.coordinates.latitude, first.coordinates.longitude),
-     // 'place': first.featureName
+      'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+      'place': first.featureName
     });
   }
   Future addMarker() async{
@@ -931,12 +933,13 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                   borderRadius: BorderRadius.circular(15),
                                   border: Border.all(style: BorderStyle.solid, color: Colors.grey),
                                 ),
-                                child: TextFormField(
+                                child: TextField(
                                   onChanged: (String enterLoc){
                                     setState(() {
                                       inputaddr=enterLoc;
                                     });
                                   },
+                                  //controller: addToMap,
                                   decoration: InputDecoration(
                                       enabledBorder: InputBorder.none,
                                       focusedBorder: InputBorder.none,
