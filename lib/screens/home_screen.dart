@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'filter.dart';
+import 'locationDemo.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -56,6 +57,24 @@ class _HomeScreenState extends State<HomeScreen> {
         //       }
         //   )
         // ],
+          actions: [
+            GestureDetector(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.location_on_outlined),
+                    Text("Mapview",style:TextStyle(color: Colors.white),)
+                  ],
+                ),
+              ),
+              onTap: (){
+                //signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NewMap()));
+              },
+            ),
+
+          ],
       ),
       drawer: Drawer(
         child: ListView(

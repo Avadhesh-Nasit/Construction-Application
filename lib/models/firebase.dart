@@ -94,11 +94,14 @@ Future<void> postProperty(String category,
   return;
 }
 
-Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId) async {
+Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location) async {
   DocumentReference property = FirebaseFirestore.instance.collection('propertyDetails').doc();
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
   //String uid = auth.currentUser.uid.toString();
+  final query = location;
+  var addresses = await Geocoder.local.findAddressesFromQuery(query);
+  var first = addresses.first;
   property.set({
     'category': category,
     'postedBy': postBy,
@@ -119,6 +122,7 @@ Future<void> postCommProperty(String category, String postBy, String sr_radio, S
     'detail':detail,
     'postedById': userId,
     'propertyId':property.documentID,
+    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude)
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;

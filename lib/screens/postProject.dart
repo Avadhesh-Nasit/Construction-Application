@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ResidentialFilterEntry1 {
@@ -347,7 +348,7 @@ class _PostPropertyState extends State<PostProperty> {
         '${_imageUrls[1]}',
         '${_imageUrls[2]}',
         '${FirebaseAuth.instance.currentUser.uid}',
-        '${addToMap}'
+          '${inputaddr}'
 
       );
 
@@ -415,7 +416,8 @@ class _PostPropertyState extends State<PostProperty> {
                       '${_imageUrls[1]}',
                       '${_imageUrls[2]}',
                       '${detail_controller.text}',
-                      '${FirebaseAuth.instance.currentUser.uid}'
+                      '${FirebaseAuth.instance.currentUser.uid}',
+                      '${inputaddr}'
 
                   );
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
@@ -514,6 +516,42 @@ class _PostPropertyState extends State<PostProperty> {
   TextEditingController project_description_controller_c = TextEditingController();
   TextEditingController detail_controller = TextEditingController();
   TextEditingController addToMap = TextEditingController();
+  String inputaddr='';
+  addToList() async{
+    final query = inputaddr;
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    var first = addresses.first;
+    FirebaseFirestore.instance.collection('propertyDetails').add({
+      'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+      'place': first.featureName
+    });
+  }
+  Future addMarker() async{
+    await showDialog(
+        context: context,
+        builder:(BuildContext context){
+          return new SimpleDialog(
+            title: Text("Add Marker Location",style: TextStyle(fontSize: 17.0),),
+            children: <Widget>[
+              new TextField(
+                onChanged: (String enterLoc){
+                  setState(() {
+                    inputaddr=enterLoc;
+                  });
+                },
+              ),
+              new SimpleDialogOption(
+                child: Text("Add It",style: TextStyle(color: Colors.blue),),
+                onPressed: (){
+                  addToList();
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -957,6 +995,31 @@ class _PostPropertyState extends State<PostProperty> {
                                   ],
                                 ),
                               ),//construction status button
+                              SizedBox(height: 10.0,),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                padding: EdgeInsets.only(left: 15),
+                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                ),
+                                child: TextField(
+                                  onChanged: (String enterLoc){
+                                    setState(() {
+                                      inputaddr=enterLoc;
+                                    });
+                                  },
+                                  //controller: addToMap,
+                                  decoration: InputDecoration(
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      hintText: "Add to Map",
+                                      hintStyle: TextStyle(fontSize: 18)
+                                  ),
+                                ),
+                              ),
                               SizedBox(height: 30.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
@@ -1381,6 +1444,31 @@ class _PostPropertyState extends State<PostProperty> {
                                   ],
                                 ),
                               ),//construction status buttons
+                              SizedBox(height: 10.0,),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                padding: EdgeInsets.only(left: 15),
+                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                ),
+                                child: TextField(
+                                  onChanged: (String enterLoc){
+                                    setState(() {
+                                      inputaddr=enterLoc;
+                                    });
+                                  },
+                                  //controller: addToMap,
+                                  decoration: InputDecoration(
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      hintText: "Add to Map",
+                                      hintStyle: TextStyle(fontSize: 18)
+                                  ),
+                                ),
+                              ),
                               SizedBox(height: 30.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,

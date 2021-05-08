@@ -53,11 +53,28 @@ class _HomeScreen1State extends State<HomeScreen1> {
         backgroundColor: Colors.indigo,
         elevation: 0.0,
         // actions: [
-        //   IconButton(icon: Icon(Icons.person),
-        //       onPressed: (){
-        //     signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
-        //       }
-        //   )
+        //   GestureDetector(
+        //     child: Container(
+        //       margin: EdgeInsets.symmetric(horizontal: 10.0),
+        //       child: Row(
+        //         children: [
+        //           Icon(Icons.location_on_outlined),
+        //           // IconButton(icon: Icon(Icons.location_on_outlined),
+        //           //     onPressed: (){
+        //           //   //signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
+        //           //  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NewMap()));
+        //           // }
+        //           // ),
+        //           Text("Mapview",style:TextStyle(color: Colors.white),)
+        //         ],
+        //       ),
+        //     ),
+        //     onTap: (){
+        //         //signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
+        //        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NewMap()));
+        //     },
+        //   ),
+        //
         // ],
       ),
       drawer: Drawer(
@@ -194,10 +211,14 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 children: [
                   Icon(Icons.info_outline),
                   Padding(padding: EdgeInsets.only(left: 10.0)),
-                  Text("About Us")
+                  Text("About Us"),
                 ],
               ),
-              onTap: resetpassword,
+              onTap: (){
+                // FirebaseFirestore.instance.collection('propertyDetails').get().then((value){
+                //   print(value.docs.length);
+                // });
+              },
             ),
             ListTile(
               title:Row(

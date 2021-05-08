@@ -281,12 +281,14 @@ class _NewMapState extends State<NewMap> {
     }
     return Scaffold(
       appBar: AppBar(
-        title: IconButton(
-          icon: Icon(Icons.add),
-          onPressed: (){
-            addMarker();
-          },
-        ),
+        title: Text("Map View",style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.indigo,
+        // IconButton(
+        //   icon: Icon(Icons.add),
+        //   onPressed: (){
+        //     addMarker();
+        //   },
+        // ),
       ),
       body: GoogleMap(
         markers: Set<Marker>.of(markers.values),
