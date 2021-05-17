@@ -55,7 +55,7 @@ class _MyFavoritePostState extends State<MyFavoritePost> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        title: Text('Favorites'),
+        title: Text('Favourite'),
         backgroundColor: Colors.indigo,
       ),
       body:ListView(

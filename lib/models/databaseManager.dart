@@ -139,6 +139,29 @@ class SearchService{
   }
 }
 
+class DatabaseManagerUser {
+  final CollectionReference profileList =
+  FirebaseFirestore.instance
+      .collection('Users');
+
+
+  Future getUsersList() async {
+    List itemsList = [];
+
+    try {
+      await profileList.getDocuments().then((querySnapshot) {
+        querySnapshot.documents.forEach((element) {
+          itemsList.add(element.data());
+        });
+      });
+      return itemsList;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+}
+
 class DataModel {
   final String postedBy;
   final String city;

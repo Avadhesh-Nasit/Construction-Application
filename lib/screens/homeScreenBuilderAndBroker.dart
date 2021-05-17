@@ -1,3 +1,4 @@
+import 'package:construction_application/screens/admin.dart';
 import 'package:construction_application/screens/builder_page.dart';
 import 'package:construction_application/screens/changePassword.dart';
 import 'package:construction_application/screens/emiCalculator.dart';
@@ -238,7 +239,7 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 ],
               ),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NewMap()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>admin()));
               },
             ),
             Divider(),

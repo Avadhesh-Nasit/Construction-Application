@@ -8,6 +8,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 
 class myHomepage extends StatefulWidget {
 
@@ -24,12 +25,52 @@ class _myHomepageState extends State<myHomepage> {
   String f1;
   var doc_id;
   var route;
-
+  RateMyApp rateMyApp = RateMyApp(
+    preferencesPrefix: 'rateMyApp_',
+    minDays: 7,
+    minLaunches: 10,
+    remindDays: 7,
+    remindLaunches: 10,
+    // googlePlayIdentifier: 'fr.skyost.example',
+    // appStoreIdentifier: '1491556149',
+  );
 
   @override
   void initState() {
     super.initState();
     fetchDatabaseList();
+    rateMyApp.init().then((_) {
+      if (rateMyApp.shouldOpenDialog) {
+        rateMyApp.showRateDialog(
+          context,
+          title: 'Rate this app', // The dialog title.
+          message: 'Help us to improve our app.', // The dialog message.
+          rateButton: 'RATE', // The dialog "rate" button text.
+          noButton: 'NO THANKS', // The dialog "no" button text.
+          laterButton: 'MAYBE LATER', // The dialog "later" button text.
+          listener: (button) { // The button click listener (useful if you want to cancel the click event).
+            switch(button) {
+              case RateMyAppDialogButton.rate:
+                print('Clicked on "Rate".');
+                break;
+              case RateMyAppDialogButton.later:
+                print('Clicked on "Later".');
+                break;
+              case RateMyAppDialogButton.no:
+                print('Clicked on "No".');
+                break;
+            }
+
+            return true; // Return false if you want to cancel the click event.
+          },
+          dialogStyle: const DialogStyle(), // Custom dialog styles.
+          onDismissed: () => rateMyApp.callEvent(RateMyAppEventType.laterButtonPressed), // Called when the user dismissed the dialog (either by taping outside or by pressing the "back" button).
+          // contentBuilder: (context, defaultContent) => content, // This one allows you to change the default dialog content.
+          // actionsBuilder: (context) => [], // This one allows you to use your own buttons.
+        );
+
+      }
+    });
   }
   fetchDatabaseList() async {
     dynamic resultant = await DatabaseManager().getUsersList();
