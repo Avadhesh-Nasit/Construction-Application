@@ -274,7 +274,6 @@ class _searchByCityState extends State<searchByCity> {
                   //   });
                   // });
                   // print(productName);
-
                 },
                 child: Container(
                   margin: EdgeInsets.all(10.0),
