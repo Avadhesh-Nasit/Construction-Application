@@ -267,6 +267,17 @@ class _userDetailsState extends State<userDetails> {
     await FirebaseFirestore.instance.collection('Users').doc(value).delete();
     Navigator.of(context).pop();
   }
+  // static Future<void> deleteItem({
+  //   required String docId,
+  // }) async {
+  //   DocumentReference documentReferencer =
+  //   _mainCollection.doc(userUid).collection('items').doc(docId);
+  //
+  //   await documentReferencer
+  //       .delete()
+  //       .whenComplete(() => print('Note item deleted from the database'))
+  //       .catchError((e) => print(e));
+  // }
 
   UserpostManager() async {
     final CollectionReference postList =

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/databaseManager.dart';
+import 'package:construction_application/screens/searchProperty.dart';
 import 'package:construction_application/screens/searchUserWithEmail.dart';
+import 'package:construction_application/screens/searchUserWithPhoneNumber.dart';
 import 'package:construction_application/screens/userDetails.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,10 @@ class _adminState extends State<admin> {
   List userProfilesList = [];
   var doc_id;
   var route;
+  String myEmail;
+  String myName;
+  String myPhone;
+  String myPhoto;
   @override
   void initState() {
     super.initState();
@@ -32,10 +38,178 @@ class _adminState extends State<admin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     // backgroundColor: Colors.yellow,
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         backgroundColor: Colors.indigo,
         elevation: 0.0,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      child: ClipOval(
+                        child: new SizedBox(
+                          width: 200.0,
+                          height: 200.0,
+                          child: (myPhoto!=null)?Image.network(
+                            myPhoto,
+                            fit: BoxFit.fill,
+                          ):Image.asset(
+                            "image/icon.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 20.0,),
+                    Container(
+                      child: FutureBuilder(
+                          future: _fetch(),
+                          builder: (context, snapshot) {
+                            if(snapshot.connectionState!=ConnectionState.done){
+                              return Text("Loading....");
+                            }
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(padding: EdgeInsets.only(top: 45.0)),
+                                Text("Admin",style: TextStyle(fontSize: 40.0,color: Colors.indigo,fontWeight: FontWeight.bold),),
+                                // SizedBox(height: 5,),
+                                // Text("$myPhone",style: TextStyle(fontSize: 15.0,color: Colors.teal),),
+                                // SizedBox(height: 5,),
+                                // Text("$myEmail",style: TextStyle(fontSize: 12.0,color: Colors.black),),
+                                // //Text("${_auth.phoneNumber}",style: TextStyle(fontSize: 15.0),)
+                              ],
+                            );
+                          }
+                      ),
+                    )
+                  ],
+                )
+            ),
+
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.home_outlined),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Home")
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>admin()));
+              },
+            ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.search_sharp),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Search User By Phone Number")
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>searchByPhoneNumber()));
+              },
+            ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.search_sharp),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Search Property"),
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>searchProperty()));
+              },
+            ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.warning_amber_outlined),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Reported Property")
+                ],
+              ),
+            ),
+            // Divider(color: Colors.indigo,),
+            // Container(
+            //   height: 70.0,
+            //   child: Row(
+            //     children: [
+            //       Padding(padding: EdgeInsets.only(left: 10.0,)),
+            //       Column(
+            //         //crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Padding(padding: EdgeInsets.only(top: 10.0)),
+            //           Text("Contact Us",style: TextStyle(fontSize: 20.0,),),
+            //           SizedBox(height: 3.0,),
+            //           Padding(padding: EdgeInsets.only(left: 10.0)),
+            //           Text("9988776655",style: TextStyle(fontSize: 15.0,color: Colors.blue),)
+            //         ],
+            //       ),
+            //       SizedBox(width: 132.0,),
+            //       Container(
+            //         decoration: BoxDecoration(
+            //           shape: BoxShape.circle,
+            //           image: DecorationImage(
+            //               fit: BoxFit.fill,
+            //               image: AssetImage("image/call.png",)
+            //           ),
+            //         ),
+            //         height: 30.0,
+            //         width: 30.0,
+            //       )
+            //     ],
+            //   ),
+            // ),
+            Divider(color: Colors.indigo,),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.info_outline),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("About Us")
+                ],
+              ),
+            ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.privacy_tip_outlined),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Privacy Policy")
+                ],
+              ),
+            ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.announcement_outlined),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Terms & Condition")
+                ],
+              ),
+            ),
+            Divider(color: Colors.indigo,),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.logout,),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Log-Out"),
+                ],
+              ),
+              onTap: (){
+              },
+            )
+          ],
+        ),
       ),
       body:ListView(
         children: [
@@ -241,6 +415,26 @@ class _adminState extends State<admin> {
         ],
       ),
     );
+  }
+  _fetch() async {
+    final firebaseUser = await FirebaseAuth.instance.currentUser;
+    if(firebaseUser!=null){
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(firebaseUser.uid)
+          .get()
+          .then((value){
+        myEmail=value.data()['email'];
+        myName=value.data()['name'];
+        myPhone=value.data()['mobileNumber'];
+        myPhoto=value.data()['Image'];
+        // print(myEmail);
+        // print(myName);
+        // print(myPhone);
+      }).catchError((e){
+        print(e);
+      });
+    }
   }
   // void deleteUser() async {
   //   FirebaseUser user = await FirebaseAuth.instance.currentUser;

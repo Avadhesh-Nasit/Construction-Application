@@ -16,7 +16,7 @@ class _searchPropertyState extends State<searchProperty> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Colors.blue.shade50,
       // appBar: AppBar(
       //   title: Text("Search Page"),
       //   backgroundColor:Colors.indigo,
@@ -28,7 +28,7 @@ class _searchPropertyState extends State<searchProperty> {
               height: 50.0,
               width: MediaQuery.of(context).size.width,
               child: Center(
-                child: Text("Search Page",style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),),
+                child: Text("Search Page",style: TextStyle(fontSize: 30.0,fontWeight: FontWeight.bold,color: Colors.indigo),),
               ),
             ),
             // GestureDetector(
@@ -65,7 +65,7 @@ class _searchPropertyState extends State<searchProperty> {
                   ),
                   padding: EdgeInsets.only(left: 30, top: 15),
                   child: Text("Search By Category",
-                      style: TextStyle(color: Colors.grey, fontSize: 16)),
+                      style: TextStyle(color: Colors.grey, fontSize: 16,)),
                 ),
               onTap: (){
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>searchByCategory()));
