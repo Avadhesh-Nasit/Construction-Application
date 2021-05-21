@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/databaseManager.dart';
+import 'package:construction_application/screens/rating.dart';
 import 'package:construction_application/screens/searchProperty.dart';
 import 'package:construction_application/screens/searchUserWithEmail.dart';
 import 'package:construction_application/screens/searchUserWithPhoneNumber.dart';
@@ -168,6 +169,18 @@ class _adminState extends State<admin> {
             //     ],
             //   ),
             // ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.info_outline),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Rating")
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ReachUs()));
+              },
+            ),
             Divider(color: Colors.indigo,),
             ListTile(
               title:Row(
