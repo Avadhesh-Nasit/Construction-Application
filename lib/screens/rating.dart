@@ -345,3 +345,24 @@ class _ReachUsState extends State<ReachUs> {
     );
   }
 }
+class Rating {
+  const Rating({@required this.UserId, this.rating});
+
+  final String UserId;
+  final double rating;
+
+  factory Rating.fromMap(Map<String, dynamic> data, String documentId) {
+    if (data == null) {
+      return null;
+    }
+    final String name = data['name'];
+    if (name == null) {
+      return null;
+    }
+    final double rating = data['rating'];
+    return Rating(
+      UserId: documentId,
+      rating: rating,
+    );
+  }
+}

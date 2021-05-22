@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/databaseManager.dart';
 import 'package:construction_application/screens/rating.dart';
+import 'package:construction_application/screens/ratingBar.dart';
 import 'package:construction_application/screens/searchProperty.dart';
 import 'package:construction_application/screens/searchUserWithEmail.dart';
 import 'package:construction_application/screens/searchUserWithPhoneNumber.dart';
@@ -172,7 +173,7 @@ class _adminState extends State<admin> {
             ListTile(
               title:Row(
                 children: [
-                  Icon(Icons.info_outline),
+                  Icon(Icons.star_rate_outlined),
                   Padding(padding: EdgeInsets.only(left: 10.0)),
                   Text("Rating")
                 ],
@@ -190,6 +191,9 @@ class _adminState extends State<admin> {
                   Text("About Us")
                 ],
               ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>RatingBar1()));
+              },
             ),
             ListTile(
               title:Row(
