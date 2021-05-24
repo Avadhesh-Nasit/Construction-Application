@@ -250,28 +250,7 @@ class DataModellandmark{
     }).toList();
   }
 }
-class DataModel2 {
-  final String postedBy;
-  final String rating;
-  final String category;
-  final String UserId;
-  final String postedById;
-  final String name;
 
-  DataModel2({this.postedBy, this.rating,this.category,this.UserId,this.postedById,this.name});
-
-  //Create a method to convert QuerySnapshot from Cloud Firestore to a list of objects of this DataModel
-  //This function in essential to the working of FirestoreSearchScaffold
-
-  List<DataModel> dataListFromSnapshot(QuerySnapshot querySnapshot) {
-    return querySnapshot.docs.map((snapshot) {
-      final Map<String, dynamic> dataMap = snapshot.data();
-
-      return DataModel(
-          postedBy: dataMap['postedBy'], city: dataMap['rating'],category:dataMap['category'],status: dataMap['userId'],firstImage: dataMap['postedById'],name: dataMap['projectName'] );
-    }).toList();
-  }
-}
 
 
 

@@ -8,6 +8,7 @@ import 'package:construction_application/screens/location.dart';
 import 'package:construction_application/screens/login_screen.dart';
 import 'package:construction_application/screens/myPost.dart';
 import 'package:construction_application/screens/my_homePage.dart';
+import 'package:construction_application/screens/newProject.dart';
 import 'package:construction_application/screens/postProject.dart';
 import 'package:construction_application/screens/postProjectBuilderBroker.dart';
 import 'package:construction_application/screens/profile.dart';
@@ -149,6 +150,18 @@ class _HomeScreen1State extends State<HomeScreen1> {
               ),
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostProperty()));
+              },
+            ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.add_box_outlined),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("Post New Project"),
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>postNewProject()));
               },
             ),
             ListTile(
