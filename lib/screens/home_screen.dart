@@ -10,6 +10,7 @@ import 'package:construction_application/screens/propertyDetail.dart';
 import 'package:construction_application/screens/searchPage.dart';
 import 'package:construction_application/screens/searchProperty.dart';
 import 'package:construction_application/screens/signup_screen.dart';
+import 'package:construction_application/screens/viewNewProject.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:construction_application/models/authentication.dart';
@@ -170,6 +171,19 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostProperty()));
+              },
+            ),
+            ListTile(
+              title:Row(
+                children: [
+                  Icon(Icons.home_outlined),
+                  Padding(padding: EdgeInsets.only(left: 10.0)),
+                  Text("New Project")
+                ],
+              ),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>viewNewProject()));
+
               },
             ),
             ListTile(

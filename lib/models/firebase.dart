@@ -202,34 +202,14 @@ Future<void> postNewProjectRes(String category,
   return;
 }
 
-Future<void> postNewProjectCom(String category,
-    String postBy,
-    String sr_radio,
-    String pro_type,
-    String projectName,
-    String address,
-    String landmark,
-    String city,
-    String state,
-    String pro_detail,
-    String area,
-    String price,
-    String description,
-    String con_status,
-    String firstImage,
-    String secondImage,
-    String thirdImage,
-    String userId,
-    String location
-    ) async {
-
-  final query = location;
-  var addresses = await Geocoder.local.findAddressesFromQuery(query);
-  var first = addresses.first;
+Future<void> postNewProjectCom(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location) async {
   DocumentReference property = FirebaseFirestore.instance.collection('newProject').doc();
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
   //String uid = auth.currentUser.uid.toString();
+  final query = location;
+  var addresses = await Geocoder.local.findAddressesFromQuery(query);
+  var first = addresses.first;
   property.set({
     'category': category,
     'postedBy': postBy,
@@ -240,7 +220,6 @@ Future<void> postNewProjectCom(String category,
     'landmark': landmark,
     'city': city,
     'state': state,
-    'detail': pro_detail,
     'area': area,
     'price': price,
     'description': description,
@@ -248,8 +227,9 @@ Future<void> postNewProjectCom(String category,
     'firstImage': firstImage,
     'secondImage': secondImage,
     'thirdImage': thirdImage,
-    'postedById':userId,
-    'propertyId':property.documentID,
+    'detail':detail,
+    'postedById': userId,
+    'propertyId':property.id,
     'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude)
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
