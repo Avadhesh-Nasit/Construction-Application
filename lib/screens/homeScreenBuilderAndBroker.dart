@@ -1,3 +1,4 @@
+import 'package:construction_application/screens/addPost.dart';
 import 'package:construction_application/screens/admin.dart';
 import 'package:construction_application/screens/builder_page.dart';
 import 'package:construction_application/screens/changePassword.dart';
@@ -34,8 +35,8 @@ class HomeScreen1 extends StatefulWidget {
 class _HomeScreen1State extends State<HomeScreen1> {
   final List<Widget> _widgetOptions = <Widget>[
     MyPost(),
-    PostPropertyBuilderAndBroker(),
-    ProfilePage()
+    addPost(),
+    ProfilePage(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -330,6 +331,31 @@ class _HomeScreen1State extends State<HomeScreen1> {
   Future<void> resetpassword(){
     User _auth = FirebaseAuth.instance.currentUser;
     _auth.sendEmailVerification();
-
+  }
+  Future<bool> post(){
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder:(BuildContext context){
+          return AlertDialog(
+            title: Text("Enter Price"),
+            contentPadding: EdgeInsets.all(10),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Post Property"),
+                onPressed: ()  async {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PostPropertyBuilderAndBroker()));
+                },
+              ),
+              FlatButton(
+                child: Text("Post New Project"),
+                onPressed: ()  async {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>postNewProject()));
+                },
+              )
+            ],
+          );
+        }
+    );
   }
 }
