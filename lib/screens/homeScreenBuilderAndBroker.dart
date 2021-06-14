@@ -24,8 +24,11 @@ import 'package:construction_application/models/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import 'firebaseNotification.dart';
 import 'locationDemo.dart';
+import 'myNewProject.dart';
 
 class HomeScreen1 extends StatefulWidget {
   @override
@@ -33,8 +36,35 @@ class HomeScreen1 extends StatefulWidget {
 }
 
 class _HomeScreen1State extends State<HomeScreen1> {
+  static Future openEmail({
+    @required String toEmail,
+    @required String subject,
+    @required String body,
+  }) async {
+    final url =
+        'mailto:$toEmail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(body)}';
+
+    await _launchUrl(url);
+  }
+
+  static Future openPhoneCall({@required String phoneNumber}) async {
+    final url = 'tel:$phoneNumber';
+
+    await _launchUrl(url);
+  }
+
+  static Future _launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
+  }
+  openUrl() {
+    String url = "https://anyror.gujarat.gov.in/";
+    _launchUrl(url);
+  }
   final List<Widget> _widgetOptions = <Widget>[
     MyPost(),
+    MyNewProject(),
     addPost(),
     ProfilePage(),
   ];
@@ -79,6 +109,22 @@ class _HomeScreen1State extends State<HomeScreen1> {
         //   ),
         //
         // ],
+        actions: [
+          GestureDetector(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                children: [
+                  Icon(Icons.notifications),
+                ],
+              ),
+            ),
+            onTap: (){
+              //signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FirebaseMessagingDemo()));
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -189,7 +235,19 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=>searchByLandmark()));
               },
             ),
-            Divider(),
+            ListTile(
+              title: Row(
+                children: [
+                  Icon(Icons.open_in_browser_outlined),
+                  SizedBox(width: 25),
+                  Text("Govt. Circulars")
+                ],
+              ),
+              onTap: () {
+                openUrl();
+              },
+            ),
+            Divider(color: Colors.indigo,),
             Container(
               height: 70.0,
               child: Row(
@@ -198,29 +256,51 @@ class _HomeScreen1State extends State<HomeScreen1> {
                   Column(
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(padding: EdgeInsets.only(top: 10.0)),
+                      Padding(padding: EdgeInsets.only(top: 20.0)),
                       Text("Contact Us",style: TextStyle(fontSize: 20.0,),),
                       SizedBox(height: 3.0,),
-                      Padding(padding: EdgeInsets.only(left: 10.0)),
-                      Text("9988776655",style: TextStyle(fontSize: 15.0),)
+                      // Padding(padding: EdgeInsets.only(left: 10.0)),
+                      // Text("9988776655",style: TextStyle(fontSize: 15.0,color: Colors.blue),)
                     ],
                   ),
-                  SizedBox(width: 132.0,),
-                  Container(
-                    decoration: BoxDecoration(
+                  SizedBox(width: 80.0,),
+                  GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             fit: BoxFit.fill,
-                            image: AssetImage("image/call.png")
-                        )
+                            image: AssetImage("image/call.png",)
+                        ),
+                      ),
+                      height: 30.0,
+                      width: 30.0,
                     ),
-                    height: 30.0,
-                    width: 30.0,
+                    onTap: (){
+                      openPhoneCall(phoneNumber: '(+91)9726696332');
+                    },
+                  ),
+                  SizedBox(width: 20.0,),
+                  GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage("image/email.png",)
+                        ),
+                      ),
+                      height: 50.0,
+                      width: 50.0,
+                    ),
+                    onTap: (){
+                      openEmail(toEmail: 'bhavinkgadhiya43@gmail.com', subject: '', body: '');
+                    },
                   )
                 ],
               ),
             ),
-            Divider(),
+            Divider(color: Colors.indigo,),
             ListTile(
               title:Row(
                 children: [
@@ -253,7 +333,6 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 ],
               ),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>admin()));
               },
             ),
             Divider(),
@@ -266,7 +345,40 @@ class _HomeScreen1State extends State<HomeScreen1> {
                 ],
               ),
               onTap: (){
-                signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
+                showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder:(BuildContext context){
+                      return AlertDialog(
+                        title: Text("Are you sure?"),
+                        contentPadding: EdgeInsets.all(10),
+                        actions: <Widget>[
+                          Row(
+                            children: [
+                              GestureDetector(
+                                  onTap: (){
+                                    signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Container(
+                                    child: Text("Yes",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
+                                  )
+                              ),
+                              SizedBox(width: 20,),
+                              GestureDetector(
+                                  onTap: (){
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Container(
+                                    child: Text("No",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
+                                  )
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                );
               },
             )
           ],
@@ -284,15 +396,16 @@ class _HomeScreen1State extends State<HomeScreen1> {
             label: 'My Post',
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex==1?Icons.add_box_rounded:Icons.add_box_outlined, color: Colors.indigo),
+            icon: Icon(_selectedIndex==1?Icons.account_balance:Icons.account_balance_outlined, color: Colors.indigo),
+            label: 'My Project',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(_selectedIndex==2?Icons.add_box_rounded:Icons.add_box_outlined, color: Colors.indigo),
             label: 'Add',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.search, color: Colors.indigo),
-          //   label: 'Search',
-          // ),
+
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex==2?Icons.account_circle:Icons.account_circle_outlined, color: Colors.indigo),
+            icon: Icon(_selectedIndex==3?Icons.account_circle:Icons.account_circle_outlined, color: Colors.indigo),
             label: 'My Profile',
           ),
         ],

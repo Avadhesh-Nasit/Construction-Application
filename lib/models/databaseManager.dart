@@ -274,6 +274,53 @@ class newProject {
   }
 }
 
+class DatabaseManagerUser1 {
+  Future getUsersList() async {
+    List itemsList = [];
+    final profileList =
+    FirebaseFirestore.instance
+        .collection('Users').where('role',isNotEqualTo: 'Admin');
+
+    try {
+      await profileList.getDocuments().then((querySnapshot) {
+        querySnapshot.documents.forEach((element) {
+          itemsList.add(element.data());
+        });
+      });
+      return itemsList;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+}
+class UserNewPostManager {
+  // var firebaseUser = FirebaseAuth.instance.currentUser;
+  // FirebaseAuth auth = FirebaseAuth.instance;
+  //FirebaseFirestore.instance.collection('Users12').document(firebaseUser.uid).collection('usersPost');
+  final CollectionReference postList =
+  FirebaseFirestore.instance
+      .collection('newProject');
+
+
+  Future getUsersPostList() async {
+    List itemsList = [];
+
+    try {
+      await postList.getDocuments().then((querySnapshot) {
+        querySnapshot.documents.forEach((element) {
+          if(element.data()['postedById'] == FirebaseAuth.instance.currentUser.uid) {
+            itemsList.add(element.data());
+          }
+        });
+      });
+      return itemsList;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+}
 
 
 

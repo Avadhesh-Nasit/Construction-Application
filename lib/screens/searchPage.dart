@@ -625,6 +625,10 @@ class _Search_PageState extends State<Search_Page> {
 
   TextEditingController state_controller = TextEditingController();
   TextEditingController city_controller = TextEditingController();
+  int propertyTypeSelect = 0;
+  int propertyTypeSelectCom = 0;
+  List<String> propertyType = ["Apartment", "Villa/House", "Row House", "Farm House", "Plot", "Pent House", "Others"];
+  List<String> propertyTypeCom = ["Office Space", "Shop", "Ware House", "Commercial Land", "Hotel", "Showroom", "Others"];
 
   final List<ResidentialFilterEntry> residential_cast = <ResidentialFilterEntry>[
     const ResidentialFilterEntry('Apartment'),
@@ -891,12 +895,47 @@ class _Search_PageState extends State<Search_Page> {
                                   )
                               ),
                               SizedBox(height: 10.0,),
+                              // Container(
+                              //     child: Wrap(
+                              //       spacing: 10.0,
+                              //       runSpacing: 3.0,
+                              //       children: residentialWidgets.toList(),
+                              //     )
+                              // ),
                               Container(
-                                  child: Wrap(
-                                    spacing: 10.0,
-                                    runSpacing: 3.0,
-                                    children: residentialWidgets.toList(),
-                                  )
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  children: [
+                                    propertyTypeRadio(propertyType[0], 0),
+                                    SizedBox(width: 10),
+                                    propertyTypeRadio(propertyType[1], 1),
+                                    SizedBox(width: 10),
+                                    propertyTypeRadio(propertyType[2], 2),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  children: [
+                                    propertyTypeRadio(propertyType[3], 3),
+                                    SizedBox(width: 10),
+                                    propertyTypeRadio(propertyType[4], 4),
+                                    SizedBox(width: 10),
+                                    propertyTypeRadio(propertyType[5], 5),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  children: [
+                                    propertyTypeRadio(propertyType[6], 6),
+                                  ],
+                                ),
                               ),
                               SizedBox(height: 10),
                               // Divider(),
@@ -1001,7 +1040,7 @@ class _Search_PageState extends State<Search_Page> {
                                     Navigator.of(context).push(MaterialPageRoute(builder:(context)=>filter(state:state_controller.text,
                                                                                                             city:city_controller.text,
                                                                                                             sellOrRent:sell_and_rent[selectedIndex1],
-                                                                                                            propertyType:_filters.toString(),
+                                                                                                            propertyType:propertyType[propertyTypeSelect],
                                                                                                             status:sale_type_list[selectedIndex3],
                                                                                                             postedBy:residential_postedBy[selectedIndex5]
                                     )));
@@ -1048,12 +1087,47 @@ class _Search_PageState extends State<Search_Page> {
                                   )
                               ),
                               SizedBox(height: 10.0,),
+                              // Container(
+                              //     child: Wrap(
+                              //       spacing: 10.0,
+                              //       runSpacing: 3.0,
+                              //       children: commercialWidgets.toList(),
+                              //     )
+                              // ),
                               Container(
-                                  child: Wrap(
-                                    spacing: 10.0,
-                                    runSpacing: 3.0,
-                                    children: commercialWidgets.toList(),
-                                  )
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  children: [
+                                    propertyTypeRadioCom(propertyTypeCom[0], 0),
+                                    SizedBox(width: 10),
+                                    propertyTypeRadioCom(propertyTypeCom[1], 1),
+                                    SizedBox(width: 10),
+                                    propertyTypeRadioCom(propertyTypeCom[2], 2),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  children: [
+                                    propertyTypeRadioCom(propertyTypeCom[3], 3),
+                                    SizedBox(width: 10),
+                                    propertyTypeRadioCom(propertyTypeCom[4], 4),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.topLeft,
+                                margin: EdgeInsets.only(left: 10),
+                                child: Row(
+                                  children: [
+                                    propertyTypeRadioCom(propertyTypeCom[5], 5),
+                                    SizedBox(width: 10),
+                                    propertyTypeRadioCom(propertyTypeCom[6], 6),
+                                  ],
+                                ),
                               ),
                               SizedBox(height: 10),
                               // Divider(),
@@ -1162,7 +1236,7 @@ class _Search_PageState extends State<Search_Page> {
                               Navigator.of(context).push(MaterialPageRoute(builder: (context)=>filter(state:state_controller.text,
                                 city:city_controller.text,
                                 sellOrRent:sell_and_rent[selectedIndex2],
-                                propertyType:commercial_filters.toString(),
+                                propertyType:propertyTypeCom[propertyTypeSelectCom],
                                 status:sale_type_list[selectedIndex4],
                                 postedBy:commercial_postedBy[selectedIndex6]
 
@@ -1216,6 +1290,16 @@ class _Search_PageState extends State<Search_Page> {
   void changeIndex_commercial_postedBy(int index) {
     setState(() {
       selectedIndex6 = index;
+    });
+  }
+  void propertyTypeIndex(int index){
+    setState(() {
+      propertyTypeSelect=index;
+    });
+  }
+  void propertyTypeIndexCom(int index){
+    setState(() {
+      propertyTypeSelectCom=index;
     });
   }
 
@@ -1277,6 +1361,29 @@ class _Search_PageState extends State<Search_Page> {
       ),
       borderSide: BorderSide(color: selectedIndex6 == index ? Colors.indigo : Colors.grey),
       child: Text(txt, style: TextStyle(color: selectedIndex6 == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
+    );
+  }
+  Widget propertyTypeRadio(String txt, int index) {
+    return OutlineButton(
+      splashColor: Colors.green,
+      onPressed: () => propertyTypeIndex(index),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      borderSide: BorderSide(color: propertyTypeSelect == index ? Colors.indigo : Colors.grey),
+      child: Text(txt, style: TextStyle(color: propertyTypeSelect == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
+    );
+  }
+
+  Widget propertyTypeRadioCom(String txt, int index) {
+    return OutlineButton(
+      splashColor: Colors.green,
+      onPressed: () => propertyTypeIndexCom(index),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      borderSide: BorderSide(color: propertyTypeSelectCom == index ? Colors.indigo : Colors.grey),
+      child: Text(txt, style: TextStyle(color: propertyTypeSelectCom == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
     );
   }
 

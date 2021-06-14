@@ -5,18 +5,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'my_homePage.dart';
-class postPropertyDetail extends StatefulWidget {
+class postProjectDetail extends StatefulWidget {
   //final String doc;
   //const propertyDetail({Key key, this.doc}) : super(key: key);
   final String value;
 
-  const postPropertyDetail({Key key, this.value}) : super(key: key);
+  const postProjectDetail({Key key, this.value}) : super(key: key);
 
   @override
-  _postPropertyDetailState createState() => _postPropertyDetailState(value);
+  _postProjectDetailState createState() => _postProjectDetailState(value);
 }
 
-class _postPropertyDetailState extends State<postPropertyDetail> {
+class _postProjectDetailState extends State<postProjectDetail> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   void showSnackBar(String value) {
     _scaffoldKey
@@ -46,7 +46,7 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
   String poI;
   bool reportV;
 
-  _postPropertyDetailState(this.value);
+  _postProjectDetailState(this.value);
   @override
   void initState() {
     super.initState();
@@ -57,7 +57,7 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
   Widget build(BuildContext context) {
     //String doc=doc_id;
     return StreamBuilder(
-        stream:FirebaseFirestore.instance.collection("propertyDetails").doc(value).snapshots(),
+        stream:FirebaseFirestore.instance.collection("newProject").doc(value).snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return new Text("Loading");
@@ -452,21 +452,21 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
                                     ),
                                     Expanded(
                                         child: Container(
-                                          alignment: Alignment.topRight,
-                                          height: 20,
-                                          width: MediaQuery
-                                              .of(context)
-                                              .size
-                                              .width/2,
-                                          child:  GestureDetector(
-                                            child: Container(
-                                              width: 40.0,
-                                              child: Text("Edit",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),),
-                                            ),
-                                            onTap: (){
-                                              editDescription();
-                                            },
-                                          )
+                                            alignment: Alignment.topRight,
+                                            height: 20,
+                                            width: MediaQuery
+                                                .of(context)
+                                                .size
+                                                .width/2,
+                                            child:  GestureDetector(
+                                              child: Container(
+                                                width: 40.0,
+                                                child: Text("Edit",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold,fontSize: 20),),
+                                              ),
+                                              onTap: (){
+                                                editDescription();
+                                              },
+                                            )
                                         )
                                     )
                                   ],
@@ -649,15 +649,15 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
             actions: <Widget>[
               Row(
                 children: [
-                 GestureDetector(
-                   onTap: (){
-                     delete();
-                     Navigator.of(context).pop();
-                   },
-                   child: Container(
-                     child: Text("Yes",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
-                   )
-                 ),
+                  GestureDetector(
+                      onTap: (){
+                        delete();
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        child: Text("Yes",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
+                      )
+                  ),
                   SizedBox(width: 20,),
                   GestureDetector(
                       onTap: (){
@@ -756,7 +756,7 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
     // );
     // },
     // );
-      showDialog(
+    showDialog(
         context: context,
         barrierDismissible: false,
         builder:(BuildContext context){
@@ -764,12 +764,12 @@ class _postPropertyDetailState extends State<postPropertyDetail> {
           return AlertDialog(
             title: Text("Enter Status"),
             content: Row(
-                children: [
-                  customRadio_1(editstatus[0], 0),
-                  SizedBox(width: 20),
-                  customRadio_1(editstatus[1], 1),
-                ],
-              ),
+              children: [
+                customRadio_1(editstatus[0], 0),
+                SizedBox(width: 20),
+                customRadio_1(editstatus[1], 1),
+              ],
+            ),
             contentPadding: EdgeInsets.all(10),
             actions: <Widget>[
               FlatButton(

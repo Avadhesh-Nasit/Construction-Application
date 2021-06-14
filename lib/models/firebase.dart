@@ -58,7 +58,10 @@ Future<void> postProperty(String category,
                           String secondImage,
                           String thirdImage,
                           String userId,
-                          String location
+                          String location,
+                          int view,
+                          String mark,
+                          bool report
                           ) async {
 
   final query = location;
@@ -88,13 +91,16 @@ Future<void> postProperty(String category,
     'thirdImage': thirdImage,
     'postedById':userId,
     'propertyId':property.documentID,
-    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude)
+    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+    'view':view,
+    'markAsSold':mark,
+    'report':report
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;
 }
 
-Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location) async {
+Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location,int view,String mark,bool report) async {
   DocumentReference property = FirebaseFirestore.instance.collection('propertyDetails').doc();
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
@@ -122,7 +128,10 @@ Future<void> postCommProperty(String category, String postBy, String sr_radio, S
     'detail':detail,
     'postedById': userId,
     'propertyId':property.documentID,
-    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude)
+    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+    'view':view,
+    'markAsSold':mark,
+    'report':report
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;
@@ -166,7 +175,10 @@ Future<void> postNewProjectRes(String category,
     String secondImage,
     String thirdImage,
     String userId,
-    String location
+    String location,
+    int view,
+    String mark,
+    bool report
     ) async {
 
   final query = location;
@@ -196,13 +208,16 @@ Future<void> postNewProjectRes(String category,
     'thirdImage': thirdImage,
     'postedById':userId,
     'propertyId':property.documentID,
-    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude)
+    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+    'view':view,
+    'markAsSold':mark,
+    'report':report
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;
 }
 
-Future<void> postNewProjectCom(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location) async {
+Future<void> postNewProjectCom(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location,int view,String mark,bool report) async {
   DocumentReference property = FirebaseFirestore.instance.collection('newProject').doc();
   //var firebaseUser = await FirebaseAuth.instance.currentUser;
   //FirebaseAuth auth = FirebaseAuth.instance;
@@ -230,7 +245,10 @@ Future<void> postNewProjectCom(String category, String postBy, String sr_radio, 
     'detail':detail,
     'postedById': userId,
     'propertyId':property.id,
-    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude)
+    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+    'view':view,
+    'markAsSold':mark,
+    'report':report
   });
   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
   return;

@@ -1,106 +1,62 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:construction_application/models/databaseManager.dart';
-import 'package:construction_application/screens/postPropertyDetail.dart';
-import 'package:construction_application/screens/propertyDetail.dart';
-
-import 'package:favorite_button/favorite_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class MyPost extends StatefulWidget {
+class Sold_Property extends StatefulWidget {
+
   @override
-  _MyPostState createState() => _MyPostState();
+  _Sold_PropertyState createState() => _Sold_PropertyState();
 }
 
-class _MyPostState extends State<MyPost> {
-  bool isAnimate = false;
+class _Sold_PropertyState extends State<Sold_Property> {
 
-  //final _auth= FirebaseAuth.instance.currentUser;
-  List userPostList = [];
+  List soldList = [];
 
-  // ignore: non_constant_identifier_names
-  String doc_id;
-  var route;
-  // ignore: non_constant_identifier_names
-  String doc_id1;
-  String myRole;
-
-  //bool f1;
-  //String id;
-  //var abc;
-
-  var refreshKey = GlobalKey<RefreshIndicatorState>();
-
-  @override
-  void initState() {
-    super.initState();
-    fetchDatabaseList();
-    refreshPage();
-  }
-
-  Future<Null> refreshPage() async {
-    refreshKey.currentState?.show();
-    await Future.delayed(Duration(seconds: 2));
-    setState(() {
-      return;
-    });
-  }
-
-  fetchDatabaseList() async {
-    dynamic resultant = await UserpostManager().getUsersPostList();
+  fetchSoldList() async {
+    dynamic resultant = await getSoldList();
 
     if (resultant == null) {
       print('Unable to retrieve');
     } else {
       setState(() {
-        userPostList = resultant;
+        soldList = resultant;
       });
     }
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchSoldList();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      body: ListView(
-        children: [
-          SizedBox(height: 15),
-          Container(
-            child: RefreshIndicator(
-              key: refreshKey,
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemCount: userPostList.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: (){
-                        FirebaseFirestore.instance
-                            .collection('propertyDetails')
-                            .get()
-                            .then(
-                              (QuerySnapshot snapshot) => {
-                            // snapshot.documents.forEach((f) {
-                            //
-                            //   print("documentID---- " + f.reference.documentID);
-                            //
-                            // }),
-                            //     snapshot.documents[index].data(),
-                            doc_id = userPostList[index]['propertyId'],
-                            //print(snapshot.documents[index].documentID)
-                            print(doc_id),
-                            route = MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  postPropertyDetail(value: doc_id),
-
-                            ),
-                            Navigator.of(context).push(route)
-                          },
-                        );
-                      },
-                      child: Container(
+      appBar: AppBar(
+        title: Text("Sold Property"),
+        backgroundColor: Colors.indigo,
+      ),
+      body: StreamBuilder<QuerySnapshot> (
+        stream: FirebaseFirestore.instance.collection('soldProperties').snapshots(),
+        builder: (context, snapshot) {
+          return ListView(
+            children: [
+              SizedBox(height: 8),
+              Container(
+                margin: EdgeInsets.only(left: 20),
+                child: Text("Sold property(${soldList.length})", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ),
+              SizedBox(height: 8),
+              Container(
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemCount: soldList.length,
+                    itemBuilder: (context, index) {
+                      DocumentSnapshot data = snapshot.data.docs[index];
+                      return Container(
                         margin: EdgeInsets.all(10.0),
                         height: 320,
                         width: MediaQuery
@@ -129,7 +85,7 @@ class _MyPostState extends State<MyPost> {
                                       topRight: Radius.circular(20.0),
                                     ),
                                     child: Image.network(
-                                        userPostList[index]['firstImage'],
+                                        soldList[index]['firstImage'],
                                         width: MediaQuery
                                             .of(context)
                                             .size
@@ -152,9 +108,9 @@ class _MyPostState extends State<MyPost> {
                                         .size
                                         .width / 2,
                                     child: Text(
-                                        userPostList[index]['projectName'],
+                                        soldList[index]['projectName'],
                                         style: TextStyle(fontSize: 25,
-                                            fontWeight: FontWeight.bold,color: Colors.indigo)),
+                                            fontWeight: FontWeight.bold)),
                                   ),
                                 ),
                                 Expanded(
@@ -166,8 +122,8 @@ class _MyPostState extends State<MyPost> {
                                           .of(context)
                                           .size
                                           .width / 2,
-                                      child: Text(userPostList[index]['price'],
-                                          style: TextStyle(fontSize: 18,
+                                      child: Text(soldList[index]['price'],
+                                          style: TextStyle(fontSize: 20,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.indigo)),
                                     )
@@ -187,7 +143,7 @@ class _MyPostState extends State<MyPost> {
                                       children: [
                                         TextSpan(
                                           // text: "Builder",
-                                            text: userPostList[index]['postedBy'],
+                                            text: soldList[index]['postedBy'],
                                             style: TextStyle(fontSize: 16,
                                                 fontWeight: FontWeight.w400)
                                         )
@@ -207,7 +163,7 @@ class _MyPostState extends State<MyPost> {
                                           fontWeight: FontWeight.w700),
                                       children: [
                                         TextSpan(
-                                            text: userPostList[index]['city'],
+                                            text: soldList[index]['city'],
                                             style: TextStyle(fontSize: 18,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w400)
@@ -228,7 +184,7 @@ class _MyPostState extends State<MyPost> {
                                           fontWeight: FontWeight.w700),
                                       children: [
                                         TextSpan(
-                                            text: userPostList[index]['category'],
+                                            text: soldList[index]['category'],
                                             style: TextStyle(fontSize: 18,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w400)
@@ -238,39 +194,59 @@ class _MyPostState extends State<MyPost> {
                                 )
                             ),
                             SizedBox(height: 7),
-                            Container(
-                                alignment: Alignment.topLeft,
-                                margin: EdgeInsets.only(left: 13),
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: "Status : ",
-                                      style: TextStyle(fontSize: 18,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700),
-                                      children: [
-                                        TextSpan(
-                                            text: userPostList[index]['status'],
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 13),
+                                      child: RichText(
+                                        text: TextSpan(
+                                            text: "Status : ",
                                             style: TextStyle(fontSize: 18,
                                                 color: Colors.black,
-                                                fontWeight: FontWeight.w400)
-                                        )
-                                      ]
+                                                fontWeight: FontWeight.w700),
+                                            children: [
+                                              TextSpan(
+                                                  text: soldList[index]['status'],
+                                                  style: TextStyle(fontSize: 18,
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.w400)
+                                              )
+                                            ]
+                                        ),
+                                      )
                                   ),
-                                )
+                                ),
+                              ],
                             ),
-
-
                           ],
                         ),
-                      ),
-                    );
-                  }),
-              onRefresh: refreshPage,
-            ),
-          ),
-        ],
+                      );
+                    }),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
+  final CollectionReference q1 = FirebaseFirestore.instance
+      .collection('soldProperties');
 
+  Future getSoldList() async {
+    List soldItemsList = [];
+
+    try {
+      await q1.getDocuments().then((querySnapshot) {
+        querySnapshot.documents.forEach((element) {
+          soldItemsList.add(element.data());
+        });
+      });
+      return soldItemsList;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 }

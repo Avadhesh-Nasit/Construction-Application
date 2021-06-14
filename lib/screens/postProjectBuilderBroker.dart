@@ -213,6 +213,7 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
   // }
   //
 
+  int userView=0;
   File _image1;
   File _image2;
   File _image3;
@@ -335,22 +336,25 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
           'Residential',
           '${owner_builder_broker[selectedIndex]}',
           '${sell_and_rent[selectedIndex1]}',
-          '$_filters1',
+          '${propertyType[propertyTypeSelect]}',
           '${project_name_controller_r.text}',
           '${address_controller_r.text}, ${landmark_controller_r.text}, ${city_controller_r.text},  ${state_controller_r.text}',
           '${landmark_controller_r.text}',
           '${city_controller_r.text}',
           '${state_controller_r.text}',
           '${bhk[selectedIndex2]}',
-          '${area_controller_r.text}',
-          '${price_controller_r.text}',
+          '${area_controller_r.text} ${Items1[_value1]}',
+          '${price_controller_r.text}/${Items1[_value1]}',
           '${project_description_controller_r.text}',
           '${construction_status[selectedIndex3]}',
           '${_imageUrls[0]}',
           '${_imageUrls[1]}',
           '${_imageUrls[2]}',
           '${FirebaseAuth.instance.currentUser.uid}',
-          '${inputaddr}'
+          '${inputaddr}',
+          userView,
+          'Available',
+          false
       );
 
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
@@ -403,14 +407,14 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
           'Commercial',
           '${owner_builder_broker[selectedIndex]}',
           '${sell_and_rent_1c[selectedIndex1c]}',
-          '$commercial1_filters',
+          '${propertyTypeCom[propertyTypeSelectCom]}',
           '${project_name_controller_c.text}',
           '${address_controller_c.text}, ${landmark_controller_c.text}, ${city_controller_c.text}, ${state_controller_c.text}',
           '${landmark_controller_c.text}',
           '${city_controller_c.text}',
           '${state_controller_c.text}',
-          '${area_controller_c.text}',
-          '${price_controller_c.text}',
+          '${area_controller_c.text} ${Items1[_value1]}',
+          '${price_controller_c.text}/${Items1[_value1]}',
           '${project_description_controller_c.text}',
           '${construction_status_4c[selectedIndex4c]}',
           '${_imageUrls[0]}',
@@ -418,7 +422,10 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
           '${_imageUrls[2]}',
           '${detail_controller.text}',
           '${FirebaseAuth.instance.currentUser.uid}',
-          '${inputaddr}'
+          '${inputaddr}',
+          userView,
+          'Available',
+          false
 
       );
       //postProperty(category, postBy, sr_radio, pro_type, projectName, address, landmark, city, state, pro_detail, area, price, description, con_status, url_link)
@@ -518,7 +525,16 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
   TextEditingController detail_controller = TextEditingController();
   TextEditingController addToMap = TextEditingController();
   String inputaddr='';
-
+  int _value1=0;
+  List Items1 = [
+    "Sq. Meter", "Are", "Hectare", "Sq. Feet", "Sq. Kilometer",
+    "Sq. Yard", "Sq. Mile", "Sq. Inch", "Guntha", "Vigha(23.5)",
+    "Vigha(16)"
+  ];
+  int propertyTypeSelect = 0;
+  int propertyTypeSelectCom = 0;
+  List<String> propertyType = ["Apartment", "Villa/House", "Row House", "Farm House", "Plot", "Pent House", "Others"];
+  List<String> propertyTypeCom = ["Office Space", "Shop", "Ware House", "Commercial Land", "Hotel", "Showroom", "Others"];
   addToList() async{
     final query = inputaddr;
     var addresses = await Geocoder.local.findAddressesFromQuery(query);
@@ -573,8 +589,8 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                   margin: EdgeInsets.only(left: 20),
                   child: Row(
                     children: [
-                      customRadio_2(owner_builder_broker[0], 0),
-                      SizedBox(width: 20),
+                      // customRadio_2(owner_builder_broker[0], 0),
+                      // SizedBox(width: 20),
                       customRadio_2(owner_builder_broker[1], 1),
                       SizedBox(width: 20),
                       customRadio_2(owner_builder_broker[2], 2),
@@ -630,13 +646,49 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                       child:Text("Property Type",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),),
                                     ), //Property type container
                                     SizedBox(height: 10.0,),
+                                    // Container(
+                                    //     child: Wrap(
+                                    //       spacing: 10.0,
+                                    //       runSpacing: 3.0,
+                                    //       children: residentialWidgets.toList(),
+                                    //     )
+                                    // ), //Filterchip for residential
+
                                     Container(
-                                        child: Wrap(
-                                          spacing: 10.0,
-                                          runSpacing: 3.0,
-                                          children: residentialWidgets.toList(),
-                                        )
-                                    ), //Filterchip for residential
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        children: [
+                                          propertyTypeRadio(propertyType[0], 0),
+                                          SizedBox(width: 10),
+                                          propertyTypeRadio(propertyType[1], 1),
+                                          SizedBox(width: 10),
+                                          propertyTypeRadio(propertyType[2], 2),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        children: [
+                                          propertyTypeRadio(propertyType[3], 3),
+                                          SizedBox(width: 10),
+                                          propertyTypeRadio(propertyType[4], 4),
+                                          SizedBox(width: 10),
+                                          propertyTypeRadio(propertyType[5], 5),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 20),
+                                      child: Row(
+                                        children: [
+                                          propertyTypeRadio(propertyType[6], 6),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -846,25 +898,86 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                 ),
                               ),//bhk detail
                               SizedBox(height: 10.0,),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextFormField(
-                                  controller: area_controller_r,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "Area",
-                                      hintStyle: TextStyle(fontSize: 18)
+                              Row(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.60,
+                                    height: 50,
+                                    padding: EdgeInsets.only(left: 15),
+                                    margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                    ),
+                                    child: TextFormField(
+                                      controller: area_controller_r,
+                                      decoration: InputDecoration(
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          hintText: "Area",
+                                          hintStyle: TextStyle(fontSize: 18)
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ), //Area
+                                  Container(
+                                    child: DropdownButton(
+                                      //itemHeight: 20.0,
+                                      value: _value1,
+                                      items: [
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Meter"),
+                                          value: 0,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Are"),
+                                          value: 1,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Hectare"),
+                                          value: 2,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Feet"),
+                                          value: 3,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Kilometer"),
+                                          value: 4,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Yard"),
+                                          value: 5,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Mile"),
+                                          value: 6,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Inch"),
+                                          value: 7,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Guntha"),
+                                          value: 8,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Vigha(23.5)"),
+                                          value: 9,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Vigha(16)"),
+                                          value: 10,
+                                        )
+                                      ],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _value1 = value;
+                                        });
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
                               SizedBox(height: 10.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width,
@@ -883,6 +996,7 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                       hintText: "Price",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  keyboardType: TextInputType.number,
                                 ),
                               ), //Price
                               SizedBox(height: 10.0,),
@@ -999,13 +1113,48 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                       child:Text("Property Type",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),),
                                     ),//property type container
                                     SizedBox(height: 10.0,),
+                                    // Container(
+                                    //     child: Wrap(
+                                    //       spacing: 10.0,
+                                    //       runSpacing: 3.0,
+                                    //       children: commercialWidgets.toList(),
+                                    //     )
+                                    // ),//Filter chip buttons
                                     Container(
-                                        child: Wrap(
-                                          spacing: 10.0,
-                                          runSpacing: 3.0,
-                                          children: commercialWidgets.toList(),
-                                        )
-                                    ),//Filter chip buttons
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        children: [
+                                          propertyTypeRadioCom(propertyTypeCom[0], 0),
+                                          SizedBox(width: 10),
+                                          propertyTypeRadioCom(propertyTypeCom[1], 1),
+                                          SizedBox(width: 10),
+                                          propertyTypeRadioCom(propertyTypeCom[2], 2),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        children: [
+                                          propertyTypeRadioCom(propertyTypeCom[3], 3),
+                                          SizedBox(width: 10),
+                                          propertyTypeRadioCom(propertyTypeCom[4], 4),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        children: [
+                                          propertyTypeRadioCom(propertyTypeCom[5], 5),
+                                          SizedBox(width: 10),
+                                          propertyTypeRadioCom(propertyTypeCom[6], 6),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -1198,25 +1347,86 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                   child: Text("Property Detail",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)
                               ), //property detail container
                               SizedBox(height: 10.0,),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextFormField(
-                                  controller: area_controller_c,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "Area",
-                                      hintStyle: TextStyle(fontSize: 18)
+                              Row(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.60,
+                                    height: 50,
+                                    padding: EdgeInsets.only(left: 15),
+                                    margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                    ),
+                                    child: TextFormField(
+                                      controller: area_controller_c,
+                                      decoration: InputDecoration(
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          hintText: "Area",
+                                          hintStyle: TextStyle(fontSize: 18)
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),//area container commercial
+                                  Container(
+                                    child: DropdownButton(
+                                      //itemHeight: 20.0,
+                                      value: _value1,
+                                      items: [
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Meter"),
+                                          value: 0,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Are"),
+                                          value: 1,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Hectare"),
+                                          value: 2,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Feet"),
+                                          value: 3,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Kilometer"),
+                                          value: 4,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Yard"),
+                                          value: 5,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Mile"),
+                                          value: 6,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sq. Inch"),
+                                          value: 7,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Guntha"),
+                                          value: 8,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Vigha(23.5)"),
+                                          value: 9,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Vigha(16)"),
+                                          value: 10,
+                                        )
+                                      ],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _value1 = value;
+                                        });
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
                               SizedBox(height: 10.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width,
@@ -1235,6 +1445,7 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
                                       hintText: "Price",
                                       hintStyle: TextStyle(fontSize: 18)
                                   ),
+                                  keyboardType: TextInputType.number,
                                 ),
                               ),//price container
                               SizedBox(height: 10.0,),
@@ -1384,6 +1595,16 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
       selectedIndex4c=index;
     });
   }
+  void propertyTypeIndex(int index){
+    setState(() {
+      propertyTypeSelect=index;
+    });
+  }
+  void propertyTypeIndexCom(int index){
+    setState(() {
+      propertyTypeSelectCom=index;
+    });
+  }
 
   Widget customRadio_4(String txt, int index) {
     return OutlineButton(
@@ -1443,6 +1664,29 @@ class _PostPropertyBuilderAndBrokerState extends State<PostPropertyBuilderAndBro
       ),
       borderSide: BorderSide(color: selectedIndex4c == index ? Colors.indigo : Colors.grey),
       child: Text(txt, style: TextStyle(color: selectedIndex4c == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
+    );
+  }
+  Widget propertyTypeRadio(String txt, int index) {
+    return OutlineButton(
+      splashColor: Colors.green,
+      onPressed: () => propertyTypeIndex(index),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      borderSide: BorderSide(color: propertyTypeSelect == index ? Colors.indigo : Colors.grey),
+      child: Text(txt, style: TextStyle(color: propertyTypeSelect == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
+    );
+  }
+
+  Widget propertyTypeRadioCom(String txt, int index) {
+    return OutlineButton(
+      splashColor: Colors.green,
+      onPressed: () => propertyTypeIndexCom(index),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      borderSide: BorderSide(color: propertyTypeSelectCom == index ? Colors.indigo : Colors.grey),
+      child: Text(txt, style: TextStyle(color: propertyTypeSelectCom == index? Colors.indigo: Colors.grey, fontSize: 16.0),),
     );
   }
 }

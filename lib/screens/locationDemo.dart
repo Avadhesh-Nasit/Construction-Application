@@ -243,7 +243,7 @@ class _NewMapState extends State<NewMap> {
       position: LatLng(specify['location'].latitude,specify['location'].longitude),
       infoWindow: InfoWindow(title: "Property",snippet: specify['projectName'],
           onTap: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail(value: specify['propertyId'],)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>propertyDetail(value: specify['propertyId'],v1:specify['view'])));
       }
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/firebase.dart';
 import 'package:construction_application/screens/Login_with_phone.dart';
+import 'package:construction_application/screens/admin.dart';
 import 'package:construction_application/screens/broker_page.dart';
 import 'package:construction_application/screens/builder_page.dart';
 import 'package:construction_application/screens/forgotPassword.dart';
@@ -244,6 +245,9 @@ class _LoginState extends State<Login> {
       }
       else if(myRole == 'Broker') {
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen1()));
+      }
+      else if(myRole == 'Admin') {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => admin()));
       }
       else {
         print("Invalid User Credentials");

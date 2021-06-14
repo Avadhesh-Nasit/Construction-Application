@@ -18,6 +18,7 @@ class myHomepage extends StatefulWidget {
 
 class _myHomepageState extends State<myHomepage> {
   final _auth= FirebaseAuth.instance.currentUser;
+  int view2;
   String myEmail;
   String myName;
   String myPhone;
@@ -25,6 +26,7 @@ class _myHomepageState extends State<myHomepage> {
   String f1;
   var doc_id;
   var route;
+  String i1;
   RateMyApp rateMyApp = RateMyApp(
     preferencesPrefix: 'rateMyApp_',
     minDays: 7,
@@ -148,6 +150,12 @@ class _myHomepageState extends State<myHomepage> {
                   ),
           SizedBox(height: 10.0,),
           Container(
+            margin: EdgeInsets.only(left: 15),
+            child: Text("Available property(${userProfilesList.length})",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          ),
+          SizedBox(height: 5),
+          Container(
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -168,7 +176,13 @@ class _myHomepageState extends State<myHomepage> {
                                   .get()
                                   .then(
                                     (QuerySnapshot snapshot) => {
-                                  // snapshot.documents.forEach((f) {
+                                      view2 = snapshot.docs[index].get('view'),
+                                      if(snapshot.docs[index].get('postedById') == FirebaseAuth.instance.currentUser.uid) {
+                                        view2 = view2
+                                      } else {
+                                        view2 = view2+1
+                                      },
+                                      // snapshot.documents.forEach((f) {
                                   //
                                   //   print("documentID---- " + f.reference.documentID);
                                   //
@@ -179,17 +193,21 @@ class _myHomepageState extends State<myHomepage> {
                                       print(doc_id),
                                    route = MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                               propertyDetail(value: doc_id),
-
+                               propertyDetail(value: doc_id,u2:i1,v1:view2),
                               ),
-                                    Navigator.of(context).push(route)
+                                      i1=snapshot.documents[index].get('postedById'),
+                                    Navigator.of(context).push(route),
+
+                                      FirebaseFirestore.instance.collection('propertyDetails').doc(doc_id).updateData(
+                                          {'view':view2,}),
+
                                 },
                               );
                               //Navigator.push(context, MaterialPageRoute(builder: (context) => propertyDetail(doc: doc_id,)));
                               },
                             child: Container(
                               margin: EdgeInsets.all(10.0),
-                              height: 320,
+                              height: 350,
                               width: MediaQuery
                                   .of(context)
                                   .size
@@ -289,7 +307,7 @@ class _myHomepageState extends State<myHomepage> {
                                                 .of(context)
                                                 .size
                                                 .width/2,
-                                            child: Text(userProfilesList[index]['price']+"/sq ft", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.indigo)),
+                                            child: Text(userProfilesList[index]['price'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.indigo)),
                                           )
                                       )
                                     ],
@@ -347,21 +365,43 @@ class _myHomepageState extends State<myHomepage> {
                                       )
                                   ),
                                   SizedBox(height: 7),
-                                  Container(
-                                      alignment: Alignment.topLeft,
-                                      margin: EdgeInsets.only(left: 13),
-                                      child: RichText(
-                                        text: TextSpan(
-                                            text: "Status : ",
-                                            style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
-                                            children: [
-                                              TextSpan(
-                                                  text: userProfilesList[index]['status'],
-                                                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400)
-                                              )
-                                            ]
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                            alignment: Alignment.topLeft,
+                                            margin: EdgeInsets.only(left: 13),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                  text: "Status : ",
+                                                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
+                                                  children: [
+                                                    TextSpan(
+                                                        text: userProfilesList[index]['status'],
+                                                        style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400)
+                                                    )
+                                                  ]
+                                              ),
+                                            )
                                         ),
-                                      )
+                                      ),
+                                      Expanded(
+                                          child: Container(
+                                            alignment: Alignment.topRight,
+                                            margin: EdgeInsets.only(right: 13),
+                                            child: Text(
+                                              userProfilesList[index]['markAsSold'],
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: userProfilesList[index]
+                                                  ['markAsSold'] ==
+                                                      'Sold'
+                                                      ? Colors.red
+                                                      : Colors.green),
+                                            ),
+                                          ))
+                                    ],
                                   ),
 
                                 ],

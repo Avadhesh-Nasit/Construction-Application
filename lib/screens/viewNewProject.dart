@@ -13,9 +13,11 @@ class viewNewProject extends StatefulWidget {
 
 class _viewNewProjectState extends State<viewNewProject> {
   List userProfilesList = [];
+  int view2;
   String f1;
   var doc_id;
   var route;
+  String i1;
   @override
   void initState() {
     super.initState();
@@ -120,6 +122,12 @@ class _viewNewProjectState extends State<viewNewProject> {
                           .get()
                           .then(
                             (QuerySnapshot snapshot) => {
+                              view2 = snapshot.docs[index].get('view'),
+                              if(snapshot.docs[index].get('postedById') == FirebaseAuth.instance.currentUser.uid) {
+                                view2 = view2
+                              } else {
+                                view2 = view2+1
+                              },
                           // snapshot.documents.forEach((f) {
                           //
                           //   print("documentID---- " + f.reference.documentID);
@@ -131,10 +139,13 @@ class _viewNewProjectState extends State<viewNewProject> {
                           print(doc_id),
                           route = MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                projectDetail(value: doc_id),
+                                projectDetail(value: doc_id,u2:i1,),
 
                           ),
-                          Navigator.of(context).push(route)
+                              i1=snapshot.documents[index].get('postedById'),
+                          Navigator.of(context).push(route),
+                              FirebaseFirestore.instance.collection('propertyDetails').doc(doc_id).updateData(
+                                  {'view':view2,}),
                         },
                       );
                       //Navigator.push(context, MaterialPageRoute(builder: (context) => propertyDetail(doc: doc_id,)));

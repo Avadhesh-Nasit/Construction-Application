@@ -103,7 +103,7 @@ class _changeEmailState extends State<changeEmail> {
                                   hintStyle: TextStyle(fontSize: 18),
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
-                                  prefixIcon: Icon(Icons.lock_outlined)
+                                  prefixIcon: Icon(Icons.mail_outline)
                               ),
                               keyboardType: TextInputType.text,
 
@@ -131,7 +131,7 @@ class _changeEmailState extends State<changeEmail> {
                             borderRadius: BorderRadius.circular(35),
                           ),
                           color: Colors.blue,
-                          child: Text("Change Password", style: TextStyle(fontSize: 22, color: Colors.white)),
+                          child: Text("Change Email", style: TextStyle(fontSize: 22, color: Colors.white)),
                         ),
                       )
                     ],

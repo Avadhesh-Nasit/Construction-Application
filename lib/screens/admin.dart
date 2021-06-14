@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:construction_application/admin/admin_search.dart';
+import 'package:construction_application/admin/report_property.dart';
 import 'package:construction_application/models/databaseManager.dart';
 import 'package:construction_application/screens/rating.dart';
 import 'package:construction_application/screens/ratingBar.dart';
@@ -8,6 +10,9 @@ import 'package:construction_application/screens/searchUserWithPhoneNumber.dart'
 import 'package:construction_application/screens/userDetails.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'login_screen.dart';
 class admin extends StatefulWidget {
   @override
   _adminState createState() => _adminState();
@@ -27,7 +32,7 @@ class _adminState extends State<admin> {
     fetchDatabaseList();
   }
   fetchDatabaseList() async {
-    dynamic resultant = await DatabaseManagerUser().getUsersList();
+    dynamic resultant = await DatabaseManagerUser1().getUsersList();
 
     if (resultant == null) {
       print('Unable to retrieve');
@@ -111,25 +116,14 @@ class _adminState extends State<admin> {
                 children: [
                   Icon(Icons.search_sharp),
                   Padding(padding: EdgeInsets.only(left: 10.0)),
-                  Text("Search User By Phone Number")
+                  Text("Search")
                 ],
               ),
               onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>searchByPhoneNumber()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Admin_Search1()));
               },
             ),
-            ListTile(
-              title:Row(
-                children: [
-                  Icon(Icons.search_sharp),
-                  Padding(padding: EdgeInsets.only(left: 10.0)),
-                  Text("Search Property"),
-                ],
-              ),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>searchProperty()));
-              },
-            ),
+
             ListTile(
               title:Row(
                 children: [
@@ -138,6 +132,9 @@ class _adminState extends State<admin> {
                   Text("Reported Property")
                 ],
               ),
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Report_Property_Page()));
+                }
             ),
             // Divider(color: Colors.indigo,),
             // Container(
@@ -170,18 +167,18 @@ class _adminState extends State<admin> {
             //     ],
             //   ),
             // ),
-            ListTile(
-              title:Row(
-                children: [
-                  Icon(Icons.star_rate_outlined),
-                  Padding(padding: EdgeInsets.only(left: 10.0)),
-                  Text("Rating")
-                ],
-              ),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ReachUs()));
-              },
-            ),
+            // ListTile(
+            //   title:Row(
+            //     children: [
+            //       Icon(Icons.star_rate_outlined),
+            //       Padding(padding: EdgeInsets.only(left: 10.0)),
+            //       Text("Rating")
+            //     ],
+            //   ),
+            //   onTap: (){
+            //     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ReachUs()));
+            //   },
+            // ),
             Divider(color: Colors.indigo,),
             ListTile(
               title:Row(
@@ -223,6 +220,40 @@ class _adminState extends State<admin> {
                 ],
               ),
               onTap: (){
+                showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder:(BuildContext context){
+                      return AlertDialog(
+                        title: Text("Are you sure?"),
+                        contentPadding: EdgeInsets.all(10),
+                        actions: <Widget>[
+                          Row(
+                            children: [
+                              GestureDetector(
+                                  onTap: (){
+                                    signOut().whenComplete(()=>Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Login()), (Route<dynamic>route) => false));
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Container(
+                                    child: Text("Yes",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
+                                  )
+                              ),
+                              SizedBox(width: 20,),
+                              GestureDetector(
+                                  onTap: (){
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Container(
+                                    child: Text("No",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
+                                  )
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                );
               },
             )
           ],
@@ -265,11 +296,11 @@ class _adminState extends State<admin> {
                     color: Colors.white,
                   ),
                   padding: EdgeInsets.only(left: 30, top: 15),
-                  child: Text("Search By Email",
+                  child: Text("Search",
                       style: TextStyle(color: Colors.grey, fontSize: 16)),
                 ),
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>searchByEmail()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Admin_Search1()));
                 },
               ),
             ],
@@ -289,7 +320,7 @@ class _adminState extends State<admin> {
                           .get()
                           .then(
                             (QuerySnapshot snapshot) => {
-                          doc_id = snapshot.docs[index].id,
+                           doc_id = userProfilesList[index]['userId'],
                           print(doc_id),
                           route = MaterialPageRoute(
                             builder: (BuildContext context) =>
@@ -326,9 +357,15 @@ class _adminState extends State<admin> {
                                     child: (userProfilesList[index]['Image']!="")?Image.network(
                                       userProfilesList[index]['Image'],
                                       fit: BoxFit.fill,
-                                    ):Image.asset(
-                                      "image/icon.png",
-                                      fit: BoxFit.fill,
+                                    ):CircleAvatar(
+                                      radius: 30,
+                                      child: Text(
+                                        userProfilesList[index]['name'][0],
+                                        style: TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.w400
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -367,7 +404,7 @@ class _adminState extends State<admin> {
                                           TextSpan(
                                             // text: "Builder",
                                               text: userProfilesList[index]['email'],
-                                              style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400)
+                                              style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400)
                                           )
                                         ]
                                     ),
@@ -452,6 +489,12 @@ class _adminState extends State<admin> {
         print(e);
       });
     }
+  }
+  Future<bool> signOut() async {
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    prefs.remove('email');
+    //prefs.remove('phoneNumber');
+    await FirebaseAuth.instance.signOut();
   }
   // void deleteUser() async {
   //   FirebaseUser user = await FirebaseAuth.instance.currentUser;

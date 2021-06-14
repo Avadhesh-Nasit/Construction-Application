@@ -20,11 +20,15 @@ class _MyApp1State extends State<MyApp1> {
   int selectedIndex = 0;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String _email, _password;
+  String em = "";
   TextEditingController name = new TextEditingController();
   TextEditingController email = new TextEditingController();
   TextEditingController no = new TextEditingController();
   TextEditingController password = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
+  String em1;
+  List myData1 = [];
+  String ok;
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +94,11 @@ class _MyApp1State extends State<MyApp1> {
                         ),
                         child: Center(
                           child: TextFormField(
+                              onChanged: (val) {
+                                setState(() {
+                                  em1 = val;
+                                });
+                              },
                               controller: email,
                             decoration: InputDecoration(
                                 hintText: "Email",
@@ -99,14 +108,22 @@ class _MyApp1State extends State<MyApp1> {
                                 prefixIcon: Icon(Icons.email_outlined)
                             ),
                             keyboardType: TextInputType.emailAddress,
-                            validator: (value)
-                            {
-                              if(value.isEmpty || !value.contains('@'))
-                              {
-                                return 'invalid email';
-                              }
-                              return null;
-                            },
+                            // validator: (value)
+                            // {
+                            //   value == ok
+                            //       ? "user already exist"
+                            //   // ignore: unrelated_type_equality_checks
+                            //       : value == "" ? "please enter email" : null;
+                            //   if(value.isEmpty || !value.contains('@'))
+                            //   {
+                            //     return 'invalid email';
+                            //   }
+                            //   return null;
+                            // },
+                              validator: (val) => val == ok
+                                  ? "user already exist"
+                              // ignore: unrelated_type_equality_checks
+                                  : val == "" ? "please enter email" : null,
                             onSaved: (val) {
                               // item.email = val;
                               _email=val;
@@ -124,6 +141,7 @@ class _MyApp1State extends State<MyApp1> {
                         ),
                         child: Center(
                           child: TextFormField(
+                            maxLength: 10,
                             controller: no,
                             decoration: InputDecoration(
                                 hintText: "Mobile No.",
@@ -226,6 +244,7 @@ class _MyApp1State extends State<MyApp1> {
                       child: RaisedButton(
                         onPressed:(){
                           // handleSubmit();
+                          validate();
                             signUp();
                         },
                         shape: RoundedRectangleBorder(
@@ -244,6 +263,26 @@ class _MyApp1State extends State<MyApp1> {
       ),
     );
   }
+  void validate() async {
+    await FirebaseFirestore.instance.collection('Users').getDocuments().then((querySnapshot){
+      querySnapshot.documents.forEach((element) {
+        myData1.add(element.data()['email']);
+      });
+    });
+    for(int i=0; i<myData1.length; i++) {
+      if(myData1[i] == em1) {
+        setState(() {
+          ok = myData1[i];
+        });
+      }
+    }
+    print(myData1);
+    print(ok);
+    //print(myData);
+    myData1.removeRange(0, myData1.length);
+    print(myData1);
+  }
+
   final FirebaseAuth _firebaseAuth=FirebaseAuth.instance;
   void signUp() async {
     if(formKey.currentState.validate()){
@@ -263,6 +302,10 @@ class _MyApp1State extends State<MyApp1> {
         //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
       }catch(e){
         print(e.message);
+      }
+      if(em1 != ok) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Login()));
       }
     }
   }

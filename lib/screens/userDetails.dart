@@ -49,17 +49,17 @@ class _userDetailsState extends State<userDetails> {
           title: Text("User's Property"),
           backgroundColor: Colors.indigo,
           actions: [
-            RaisedButton(
-              child: Text(
-                "Delete User",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)),
-              color: Colors.red,
-              onPressed: () {},
-            )
+            // RaisedButton(
+            //   child: Text(
+            //     "Delete User",
+            //     style:
+            //         TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            //   ),
+            //   shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(20.0)),
+            //   color: Colors.red,
+            //   onPressed: () {},
+            // )
           ],
         ),
         body: ListView(
@@ -248,6 +248,24 @@ class _userDetailsState extends State<userDetails> {
                     );
                   }),
             ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.4,
+                height: 40,
+                child: RaisedButton(
+                  onPressed: () {
+                    deleteUser();
+                  },
+                  color: Colors.red.shade500,
+                  child: Center(child: Text("Delete User", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20.0,)
           ],
         ),
         // Container(
@@ -278,6 +296,43 @@ class _userDetailsState extends State<userDetails> {
   //       .whenComplete(() => print('Note item deleted from the database'))
   //       .catchError((e) => print(e));
   // }
+
+  Future<bool> deleteUser(){
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder:(BuildContext context){
+          return AlertDialog(
+            title: Text("Are you sure?"),
+            contentPadding: EdgeInsets.all(10),
+            actions: <Widget>[
+              Row(
+                children: [
+                  GestureDetector(
+                      onTap: (){
+                        delete();
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        child: Text("Yes",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
+                      )
+                  ),
+                  SizedBox(width: 20,),
+                  GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        child: Text("No",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
+                      )
+                  ),
+                ],
+              ),
+            ],
+          );
+        }
+    );
+  }
 
   UserpostManager() async {
     final CollectionReference postList =
