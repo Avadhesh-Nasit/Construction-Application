@@ -372,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.of(context).pop();
                                   },
                                   child: Container(
-                                    child: Text("Yes",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
+                                    child: Text("Yes",style: TextStyle(color: Colors.blue,fontSize: 20),),
                                   )
                               ),
                               SizedBox(width: 20,),
@@ -381,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.of(context).pop();
                                   },
                                   child: Container(
-                                    child: Text("No",style: TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold),),
+                                    child: Text("No",style: TextStyle(color: Colors.blue,fontSize: 20),),
                                   )
                               ),
                             ],

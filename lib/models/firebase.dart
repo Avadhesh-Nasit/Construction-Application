@@ -40,102 +40,102 @@ Future<void> user(String displayName,String phoneNumber, String password,String 
   return;
 }
 
-Future<void> postProperty(String category,
-                          String postBy,
-                          String sr_radio,
-                          String pro_type,
-                          String projectName,
-                          String address,
-                          String landmark,
-                          String city,
-                          String state,
-                          String pro_detail,
-                          String area,
-                          String price,
-                          String description,
-                          String con_status,
-                          String firstImage,
-                          String secondImage,
-                          String thirdImage,
-                          String userId,
-                          String location,
-                          int view,
-                          String mark,
-                          bool report
-                          ) async {
+// Future<void> postProperty(String category,
+//                           String postBy,
+//                           String sr_radio,
+//                           String pro_type,
+//                           String projectName,
+//                           String address,
+//                           String landmark,
+//                           String city,
+//                           String state,
+//                           String pro_detail,
+//                           String area,
+//                           String price,
+//                           String description,
+//                           String con_status,
+//                           String firstImage,
+//                           String secondImage,
+//                           String thirdImage,
+//                           String userId,
+//                           String location,
+//                           int view,
+//                           String mark,
+//                           bool report
+//                           ) async {
+//
+//   final query = location;
+//   var addresses = await Geocoder.local.findAddressesFromQuery(query);
+//   var first = addresses.first;
+//   DocumentReference property = FirebaseFirestore.instance.collection('propertyDetails').doc();
+//   //var firebaseUser = await FirebaseAuth.instance.currentUser;
+//   //FirebaseAuth auth = FirebaseAuth.instance;
+//   //String uid = auth.currentUser.uid.toString();
+//   property.set({
+//     'category': category,
+//     'postedBy': postBy,
+//     'sellOrRent': sr_radio,
+//     'propertyType': pro_type,
+//     'projectName': projectName,
+//     'address': address,
+//     'landmark': landmark,
+//     'city': city,
+//     'state': state,
+//     'detail': pro_detail,
+//     'area': area,
+//     'price': price,
+//     'description': description,
+//     'status': con_status,
+//     'firstImage': firstImage,
+//     'secondImage': secondImage,
+//     'thirdImage': thirdImage,
+//     'postedById':userId,
+//     'propertyId':property.documentID,
+//     'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+//     'view':view,
+//     'markAsSold':mark,
+//     'report':report
+//   });
+//   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
+//   return;
+// }
 
-  final query = location;
-  var addresses = await Geocoder.local.findAddressesFromQuery(query);
-  var first = addresses.first;
-  DocumentReference property = FirebaseFirestore.instance.collection('propertyDetails').doc();
-  //var firebaseUser = await FirebaseAuth.instance.currentUser;
-  //FirebaseAuth auth = FirebaseAuth.instance;
-  //String uid = auth.currentUser.uid.toString();
-  property.set({
-    'category': category,
-    'postedBy': postBy,
-    'sellOrRent': sr_radio,
-    'propertyType': pro_type,
-    'projectName': projectName,
-    'address': address,
-    'landmark': landmark,
-    'city': city,
-    'state': state,
-    'detail': pro_detail,
-    'area': area,
-    'price': price,
-    'description': description,
-    'status': con_status,
-    'firstImage': firstImage,
-    'secondImage': secondImage,
-    'thirdImage': thirdImage,
-    'postedById':userId,
-    'propertyId':property.documentID,
-    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
-    'view':view,
-    'markAsSold':mark,
-    'report':report
-  });
-  // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
-  return;
-}
-
-Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location,int view,String mark,bool report) async {
-  DocumentReference property = FirebaseFirestore.instance.collection('propertyDetails').doc();
-  //var firebaseUser = await FirebaseAuth.instance.currentUser;
-  //FirebaseAuth auth = FirebaseAuth.instance;
-  //String uid = auth.currentUser.uid.toString();
-  final query = location;
-  var addresses = await Geocoder.local.findAddressesFromQuery(query);
-  var first = addresses.first;
-  property.set({
-    'category': category,
-    'postedBy': postBy,
-    'sellOrRent': sr_radio,
-    'propertyType': pro_type,
-    'projectName': projectName,
-    'address': address,
-    'landmark': landmark,
-    'city': city,
-    'state': state,
-    'area': area,
-    'price': price,
-    'description': description,
-    'status': con_status,
-    'firstImage': firstImage,
-    'secondImage': secondImage,
-    'thirdImage': thirdImage,
-    'detail':detail,
-    'postedById': userId,
-    'propertyId':property.documentID,
-    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
-    'view':view,
-    'markAsSold':mark,
-    'report':report
-  });
-  // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
-  return;
-}
+// Future<void> postCommProperty(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location,int view,String mark,bool report) async {
+//   DocumentReference property = FirebaseFirestore.instance.collection('propertyDetails').doc();
+//   //var firebaseUser = await FirebaseAuth.instance.currentUser;
+//   //FirebaseAuth auth = FirebaseAuth.instance;
+//   //String uid = auth.currentUser.uid.toString();
+//   final query = location;
+//   var addresses = await Geocoder.local.findAddressesFromQuery(query);
+//   var first = addresses.first;
+//   property.set({
+//     'category': category,
+//     'postedBy': postBy,
+//     'sellOrRent': sr_radio,
+//     'propertyType': pro_type,
+//     'projectName': projectName,
+//     'address': address,
+//     'landmark': landmark,
+//     'city': city,
+//     'state': state,
+//     'area': area,
+//     'price': price,
+//     'description': description,
+//     'status': con_status,
+//     'firstImage': firstImage,
+//     'secondImage': secondImage,
+//     'thirdImage': thirdImage,
+//     'detail':detail,
+//     'postedById': userId,
+//     'propertyId':property.documentID,
+//     'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+//     'view':view,
+//     'markAsSold':mark,
+//     'report':report
+//   });
+//   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
+//   return;
+// }
 
 
 
@@ -156,100 +156,100 @@ Future<void> FavoriteProperty(String category, String postBy, String projectName
     'firstImage': first_image
   });
 }
-
-Future<void> postNewProjectRes(String category,
-    String postBy,
-    String sr_radio,
-    String pro_type,
-    String projectName,
-    String address,
-    String landmark,
-    String city,
-    String state,
-    String pro_detail,
-    String area,
-    String price,
-    String description,
-    String con_status,
-    String firstImage,
-    String secondImage,
-    String thirdImage,
-    String userId,
-    String location,
-    int view,
-    String mark,
-    bool report
-    ) async {
-
-  final query = location;
-  var addresses = await Geocoder.local.findAddressesFromQuery(query);
-  var first = addresses.first;
-  DocumentReference property = FirebaseFirestore.instance.collection('newProject').doc();
-  //var firebaseUser = await FirebaseAuth.instance.currentUser;
-  //FirebaseAuth auth = FirebaseAuth.instance;
-  //String uid = auth.currentUser.uid.toString();
-  property.set({
-    'category': category,
-    'postedBy': postBy,
-    'sellOrRent': sr_radio,
-    'propertyType': pro_type,
-    'projectName': projectName,
-    'address': address,
-    'landmark': landmark,
-    'city': city,
-    'state': state,
-    'detail': pro_detail,
-    'area': area,
-    'price': price,
-    'description': description,
-    'status': con_status,
-    'firstImage': firstImage,
-    'secondImage': secondImage,
-    'thirdImage': thirdImage,
-    'postedById':userId,
-    'propertyId':property.documentID,
-    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
-    'view':view,
-    'markAsSold':mark,
-    'report':report
-  });
-  // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
-  return;
-}
-
-Future<void> postNewProjectCom(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location,int view,String mark,bool report) async {
-  DocumentReference property = FirebaseFirestore.instance.collection('newProject').doc();
-  //var firebaseUser = await FirebaseAuth.instance.currentUser;
-  //FirebaseAuth auth = FirebaseAuth.instance;
-  //String uid = auth.currentUser.uid.toString();
-  final query = location;
-  var addresses = await Geocoder.local.findAddressesFromQuery(query);
-  var first = addresses.first;
-  property.set({
-    'category': category,
-    'postedBy': postBy,
-    'sellOrRent': sr_radio,
-    'propertyType': pro_type,
-    'projectName': projectName,
-    'address': address,
-    'landmark': landmark,
-    'city': city,
-    'state': state,
-    'area': area,
-    'price': price,
-    'description': description,
-    'status': con_status,
-    'firstImage': firstImage,
-    'secondImage': secondImage,
-    'thirdImage': thirdImage,
-    'detail':detail,
-    'postedById': userId,
-    'propertyId':property.id,
-    'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
-    'view':view,
-    'markAsSold':mark,
-    'report':report
-  });
-  // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
-  return;
-}
+//
+// Future<void> postNewProjectRes(String category,
+//     String postBy,
+//     String sr_radio,
+//     String pro_type,
+//     String projectName,
+//     String address,
+//     String landmark,
+//     String city,
+//     String state,
+//     String pro_detail,
+//     String area,
+//     String price,
+//     String description,
+//     String con_status,
+//     String firstImage,
+//     String secondImage,
+//     String thirdImage,
+//     String userId,
+//     String location,
+//     int view,
+//     String mark,
+//     bool report
+//     ) async {
+//
+//   final query = location;
+//   var addresses = await Geocoder.local.findAddressesFromQuery(query);
+//   var first = addresses.first;
+//   DocumentReference property = FirebaseFirestore.instance.collection('newProject').doc();
+//   //var firebaseUser = await FirebaseAuth.instance.currentUser;
+//   //FirebaseAuth auth = FirebaseAuth.instance;
+//   //String uid = auth.currentUser.uid.toString();
+//   property.set({
+//     'category': category,
+//     'postedBy': postBy,
+//     'sellOrRent': sr_radio,
+//     'propertyType': pro_type,
+//     'projectName': projectName,
+//     'address': address,
+//     'landmark': landmark,
+//     'city': city,
+//     'state': state,
+//     'detail': pro_detail,
+//     'area': area,
+//     'price': price,
+//     'description': description,
+//     'status': con_status,
+//     'firstImage': firstImage,
+//     'secondImage': secondImage,
+//     'thirdImage': thirdImage,
+//     'postedById':userId,
+//     'propertyId':property.documentID,
+//     'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+//     'view':view,
+//     'markAsSold':mark,
+//     'report':report
+//   });
+//   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
+//   return;
+// }
+//
+// Future<void> postNewProjectCom(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,String location,int view,String mark,bool report) async {
+//   DocumentReference property = FirebaseFirestore.instance.collection('newProject').doc();
+//   //var firebaseUser = await FirebaseAuth.instance.currentUser;
+//   //FirebaseAuth auth = FirebaseAuth.instance;
+//   //String uid = auth.currentUser.uid.toString();
+//   final query = location;
+//   var addresses = await Geocoder.local.findAddressesFromQuery(query);
+//   var first = addresses.first;
+//   property.set({
+//     'category': category,
+//     'postedBy': postBy,
+//     'sellOrRent': sr_radio,
+//     'propertyType': pro_type,
+//     'projectName': projectName,
+//     'address': address,
+//     'landmark': landmark,
+//     'city': city,
+//     'state': state,
+//     'area': area,
+//     'price': price,
+//     'description': description,
+//     'status': con_status,
+//     'firstImage': firstImage,
+//     'secondImage': secondImage,
+//     'thirdImage': thirdImage,
+//     'detail':detail,
+//     'postedById': userId,
+//     'propertyId':property.id,
+//     'location':new GeoPoint(first.coordinates.latitude,first.coordinates.longitude),
+//     'view':view,
+//     'markAsSold':mark,
+//     'report':report
+//   });
+//   // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
+//   return;
+// }

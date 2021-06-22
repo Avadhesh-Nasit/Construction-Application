@@ -307,7 +307,7 @@ class _myHomepageState extends State<myHomepage> {
                                                 .of(context)
                                                 .size
                                                 .width/2,
-                                            child: Text(userProfilesList[index]['price'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.indigo)),
+                                            child: Text('₹'+userProfilesList[index]['price'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.indigo)),
                                           )
                                       )
                                     ],

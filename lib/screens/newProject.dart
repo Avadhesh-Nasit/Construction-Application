@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:construction_application/models/firebase.dart';
+import 'package:construction_application/screens/addToMap.dart';
 import 'package:construction_application/screens/builder_page.dart';
 import 'package:construction_application/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,6 +30,101 @@ class postNewProject extends StatefulWidget {
 }
 
 class _postNewProjectState extends State<postNewProject> {
+  DocumentReference propertyRes = FirebaseFirestore.instance.collection('newProject').doc();
+  DocumentReference propertyCom = FirebaseFirestore.instance.collection('newProject').doc();
+
+
+  Future<void> postNewProjectRes(String category,
+      String postBy,
+      String sr_radio,
+      String pro_type,
+      String projectName,
+      String address,
+      String landmark,
+      String city,
+      String state,
+      String pro_detail,
+      String area,
+      String price,
+      String description,
+      String con_status,
+      String firstImage,
+      String secondImage,
+      String thirdImage,
+      String userId,
+      int view,
+      String mark,
+      bool report
+      ) async {
+    // final query = location;
+    // var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    // var first = addresses.first;
+    //var firebaseUser = await FirebaseAuth.instance.currentUser;
+    //FirebaseAuth auth = FirebaseAuth.instance;
+    //String uid = auth.currentUser.uid.toString();
+    propertyRes.set({
+      'category': category,
+      'postedBy': postBy,
+      'sellOrRent': sr_radio,
+      'propertyType': pro_type,
+      'projectName': projectName,
+      'address': address,
+      'landmark': landmark,
+      'city': city,
+      'state': state,
+      'detail': pro_detail,
+      'area': area,
+      'price': price,
+      'description': description,
+      'status': con_status,
+      'firstImage': firstImage,
+      'secondImage': secondImage,
+      'thirdImage': thirdImage,
+      'postedById':userId,
+      'propertyId':propertyRes.documentID,
+      'view':view,
+      'markAsSold':mark,
+      'report':report
+    });
+    // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
+    return;
+  }
+
+  Future<void> postNewProjectCom(String category, String postBy, String sr_radio, String pro_type, String projectName, String address, String landmark, String city, String state, String area, String price, String description, String con_status,String firstImage,String secondImage,String thirdImage,String detail,String userId,int view,String mark,bool report) async {
+    //var firebaseUser = await FirebaseAuth.instance.currentUser;
+    //FirebaseAuth auth = FirebaseAuth.instance;
+    //String uid = auth.currentUser.uid.toString();
+    // final query = location;
+    // var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    // var first = addresses.first;
+    propertyCom.set({
+      'category': category,
+      'postedBy': postBy,
+      'sellOrRent': sr_radio,
+      'propertyType': pro_type,
+      'projectName': projectName,
+      'address': address,
+      'landmark': landmark,
+      'city': city,
+      'state': state,
+      'area': area,
+      'price': price,
+      'description': description,
+      'status': con_status,
+      'firstImage': firstImage,
+      'secondImage': secondImage,
+      'thirdImage': thirdImage,
+      'detail':detail,
+      'postedById': userId,
+      'propertyId':propertyCom.id,
+      'view':view,
+      'markAsSold':mark,
+      'report':report
+    });
+    // users1.add({'Name': displayName, 'User Id': uid, 'Email': email, 'Mobile Number': phoneNumber, 'Password': password, 'Role': role});
+    return;
+  }
+
 
   final List<ResidentialFilterEntry1> residential1_cast = <ResidentialFilterEntry1>[
     const ResidentialFilterEntry1('Apartment'),
@@ -211,6 +307,12 @@ class _postNewProjectState extends State<postNewProject> {
   //   );
   // }
   //
+  List States = [
+    "Select State", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "  Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh",
+    "Jharkhand", " Karnataka", "  Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha",
+    "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", " West Bengal"
+  ];
+  int _value2=0;
 
   int userView;
   File _image1;
@@ -340,7 +442,7 @@ class _postNewProjectState extends State<postNewProject> {
           '${address_controller_r.text}, ${landmark_controller_r.text}, ${city_controller_r.text},  ${state_controller_r.text}',
           '${landmark_controller_r.text}',
           '${city_controller_r.text}',
-          '${state_controller_r.text}',
+          '${States[_value2]}',
           '${bhk[selectedIndex2]}',
           '${area_controller_r.text} ${Items1[_value1]}',
           '${price_controller_r.text}/${Items1[_value1]}',
@@ -350,7 +452,6 @@ class _postNewProjectState extends State<postNewProject> {
           '${_imageUrls[1]}',
           '${_imageUrls[2]}',
           '${FirebaseAuth.instance.currentUser.uid}',
-          '${inputaddr}',
           userView,
           'Available',
           false
@@ -411,7 +512,7 @@ class _postNewProjectState extends State<postNewProject> {
           '${address_controller_c.text}, ${landmark_controller_c.text}, ${city_controller_c.text}, ${state_controller_c.text}',
           '${landmark_controller_c.text}',
           '${city_controller_c.text}',
-          '${state_controller_c.text}',
+          '${States[_value2]}',
           '${area_controller_c.text} ${Items1[_value1]}',
           '${price_controller_c.text}/${Items1[_value1]}',
           '${project_description_controller_c.text}',
@@ -421,7 +522,6 @@ class _postNewProjectState extends State<postNewProject> {
           '${_imageUrls[2]}',
           '${detail_controller.text}',
           '${FirebaseAuth.instance.currentUser.uid}',
-          '${inputaddr}',
           userView,
           'Available',
           false
@@ -759,47 +859,180 @@ class _postNewProjectState extends State<postNewProject> {
                                 ),
                               ), //Landmark
                               SizedBox(height: 10.0,),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextFormField(
-                                  controller: city_controller_r,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "City",
-                                      hintStyle: TextStyle(fontSize: 18)
+                              Row(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 50,
+                                    padding: EdgeInsets.only(left: 15),
+                                    margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                    ),
+                                    child: TextFormField(
+                                      controller: city_controller_r,
+                                      decoration: InputDecoration(
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          hintText: "City",
+                                          hintStyle: TextStyle(fontSize: 18)
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Container(
+                                    child: DropdownButton(
+                                      //itemHeight: 20.0,
+                                      value: _value2,
+                                      items: [
+                                        DropdownMenuItem(
+                                          child: Text("Select State"),
+                                          value: 0,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Anddhra Pradesh"),
+                                          value: 1,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Arunachal Pradesh"),
+                                          value: 2,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Assam"),
+                                          value: 3,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Bihar"),
+                                          value: 4,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Chhattisgarh"),
+                                          value: 5,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Goa"),
+                                          value: 6,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Gujarat"),
+                                          value: 7,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Haryana"),
+                                          value: 8,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Himachal Pradesh"),
+                                          value: 9,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Jharkhand"),
+                                          value: 10,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Karnataka"),
+                                          value: 11,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Kerala"),
+                                          value: 12,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Madhya Pradesh"),
+                                          value: 13,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Maharashtra"),
+                                          value: 14,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Manipur"),
+                                          value: 15,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Meghalaya"),
+                                          value: 16,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Mizoram"),
+                                          value: 17,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Nagaland"),
+                                          value: 18,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Odisha"),
+                                          value: 19,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Punjab"),
+                                          value: 20,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Rajasthan"),
+                                          value: 21,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sikkim"),
+                                          value: 22,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Tamil Nadu"),
+                                          value: 23,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Telangana"),
+                                          value: 24,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Tripura"),
+                                          value: 25,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Uttar Pradesh"),
+                                          value: 26,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Uttarakhand"),
+                                          value: 27,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("West Bengal"),
+                                          value: 28,
+                                        )
+                                      ],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _value2 = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ), //City
                               SizedBox(height: 10.0),
-                              Container(
-                                width: MediaQuery.of(context).size.width ,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextFormField(
-                                  controller: state_controller_r,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "State",
-                                      hintStyle: TextStyle(fontSize: 18)
-                                  ),
-                                ),
-                              ), //State
-
-                              SizedBox(height: 10.0,),
+                              // Container(
+                              //   width: MediaQuery.of(context).size.width ,
+                              //   height: 50,
+                              //   padding: EdgeInsets.only(left: 15),
+                              //   margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(15),
+                              //     border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              //   ),
+                              //   child: TextFormField(
+                              //     controller: state_controller_r,
+                              //     decoration: InputDecoration(
+                              //         enabledBorder: InputBorder.none,
+                              //         focusedBorder: InputBorder.none,
+                              //         hintText: "State",
+                              //         hintStyle: TextStyle(fontSize: 18)
+                              //     ),
+                              //   ),
+                              // ), //State
+                              //
+                              // SizedBox(height: 10.0,),
                               SizedBox(height: 10.0,),
                               Divider(),
                               Container(
@@ -1037,30 +1270,30 @@ class _postNewProjectState extends State<postNewProject> {
                                 ),
                               ),//construction status button
                               SizedBox(height: 10.0,),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextField(
-                                  onChanged: (String enterLoc){
-                                    setState(() {
-                                      inputaddr=enterLoc;
-                                    });
-                                  },
-                                  //controller: addToMap,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "Add to Map",
-                                      hintStyle: TextStyle(fontSize: 18)
-                                  ),
-                                ),
-                              ),
+                              // Container(
+                              //   width: MediaQuery.of(context).size.width,
+                              //   height: 50,
+                              //   padding: EdgeInsets.only(left: 15),
+                              //   margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(15),
+                              //     border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              //   ),
+                              //   child: TextField(
+                              //     onChanged: (String enterLoc){
+                              //       setState(() {
+                              //         inputaddr=enterLoc;
+                              //       });
+                              //     },
+                              //     //controller: addToMap,
+                              //     decoration: InputDecoration(
+                              //         enabledBorder: InputBorder.none,
+                              //         focusedBorder: InputBorder.none,
+                              //         hintText: "Add to Map",
+                              //         hintStyle: TextStyle(fontSize: 18)
+                              //     ),
+                              //   ),
+                              // ),
                               SizedBox(height: 30.0,),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
@@ -1070,7 +1303,7 @@ class _postNewProjectState extends State<postNewProject> {
                                     //uploadImageToFirebase(context);
                                     uploadMultipleImages1();
                                     Navigator.pushReplacement(
-                                        context, MaterialPageRoute(builder: (context) => HomeScreen1()));
+                                        context, MaterialPageRoute(builder: (context) => Map123(value: propertyRes.documentID,)));
                                   },
                                   color: Colors.indigo,
                                   child: Center(child: Text("POST", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
@@ -1224,47 +1457,180 @@ class _postNewProjectState extends State<postNewProject> {
                                 ),
                               ),//landmark container commercial
                               SizedBox(height: 10.0,),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextFormField(
-                                  controller: city_controller_c,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "City",
-                                      hintStyle: TextStyle(fontSize: 18)
+                              Row(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 50,
+                                    padding: EdgeInsets.only(left: 15),
+                                    margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                                    ),
+                                    child: TextFormField(
+                                      controller: city_controller_c,
+                                      decoration: InputDecoration(
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          hintText: "City",
+                                          hintStyle: TextStyle(fontSize: 18)
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Container(
+                                    child: DropdownButton(
+                                      //itemHeight: 20.0,
+                                      value: _value2,
+                                      items: [
+                                        DropdownMenuItem(
+                                          child: Text("Select State"),
+                                          value: 0,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Anddhra Pradesh"),
+                                          value: 1,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Arunachal Pradesh"),
+                                          value: 2,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Assam"),
+                                          value: 3,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Bihar"),
+                                          value: 4,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Chhattisgarh"),
+                                          value: 5,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Goa"),
+                                          value: 6,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Gujarat"),
+                                          value: 7,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Haryana"),
+                                          value: 8,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Himachal Pradesh"),
+                                          value: 9,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Jharkhand"),
+                                          value: 10,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Karnataka"),
+                                          value: 11,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Kerala"),
+                                          value: 12,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Madhya Pradesh"),
+                                          value: 13,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Maharashtra"),
+                                          value: 14,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Manipur"),
+                                          value: 15,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Meghalaya"),
+                                          value: 16,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Mizoram"),
+                                          value: 17,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Nagaland"),
+                                          value: 18,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Odisha"),
+                                          value: 19,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Punjab"),
+                                          value: 20,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Rajasthan"),
+                                          value: 21,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Sikkim"),
+                                          value: 22,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Tamil Nadu"),
+                                          value: 23,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Telangana"),
+                                          value: 24,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Tripura"),
+                                          value: 25,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Uttar Pradesh"),
+                                          value: 26,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("Uttarakhand"),
+                                          value: 27,
+                                        ),
+                                        DropdownMenuItem(
+                                          child: Text("West Bengal"),
+                                          value: 28,
+                                        )
+                                      ],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _value2 = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),//city container commercial
                               SizedBox(height: 10.0),
-                              Container(
-                                width: MediaQuery.of(context).size.width ,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextFormField(
-                                  controller: state_controller_c,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "State",
-                                      hintStyle: TextStyle(fontSize: 18)
-                                  ),
-                                ),
-                              ),//state container commercial
-
-                              SizedBox(height: 10.0,),
+                              // Container(
+                              //   width: MediaQuery.of(context).size.width ,
+                              //   height: 50,
+                              //   padding: EdgeInsets.only(left: 15),
+                              //   margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(15),
+                              //     border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              //   ),
+                              //   child: TextFormField(
+                              //     controller: state_controller_c,
+                              //     decoration: InputDecoration(
+                              //         enabledBorder: InputBorder.none,
+                              //         focusedBorder: InputBorder.none,
+                              //         hintText: "State",
+                              //         hintStyle: TextStyle(fontSize: 18)
+                              //     ),
+                              //   ),
+                              // ),//state container commercial
+                              //
+                              // SizedBox(height: 10.0,),
                               SizedBox(height: 10.0,),
                               Divider(),
                               Container(
@@ -1505,30 +1871,30 @@ class _postNewProjectState extends State<postNewProject> {
                                 ),
                               ),//construction status buttons
                               SizedBox(height: 10.0,),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                padding: EdgeInsets.only(left: 15),
-                                margin: EdgeInsets.only(left: 20, top: 10,right: 20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(style: BorderStyle.solid, color: Colors.grey),
-                                ),
-                                child: TextField(
-                                  onChanged: (String enterLoc){
-                                    setState(() {
-                                      inputaddr=enterLoc;
-                                    });
-                                  },
-                                  //controller: addToMap,
-                                  decoration: InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "Add to Map",
-                                      hintStyle: TextStyle(fontSize: 18)
-                                  ),
-                                ),
-                              ),
+                              // Container(
+                              //   width: MediaQuery.of(context).size.width,
+                              //   height: 50,
+                              //   padding: EdgeInsets.only(left: 15),
+                              //   margin: EdgeInsets.only(left: 20, top: 10,right: 20),
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(15),
+                              //     border: Border.all(style: BorderStyle.solid, color: Colors.grey),
+                              //   ),
+                              //   child: TextField(
+                              //     onChanged: (String enterLoc){
+                              //       setState(() {
+                              //         inputaddr=enterLoc;
+                              //       });
+                              //     },
+                              //     //controller: addToMap,
+                              //     decoration: InputDecoration(
+                              //         enabledBorder: InputBorder.none,
+                              //         focusedBorder: InputBorder.none,
+                              //         hintText: "Add to Map",
+                              //         hintStyle: TextStyle(fontSize: 18)
+                              //     ),
+                              //   ),
+                              // ),
                               SizedBox(height:30.0),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
@@ -1538,7 +1904,7 @@ class _postNewProjectState extends State<postNewProject> {
                                     //uploadImageToFirebase1(context);
                                     uploadMultipleImages2();
                                     Navigator.pushReplacement(
-                                        context, MaterialPageRoute(builder: (context) => HomeScreen1()));
+                                        context, MaterialPageRoute(builder: (context) => Map123(value: propertyCom.documentID,)));
                                   },
                                   color: Colors.indigo,
                                   child: Center(child: Text("POST", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
