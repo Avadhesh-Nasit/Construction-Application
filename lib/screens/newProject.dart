@@ -862,7 +862,7 @@ class _postNewProjectState extends State<postNewProject> {
                               Row(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width,
+                                    width: MediaQuery.of(context).size.width*0.45,
                                     height: 50,
                                     padding: EdgeInsets.only(left: 15),
                                     margin: EdgeInsets.only(left: 20, top: 10,right: 20),
@@ -1116,15 +1116,15 @@ class _postNewProjectState extends State<postNewProject> {
                               SizedBox(height: 10.0,),
                               Container(
                                 alignment: Alignment.topLeft,
-                                margin: EdgeInsets.only(left: 20),
+                                margin: EdgeInsets.only(left: 10),
                                 child: Row(
                                   children: [
                                     customRadio_3(bhk[0], 0),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 5),
                                     customRadio_3(bhk[1], 1),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 5),
                                     customRadio_3(bhk[2], 2),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 5),
                                     customRadio_3(bhk[3], 3),
                                   ],
                                 ),
@@ -1133,7 +1133,7 @@ class _postNewProjectState extends State<postNewProject> {
                               Row(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.60,
+                                    width: MediaQuery.of(context).size.width*0.45,
                                     height: 50,
                                     padding: EdgeInsets.only(left: 15),
                                     margin: EdgeInsets.only(left: 20, top: 10,right: 20),
@@ -1460,7 +1460,7 @@ class _postNewProjectState extends State<postNewProject> {
                               Row(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width,
+                                    width: MediaQuery.of(context).size.width*0.45,
                                     height: 50,
                                     padding: EdgeInsets.only(left: 15),
                                     margin: EdgeInsets.only(left: 20, top: 10,right: 20),
@@ -1714,7 +1714,7 @@ class _postNewProjectState extends State<postNewProject> {
                               Row(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.60,
+                                    width: MediaQuery.of(context).size.width*0.45,
                                     height: 50,
                                     padding: EdgeInsets.only(left: 15),
                                     margin: EdgeInsets.only(left: 20, top: 10,right: 20),

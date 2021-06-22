@@ -313,22 +313,44 @@ class _myHomepageState extends State<myHomepage> {
                                     ],
                                   ),
                                   SizedBox(height: 10),
-                                  Container(
-                                      alignment: Alignment.topLeft,
-                                      margin: EdgeInsets.only(left: 13),
-                                      child: RichText(
-                                        text: TextSpan(
-                                            text: "Posted by : ",
-                                            style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
-                                            children: [
-                                              TextSpan(
-                                                // text: "Builder",
-                                                  text: userProfilesList[index]['postedBy'],
-                                                  style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400)
-                                              )
-                                            ]
+                                  Row(
+                                    children: [
+                                           Container(
+                                            alignment: Alignment.topLeft,
+                                            margin: EdgeInsets.only(left: 13),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                  text: "Posted by : ",
+                                                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
+                                                  children: [
+                                                    TextSpan(
+                                                      // text: "Builder",
+                                                        text: userProfilesList[index]['postedBy'],
+                                                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400)
+                                                    )
+                                                  ]
+                                              ),
+                                            )
                                         ),
-                                      )
+                                         Spacer(),
+                                         Container(
+                                            alignment: Alignment.topLeft,
+                                            margin: EdgeInsets.only(left: 13),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                  text: userProfilesList[index]['area'],
+                                                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
+                                                  // children: [
+                                                  //   TextSpan(
+                                                  //     // text: "Builder",
+                                                  //       text: userProfilesList[index]['area'],
+                                                  //       style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400)
+                                                  //   )
+                                                  // ]
+                                              ),
+                                            )
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(height: 7),
                                   Container(
