@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:construction_application/screens/homeScreenBuilderAndBroker.dart';
 import 'package:construction_application/screens/home_screen.dart';
 import 'package:construction_application/screens/my_homePage.dart';
 import 'package:flutter/material.dart';
@@ -11,15 +12,15 @@ import 'myPost.dart';
 
 // void main() => runApp(MyApp());
 
-class Map123 extends StatefulWidget {
+class MapBuilder extends StatefulWidget {
   final String value;
 
-  const Map123({Key key, this.value}) : super(key: key);
+  const MapBuilder({Key key, this.value}) : super(key: key);
   @override
-  _Map123State createState() => _Map123State();
+  _MapBuilderState createState() => _MapBuilderState();
 }
 
-class _Map123State extends State<Map123> {
+class _MapBuilderState extends State<MapBuilder> {
   Completer<GoogleMapController> _controller = Completer();
 
   static const LatLng _center = const LatLng(45.521563, -122.677433);
@@ -118,7 +119,7 @@ class _Map123State extends State<Map123> {
                         post();
                         print(widget.value);
                         Navigator.pushReplacement(
-                            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                            context, MaterialPageRoute(builder: (context) => HomeScreen1()));
                       },
                       materialTapTargetSize: MaterialTapTargetSize.padded,
                       backgroundColor: Colors.indigo,
@@ -139,7 +140,7 @@ class _Map123State extends State<Map123> {
                           'location': GeoPoint(0, 0),
                         });
                         Navigator.pushReplacement(
-                            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                            context, MaterialPageRoute(builder: (context) => HomeScreen1()));
                       },
                       materialTapTargetSize: MaterialTapTargetSize.padded,
                       backgroundColor: Colors.indigo,

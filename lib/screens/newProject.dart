@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'addToMapBuilder.dart';
 import 'homeScreenBuilderAndBroker.dart';
 
 class ResidentialFilterEntry1 {
@@ -1303,7 +1304,7 @@ class _postNewProjectState extends State<postNewProject> {
                                     //uploadImageToFirebase(context);
                                     uploadMultipleImages1();
                                     Navigator.pushReplacement(
-                                        context, MaterialPageRoute(builder: (context) => Map123(value: propertyRes.documentID,)));
+                                        context, MaterialPageRoute(builder: (context) => MapBuilder(value: propertyRes.documentID,)));
                                   },
                                   color: Colors.indigo,
                                   child: Center(child: Text("POST", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
@@ -1904,7 +1905,7 @@ class _postNewProjectState extends State<postNewProject> {
                                     //uploadImageToFirebase1(context);
                                     uploadMultipleImages2();
                                     Navigator.pushReplacement(
-                                        context, MaterialPageRoute(builder: (context) => Map123(value: propertyCom.documentID,)));
+                                        context, MaterialPageRoute(builder: (context) => MapBuilder(value: propertyCom.documentID,)));
                                   },
                                   color: Colors.indigo,
                                   child: Center(child: Text("POST", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold))),
